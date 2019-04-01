@@ -1,0 +1,73 @@
+{
+  "id": "lishadowapps",
+  "username": "lishadowapps",
+  "online": false,
+  "perfs": {
+    "blitz": {
+      "games": 3936,
+      "rating": 2050,
+      "rd": 59,
+      "prog": 39
+    },
+    "bullet": {
+      "games": 3423,
+      "rating": 1906,
+      "rd": 60,
+      "prog": -21
+    },
+    "correspondence": {
+      "games": 0,
+      "rating": 1500,
+      "rd": 350,
+      "prog": 0,
+      "prov": true
+    },
+    "atomic": {
+      "games": 480,
+      "rating": 2292,
+      "rd": 70,
+      "prog": 12
+    },
+    "classical": {
+      "games": 245,
+      "rating": 2064,
+      "rd": 62,
+      "prog": -19
+    },
+    "rapid": {
+      "games": 1714,
+      "rating": 2164,
+      "rd": 60,
+      "prog": -4
+    }
+  },
+  "createdAt": 1520345362350,
+  "profile": {
+    "bio": "powered by gui bot: https://github.com/humbletest/lgbot/wiki,\r\nauthor of these bots: @lichapibot, @AtomicChessBot, @RandomMoverBot, @CaptureBot\r\n\r\nhttps://imgur.com/xv5qx6F"
+  },
+  "seenAt": 1547631433104,
+  "playTime": {
+    "total": 3790981,
+    "tv": 141643
+  },
+  "language": "en-GB",
+  "url": "https://lichess.org/@/lishadowapps",
+  "nbFollowing": 4,
+  "nbFollowers": 28,
+  "completionRate": 100,
+  "count": {
+    "all": 9978,
+    "rated": 9798,
+    "ai": 0,
+    "draw": 852,
+    "drawH": 852,
+    "loss": 4566,
+    "lossH": 4566,
+    "win": 4560,
+    "winH": 4560,
+    "bookmark": 0,
+    "playing": 0,
+    "import": 6,
+    "me": 0
+  }
+}

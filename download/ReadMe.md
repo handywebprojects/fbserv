@@ -1,0 +1,1 @@
+Image file download temporary directory.

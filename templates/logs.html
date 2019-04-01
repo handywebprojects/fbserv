@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Logs {{logs[0]["timef"][-8:]}}</title>
+
+    <link rel="shortcut icon" href="{{ url_for("static", filename="img/favicon.ico") }}">    
+
+    <link rel="stylesheet" href="static/css/staticpage.css?ver=1549100598">
+
+</head>
+
+<body>
+
+    <div class="appstatediv">
+        <div>
+            <div class="appstatelabel">latest request:</div>  {{ appstate["lastrequesttimef"] }} , delta: {{ appstate["lastrequestdelta"] }}
+        </div>
+        <div>
+            <div class="appstatelabel">server start:</div>    {{ appstate["serverstarttimef"] }} , delta: {{ appstate["sstdelta"] }}
+        </div>
+        <div>
+            <div class="appstatelabel">last tick:</div>       {{ appstate["lastticktimef"] }} , delta: {{ appstate["lttdelta"] }}
+        </div>
+        <div>
+            <div class="appstatelabel">queried players:</div> {{ appstate["totalqueried"] }} , rate: {{ appstate["queryrate"] }}
+        </div>
+        <div>
+            <div class="appstatelabel">unique visitors:</div>
+            {% for date, cdate in dates.items() %}
+            [ {{ date }} : {{ cdate["numips"] }} ] 
+            {% endfor %}
+        </div>
+    </div>
+
+    <table>
+
+        {% for log in logs %}
+
+            <tr>
+                <td>
+                    <div class="logtime">{{log["timef"]}}</div>
+                    <div class="logip">{{hexdigest(log.get("ip", None))}}</div>
+                </td>
+                <td>
+                    <div class="logcontainer">
+                        <div class="logmul">{{log["mul"]}}</div>
+                        <div>
+                            <div class="logmsg">{{log["msg"]}}</div>
+                            {% if log["referer"] %}
+                                <div class="logreferer"><a  target="_blank" rel="noopener noreferrer" href="{{log["referer"]}}">{{log["referer"]}}</a></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <script>
+        setTimeout(function(){
+            location.reload()
+        }, 60000)
+    </script>
+
+</body>
+
+</html>

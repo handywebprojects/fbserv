@@ -1,0 +1,27 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+	hideDotFiles = dotGitOnly
+[remote "github"]
+	url = https://github.com/handywebprojects/fbserv.git
+	fetch = +refs/heads/*:refs/remotes/github/*
+[remote "gitlab"]
+	url = https://gitlab.com/handywebprojects/fbserv.git
+	fetch = +refs/heads/*:refs/remotes/gitlab/*
+[user]
+	name = handywebprojects
+	email = handywebprojects@gmail.com
+	[credential "https://github.com/handywebprojects/fbserv.git"]
+		username = handywebprojects
+	[credential "https://gitlab.com/handywebprojects/fbserv.git"]
+		username = handywebprojects
+[remote "heroku"]
+	url = https://git.heroku.com/fbserv.git
+	fetch = +refs/heads/*:refs/remotes/heroku/*
+[remote "heroku2"]
+	url = https://git.heroku.com/fbserv2.git
+	fetch = +refs/heads/*:refs/remotes/heroku/*

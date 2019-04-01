@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Titled players</title>
+
+    <link rel="shortcut icon" href="{{ url_for("static", filename="img/favicon.ico") }}">    
+
+    <link rel="stylesheet" href="static/css/staticpage.css?ver=1549100598">
+
+</head>
+
+<body>        
+
+    <div id="maindiv" style="opacity: 0.0;">
+
+    <div id="headdiv" style="diplay: {{["none","initial"][config.toint(minimal)]}};">
+        <div>
+            
+                <a target="_blank" rel="noopener noreferrer" href="/">Fbserv analysis home</a>
+                |
+                <a target="_blank" rel="noopener noreferrer" href="https://github.com/handywebprojects/fbserv/commits/master">Fbserv source GitHub</a>
+                |
+                <a target="_blank" rel="noopener noreferrer" href="https://gitlab.com/handywebprojects/fbserv/commits/master">Fbserv source GitLab</a>
+                |
+                <a target="_blank" rel="noopener noreferrer" href="https://lichess.org/api">Lichess API</a>
+                |
+                <a target="_blank" rel="noopener noreferrer" href="https://lichess.org/forum/team-lichess-bots">Lichess bots team forum</a>            
+                |
+                <a target="_blank" rel="noopener noreferrer" href="https://lichess.org/forum/general-chess-discussion/titled-player-toplists">Feedback</a>                        
+                            
+        </div>
+
+        <div class="inputdiv">
+        Titles:
+        {% for title in alltitles %}
+            {{title}}<input type="checkbox" id="title{{title}}" onchange="createlink();"></input>
+            {% if title in titles %}
+                <script>
+                    document.getElementById("title{{title}}").checked=true
+                </script>
+            {% endif %}
+        {% endfor %}
+        <input type="button" value="Check all" onmousedown="checkall(true);">
+        <input type="button" value="Uncheck all" onmousedown="checkall(false);">
+        <input type="button" value="Human" onmousedown="checkbot(false);">
+        <input type="button" value="Bot" onmousedown="checkbot(true);">
+        <input type="button" value="Men" onmousedown="checktitlelist(MEN_TITLE);">
+        <input type="button" value="Women" onmousedown="checktitlelist(WOMEN_TITLE);">
+        </div>
+        <div class="inputdiv">
+        Columns:
+        {% for i in range(numcolumns) %}
+            <select id="column{{i}}" onchange="createlink();">
+            {% for columntype in columntypes %}
+                <option id="option{{i}}{{columntype}}">{{columntype}}</option>            
+            {% endfor %}
+            </select>        
+            <input type="checkbox" id="reverse{{i}}" onchange="createlink();"></input>        
+            </input>
+        {% endfor %}
+        ( check to reverse )
+        </div>
+
+        <div class="inputdiv">
+            Online only:
+            <input type="checkbox" id="onlineonly" onchange="createlink();"></input>
+            {% if onlineonly %}
+                <script>
+                    document.getElementById("onlineonly").checked=true
+                </script>
+            {% endif %}
+            Hide offline:
+            <input type="checkbox" id="hideoffline" onchange="createlink();"></input>
+            {% if hideoffline %}
+                <script>
+                    document.getElementById("hideoffline").checked=true
+                </script>
+            {% endif %}
+            Column presets:
+            <input type="button" value="Most played" onmousedown="mostplayed();">
+            <input type="button" value="Most followed" onmousedown="mostfollowed();">
+            <input type="button" value="Most recent" onmousedown="mostrecent([false, false, false, false, false]);">
+            <input type="button" value="Most senior" onmousedown="mostrecent([true, false, false, false, false]);">
+            <input type="button" value="Highest rated bullet" onmousedown="highestrated('bullet');">
+            <input type="button" value="Highest rated blitz" onmousedown="highestrated('blitz');">
+            Font size:        
+            <select id="selectfontsize" onchange="createlink();">
+            {% for fs in ["inherit", "12px", "14px", "16px", "18px", "20px", "22px"] %}
+                <option id="fontsize{{fs}}" {{["", "selected"][config.toint(fs == fontsize)]}}>{{fs}}</option>
+            {% endfor %}
+            </select> 
+        </div>
+    </div>
+
+    <div class="linkdiv"><a id="hlink"></a></div>    
+
+    <div id="infodiv" class="infodiv">Everything is up to date.</div>
+
+    <a target="_blank" rel="noopener noreferrer" href="/tourneys.html">Tourneys</a>
+    |
+    <a target="_blank" rel="noopener noreferrer" href="/games.html">Game search</a>
+
+    <div class="tablediv">
+        <span id="minimalspan">
+            <input id="minimalbutton" type="button" value="{{["Show minimal", "Show full"][config.toint(minimal)]}}" onmousedown="changeminimal(!minimal);">
+        </span>
+        Total number of players {{ numplayers }} . 
+        Breakdown: {{titlebreakdown}} . 
+        Online: <span id="numonline"></span> .
+        Playing: <span id="numplaying"></span> .
+        <table class="maintable" cellpadding="3" cellspacing="3" border="1" style="font-size: {{fontsize}};">
+            <tr>
+                <td>Rank</td>
+                <td>Player</td>
+                <td>Title</td>
+                {% for column in columns %}
+                    <td>{{column}}</td>
+                {% endfor %}
+            </tr>
+            {% for playerrow in playerrows %}
+            <tr id="tr{{playerrow[1]}}">
+                {% for i in range(numcolumns + 3) %}
+                    {% if i == 0 %}
+                        <td id="ranktd{{playerrow[1]}}">{{playerrow[i]}}</td>
+                    {% elif i == 1 %}
+                        <td id="playingtd{{playerrow[i]}}">
+                            <a target="_blank" rel="noopener noreferrer" href="https://lichess.org/@/{{playerrow[i]}}">{{playerrow[i]}}</a>
+                            <div id="playingdiv{{playerrow[i]}}" class="playingdiv"></div>
+                        </td>
+                    {% else %}
+                        <td class="playercolumn{{i}}">{{playerrow[i]}}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    </div>
+
+    <script>                
+        MEN_TITLE = ["GM", "IM", "FM", "CM", "NM"]
+        WOMEN_TITLE = ["WGM", "WIM", "WFM", "WCM", "WNM"]
+        {% autoescape false %}
+        idnamehash = {{idnamehash}}
+        nameidhash = {{nameidhash}}
+        allids = Object.keys(idnamehash)
+        {% endautoescape %}
+        var queried = {}
+        var onlines = {}
+        var playings = {}
+        function handlehideoffline(){
+            hideoffline = document.getElementById("hideoffline").checked
+            for(name in queried){
+                tr = document.getElementById("tr" + name)
+                tr.style.display = "table-row"
+                if(hideoffline) tr.style.display = onlines[name] ? "table-row" : "none"
+            }
+        }
+        function createlink(){
+            seltitles = []
+            {% for title in alltitles %}
+                titlee = document.getElementById("title{{title}}")
+                if(titlee.checked) seltitles.push("{{title}}")
+            {% endfor %}
+            cols = []
+            reverses = []
+            for(i=0;i<{{ numcolumns }};i++){
+                cols.push(document.getElementById("column" + i).value)
+                reverses.push(document.getElementById("reverse" + i).checked ? "y" : "n")
+            }
+            onlineonly = document.getElementById("onlineonly").checked
+            hideoffline = document.getElementById("hideoffline").checked
+            fs = document.getElementById("selectfontsize").value
+            link = "/titled?titles=" + seltitles.join(",") + "&onlineonly=" + onlineonly + "&hideoffline=" + hideoffline + "&" + cols.map((x,i) => `column${i}=${x}`).join("&") + "&reverses=" + reverses.join("") + "&fontsize=" + fs + "&minimal=" + minimal
+            {% if nolog %}
+                link += "&nolog=true"
+            {% endif %}
+            hlinke = document.getElementById("hlink")
+            hlinke.innerHTML = link
+            hlinke.setAttribute("href", link)
+            handlehideoffline()
+        }
+        function checkall(value){
+            {% for title in alltitles %}
+                titlee = document.getElementById("title{{title}}")
+                titlee.checked = value
+            {% endfor %}
+            createlink()
+        }
+        function checkbot(isbot){
+            checkall(!isbot)
+            document.getElementById("titleBOT").checked = isbot
+            createlink()
+        }        
+        function checktitlelist(titlelist){
+            checkall(false)
+            for(title of titlelist) document.getElementById("title"+title).checked = true            
+            createlink()
+        }
+        function selectcolumn(i, columntype){
+            {% for columntype in columntypes %}
+                optione = document.getElementById("option" + i + "{{columntype}}")                
+                if(columntype == "{{columntype}}") optione.selected = true
+                else optione.removeAttribute("selected")
+            {% endfor %}
+        }
+        function setreverses(reverses){
+            for(i=0;i<{{ numcolumns }};i++){
+                document.getElementById("reverse" + i).checked=reverses[i]
+            }
+        }
+        function resetreverses(){
+            setreverses([false, false, false, false, false])
+        }
+        function mostplayed(){
+            selectcolumn(0, "total_games")
+            selectcolumn(1, "number_of_followers")
+            resetreverses()
+            createlink()
+        }
+        function mostfollowed(){
+            selectcolumn(0, "number_of_followers")
+            selectcolumn(1, "total_games")            
+            resetreverses()
+            createlink()
+        }
+        function mostrecent(reverses){
+            selectcolumn(0, "created_at")
+            selectcolumn(1, "total_games")            
+            setreverses(reverses)
+            createlink()
+        }
+        function highestrated(perf){
+            selectcolumn(0, perf + "_rating")
+            selectcolumn(1, perf + "_games")            
+            resetreverses()
+            createlink()
+        }
+        function processonline(content){            
+            ididhash = {}
+            for(line of content.split("\n")){
+                try{
+                    player = JSON.parse(line)
+                    id = player["id"]
+                    ididhash[id] = player
+                }catch(e){                    
+                }
+            }            
+            joined = []
+            left = []
+            for(id in ididhash){
+                if(idnamehash[id] == undefined){
+                    joined.push(id)
+                }
+            }            
+            for(id in idnamehash){                
+                if(ididhash[id] == undefined){
+                    left.push(id)
+                }
+            }            
+            console.log("joined", joined, "left", left)
+            if((joined.length == 0)&&(left.length == 0)){   
+                console.log("no change")
+                setTimeout(getonline, 10000)
+            }else{
+                joinedstr = joined.length == 0?"": "Joined: " + joined.join(" , ") + " ."
+                leftstr = left.length == 0?"": "Left: " + left.map(id => idnamehash[id]["title"] + " " + idnamehash[id]["username"]).join(" , ") + " ."
+                changestr = [joinedstr, leftstr].join(" ")
+                document.getElementById("infodiv").innerHTML = changestr + " Refreshing page soon ..."
+                setTimeout(function(){
+                    location.reload()
+                }, 20000)
+            }            
+        }
+        function getonline(){
+            {% autoescape false %}
+            url = "https://lichess.org/api/users/titled?online=true&titles=" + {{titles}}.join(",")
+            {% endautoescape %}
+            console.log("getting", url)
+            fetch(url).then(
+                res => res.text().then(
+                    content => processonline(content)
+                )
+            )
+        }   
+        var statusi = 0             
+        function processstatus(content){            
+            try{
+                players = JSON.parse(content)
+                for(player of players){
+                    id = player["id"]
+                    name = player["name"]
+                    playing = player["playing"]
+                    ptd = document.getElementById("playingtd" + name)
+                    pdiv = document.getElementById("playingdiv" + name)                    
+                    if(playing){
+                        pdiv.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="https://lichess.org/@/${name}/tv">playing</a>`
+                        ptd.classList.add("playingtd")
+                        playings[name] = true
+                    }else{
+                        pdiv.innerHTML = ""
+                        ptd.classList.remove("playingtd")
+                        delete playings[name]
+                    }                    
+                    online = player["online"]
+                    queried[name] = true
+                    if(online) onlines[name] = true
+                    else delete onlines[name]
+                    rtd = document.getElementById("ranktd" + name)
+                    if(online) rtd.classList.add("playingtd")
+                    else rtd.classList.remove("playingtd")                    
+                numqueried = Object.keys(queried).length
+                numonlinee = document.getElementById("numonline")
+                numonline = Object.keys(onlines).length
+                numonlinee.innerHTML = `<span style="color: #007; font-weight: bold;">${numonline}</span> / ${numqueried}`
+                numplayinge = document.getElementById("numplaying")
+                numplaying = Object.keys(playings).length
+                numplayinge.innerHTML = `<span style="color: #550; font-weight: bold;">${numplaying}</span>`
+                }
+                handlehideoffline()
+            }catch(e){
+                console.log(e)
+            }
+            setTimeout(querystatus, 250)
+        }
+        function querystatus(){            
+            numplayers = {{numplayers}}
+            max = 50
+            if(numplayers < max) max = numplayers
+            sids = []
+            for(i=0;i<max;i++){
+                sids.push(allids[statusi])
+                statusi++
+                if(statusi>=allids.length) statusi=0
+            }
+            surl = "https://lichess.org/api/users/status?ids=" + sids.join(",")
+            console.log("getting", surl)
+            fetch(surl).then(
+                res => res.text().then(
+                    content => processstatus(content)
+                )
+            )
+        }
+        {% if minimal %}
+        var minimal = true
+        {% else %}
+        var minimal = false
+        {% endif %}
+        var cheight = 0
+        function changeminimal(newminimal){
+            mbe = document.getElementById("minimalbutton")
+            minimal = newminimal
+            mbe.value = minimal?"Show full":"Show minimal"
+            hde = document.getElementById("headdiv")
+            hde.style.display=minimal?"none":"initial"
+            createlink()
+        }            
+        changeminimal(minimal)    
+        reverses = [ false, false, false, false, false]
+        {% for i in range(numcolumns) %}
+            selectcolumn({{i}}, "{{columns[i]}}")
+            {% if reverses[i] %}
+                reverses[{{i}}] = true
+            {% endif %}
+        {% endfor %}
+        setreverses(reverses)
+        createlink()
+        document.getElementById("maindiv").style.opacity = 1
+        {% if onlineonly %}            
+            setTimeout(getonline, 40000)
+        {% endif %}
+        querystatus()        
+    </script>
+
+</body>
+
+</html>

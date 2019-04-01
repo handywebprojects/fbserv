@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+flask-socketio = "*"
+gunicorn = "*"
+urllib3 = {extras = ["secure"]}
+selenium = "*"
+pyyaml = "*"
+"heroku3" = "*"
+websocket-client = "*"
+pyperclip = "*"
+firebase-admin = "*"
+eventlet = "*"
+gevent = "*"
+gevent-websocket = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"

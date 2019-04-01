@@ -1,0 +1,1 @@
+start s\r python simple.py

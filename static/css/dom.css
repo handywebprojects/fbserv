@@ -1,0 +1,390 @@
+:root {
+    --large-sheet-width: 2000px;
+    --large-sheet-height: 3000px;
+    --schema-box-size: 22px;
+    --schema-font-size: calc(var(--schema-box-size) * 0.7);
+    --schema-textinput-height: calc(var(--schema-box-size) * 0.8);
+    --schema-textarea-height: calc(var(--schema-box-size) * 5);
+    --schema-key-width: 200px;
+    --schema-value-width: 400px;
+    --schema-color-width: calc(var(--schema-value-width) * 0.4);
+    --schema-slider-width: 150px;
+    --schema-slider-value-width: 80px;    
+    --schema-slider-minmax-factor: 0.6;
+    --schema-slider-step-width: 30px;    
+    --schema-slider-step-factor: 0.5;
+    --schema-margin: 2px;    
+    --schema-textinput-padding: 5px;
+    --schema-open-button-size: calc(var(--schema-box-size) - 2*var(--schema-margin));
+}
+
+.largesheet {
+    min-width: var(--large-sheet-width);
+    min-height: var(--large-sheet-height);
+}
+
+.schema .container {    
+    width: fit-content;
+}
+
+.schema .item {
+    display: flex;
+    margin: var(--schema-margin);
+    background-color: #ddd;    
+    width: fit-content;
+    padding: 2px;    
+}
+
+.schema .pastebutton {
+    font-size: calc(var(--schema-font-size) * 0.8);        
+}
+
+.schema .item.list {
+    border: 2px dotted #9aa;
+    padding: 0px;
+}
+
+.schema .item.dict {
+    border: 2px dotted #99a;
+    padding: 0px;
+}
+
+.schema .item.combo {
+    border: 2px dotted #99a;
+    padding: 0px;
+}
+
+.schema .item.radio {
+    border: 2px dotted #99a;
+    padding: 0px;
+}
+
+.schema .value.list {
+    background-color: #dee;
+}
+
+.schema .value.dict {
+    background-color: #cce;    
+}
+
+.schema .value.combo {
+    background-color: #aca;
+}
+
+.schema .value.radio {
+    background-color: #ecd;    
+}
+
+.schema .value.textarea {
+    background-color: #eed;    
+    height: calc(var(--schema-textarea-height) + 2 * var(--schema-margin));
+}
+
+.schema .value.date {
+    background-color: #ecd;
+}
+
+.schema .value.color {
+    background-color: #777;
+}
+
+.schema .value .textinput.string {
+    width: calc(var(--schema-value-width) - 10px);
+    height: var(--schema-textinput-height);
+    font-size: var(--schema-font-size);
+    padding-left: var(--schema-textinput-padding);
+}
+
+.schema .value .date {    
+    font-size: calc(var(--schema-font-size) * 0.85);
+}
+
+.schema .value .textarea {    
+    height: var(--schema-textarea-height);
+    font-size: calc(var(--schema-font-size) * 0.85);
+    width: calc(var(--schema-value-width) - 7px);
+    padding-left: var(--schema-textinput-padding);
+}
+
+.schema .value .color {    
+    font-size: calc(var(--schema-font-size) * 0.85);
+    width: var(--schema-color-width);
+}
+
+.schema .value .textinput.sliderminmax {
+    width: calc(var(--schema-slider-value-width) * var(--schema-slider-minmax-factor));
+    height: calc(var(--schema-textinput-height) * var(--schema-slider-minmax-factor));
+    font-size: calc(var(--schema-font-size) * var(--schema-slider-minmax-factor));
+    padding-left: calc(var(--schema-textinput-padding) * var(--schema-slider-minmax-factor));
+}
+
+.schema .value .textinput.slidervalue {
+    width: var(--schema-slider-value-width);
+    height: var(--schema-textinput-height);
+    font-size: var(--schema-font-size);
+    padding-left: var(--schema-textinput-padding);
+}
+
+.schema .value .textinput.sliderstep {
+    width: var(--schema-slider-step-width);
+    height: calc(var(--schema-textinput-height) * var(--schema-slider-step-factor));
+    font-size: calc(var(--schema-font-size) * var(--schema-slider-step-factor));
+    padding-left: calc(var(--schema-textinput-padding) * var(--schema-slider-step-factor));
+}
+
+.schema .value .textinput.sliderslider {
+    width: var(--schema-slider-width);
+    height: var(--schema-textinput-height);
+}
+
+.schema .value .checkbox {
+    width: var(--schema-textinput-height);
+    height: var(--schema-textinput-height);
+}
+
+.schema .value .datelabel {
+    font-size: calc(var(--schema-font-size) * 0.5);
+    font-family: monospace;
+    background-color: #ffa;
+    padding: 3px;
+}
+
+.schema .value .colorlabel {
+    font-size: calc(var(--schema-font-size) * 0.5);
+    font-family: monospace;
+    background-color: #ffa;
+    padding: 3px;
+}
+
+.schema .box.combo .checkbox {
+    width: var(--schema-textinput-height);
+    height: var(--schema-textinput-height);
+}
+
+.schema .box.radio .radio {
+    width: var(--schema-textinput-height);
+    height: var(--schema-textinput-height);
+}
+
+.schema .key .textinput {
+    width: calc(var(--schema-key-width) - 10px);
+    height: var(--schema-textinput-height);
+    font-size: var(--schema-font-size);        
+    padding-left: var(--schema-textinput-padding);
+    background-color: #ffd;
+    font-weight: bold;
+}
+
+.schema .key .textinput.textinputediting {
+    background-color: #ff0;
+}
+
+.schema .create {
+    display: flex; justify-content: space-around; align-items: center;
+    width: var(--schema-value-width);
+    height: var(--schema-box-size);
+    background-color: #ccc;
+    margin: var(--schema-margin);
+}
+
+.schema .create .createcombo {
+    font-size: var(--schema-font-size);
+}
+
+.schema .childs {    
+    width: fit-content;
+    margin-left: 20px;    
+}
+
+.schema .openbutton {
+    display: flex; justify-content: space-around; align-items: center;    
+    min-width: var(--schema-box-size);
+    height: var(--schema-open-button-size);    
+    background-color: #afa;
+    margin: var(--schema-margin);
+    cursor: pointer;
+}
+
+.schema .key {
+    display: flex; justify-content: space-around; align-items: center;
+    width: var(--schema-key-width);
+    height: var(--schema-box-size);
+    background-color: #eee;
+    margin: var(--schema-margin);    
+}
+
+.schema .value {
+    display: flex; justify-content: space-around; align-items: center;
+    width: var(--schema-value-width);
+    height: var(--schema-box-size);
+    background-color: #ffe;
+    margin: var(--schema-margin);
+}
+
+.schema .box {
+    display: flex; justify-content: space-around; align-items: center;
+    width: var(--schema-box-size);
+    height: var(--schema-box-size);    
+    margin: var(--schema-margin);
+    cursor: pointer;
+}
+
+.schema .box.help {
+    background-color: #ffe;
+}
+
+.schema .box.copy {
+    background-color: #eef;
+}
+
+.schema .box.delete {
+    background-color: #fee;
+}
+
+.schema .box.combo {
+    background-color: #7f7;
+}
+
+.schema .box.radio {
+    background-color: #e9d;
+    border-radius: var(--schema-textinput-height);
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+}
+
+.contentplaceholder {
+    padding: 20px;
+}
+
+.splitpane.container {
+    background-color: #eee;
+}
+
+.splitpane.controlpanel {
+    display: flex; justify-content: space-around; align-items: center;
+    background-color: #ddd;
+}
+
+.splitpane.subcontrolpanel {
+    background-color: #eee;    
+}
+
+.splitpane.contentdiv {
+    background-color: #eff;
+    overflow: scroll;
+}
+
+.tab.container {
+    cursor: pointer;
+    background-color: #ccc;    
+    opacity: 0.6;
+}
+
+.tab.container.selected {
+    background-color: #fff;    
+    opacity: 0.8;
+}
+
+.tab.container:hover {
+    opacity: 1;
+}
+
+/* https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/ */
+
+.fileuploadform {
+    margin-bottom: 10px;
+}
+
+.fileuploaddroparea {
+    border: 2px dashed #aaa;
+    border-radius: 20px;
+    width: 480px;
+    font-family: sans-serif;
+    margin: 30px;
+    padding: 30px;
+}
+
+.fileuploaddroparea.highlight {
+    border-color: purple;
+}
+
+.fileuploadp {
+    margin-top: 0;
+}
+
+.fileuploadgallery {
+    margin-top: 10px;
+}
+
+.fileuploadgallery img {
+    width: 150px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.fileuploadbutton {
+    display: inline-block;
+    padding: 10px;
+    background: #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: 30px;
+}
+
+.fileuploadbutton:hover {
+    background: #ddd;
+}
+
+.fileuploadfileelem {
+    display: none;
+}
+
+.fileuploadinfo {
+    margin: 30px;
+    font-family: monospace;
+    font-size: 20px;
+}
+
+.fileuploadfilename {
+    font-weight: bold;
+    color: #070;
+}
+
+.textinputediting {
+    background-color: #ff0;
+}
+
+.controlbutton {
+    font-size: 22px;
+}
+
+.processinput {
+    display: flex; justify-content: space-around; align-items: center;
+}
+
+.redbutton {
+    background-color: #fcc;
+}
+
+.greenbutton {
+    background-color: #cfc;
+}
+
+.bluebutton {
+    background-color: #ccf;
+}
+
+.fileuploaderror {
+    color: #700;
+    font-weight: bold;
+}

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Tourneys</title>
+
+    <link rel="shortcut icon" href="static/img/favicon.ico"">
+
+    <link rel="stylesheet" href="static/css/staticpage.css?ver=1549100598">
+
+    <script src="static/js/dom.js?ver=1552144735"></script>
+    <script src="static/js/lichess.js?ver=1552835295"></script>
+
+</head>
+
+<body>        
+
+    <div id="root"></div>
+
+    <script>
+        ignoredperfs = []
+        if(params.ignoredperfs){            
+            ignoredperfs = params.ignoredperfs.split(",")            
+        }
+
+        includekinds = ["created", "started", "finished"]
+        if(params.includekinds){            
+            includekinds = params.includekinds.split(",")            
+        }
+
+        perfchecks = {}
+
+        perfdiv = Div().ac("inputdiv").a(
+            PERF_TYPES.map(perf=>{
+                lcb = LCheck(perf).set(!ignoredperfs.includes(perf)).onchange(updatelist)
+                perfchecks[perf] = lcb
+                return lcb
+            })
+        )
+
+        function setchecks(checks, value){            
+            for(key in checks) checks[key].set(value)
+            updatelist()            
+        }
+
+        infodiv = Div().ml(20).disp("inline-block").ac("infodiv").pad(2).pl(10).pr(10)
+
+        perfdiv.a(
+            Button("Check all", setchecks.bind(null, perfchecks, true)),
+            Button("Uncheck all", setchecks.bind(null, perfchecks, false)),
+            infodiv
+        )
+
+        ttchecks = {}
+
+        ttdiv = Div().ac("inputdiv").a(
+            TOURNEY_TYPES.map(tt=>{
+                lcb = LCheck(tt).set(includekinds.includes(tt)).onchange(updatelist)
+                ttchecks[tt] = lcb
+                return lcb
+            })
+        )
+
+        ttdiv.a(Hlink("https://fbserv.herokuapp.com/titled?titles=GM,WGM,IM,WIM&fontsize=20px", "Titled player toplists", true).ml(20).fs(16).ac("infodiv"))
+        ttdiv.a(Hlink("https://fbserv.herokuapp.com/games.html", "Game search", true).ml(20).fs(16).ac("infodiv"))
+
+        tourneysobj = {created:[], started:[], finished:[]}
+
+        seltourneys = []
+
+        tourneysinfo = {}
+
+        tablediv = Div().ac("tablediv")
+
+        TOSTART_LIMIT = 360
+
+        function updatelist(uptodate){
+            ips = []
+            for(key in perfchecks) if(!perfchecks[key].checked) ips.push(key)
+            iks = []
+            for(key in ttchecks) if(ttchecks[key].checked) iks.push(key)
+            link = "tourneys.html?ignoredperfs=" + ips.join(",") + "&includekinds=" + iks.join(",")
+            linkdiv.x.a(Hlink(link, link))
+            selperfs = Object.keys(perfchecks).filter(perf=>perfchecks[perf].checked)
+            seltts = Object.keys(ttchecks).filter(tt=>ttchecks[tt].checked)            
+            alltourneys = []
+            for(tt of seltts){
+                alltourneys=alltourneys.concat(tourneysobj[tt])
+            }
+            seltourneys=alltourneys.map(tobj=>Tourney(tobj)).filter(t=>selperfs.includes(t.perf)&&t.minutesToStart<=TOSTART_LIMIT)
+            seltourneys.sort((a,b)=>{
+                if(a.status==b.status) return b.minutes() - a.minutes()
+                return a.status - b.status
+            })            
+            tablediv.x
+            for(t of seltourneys){
+                tinfodiv = Div().w(300)                
+                info = tourneysinfo[t.id]                
+                if(info){                    
+                    tinfodiv.a(Div().html(`${info.totalgames} game(s) played${info.playing.length>0?" , playing:":""}`).c("#007"))
+                    for(game of info.playing){        
+                        white = game.players.white
+                        black = game.players.black                
+                        tinfodiv.a(Div().html(`${white.user.name} ${white.rating} - ${black.user.name} ${black.rating}`).c("#070"))
+                    }
+                }
+                let thref = "https://lichess.org/tournament/" + t.id
+                let clickhref = function(){
+                    document.location = thref
+                }
+                tdiv = Div().disp("flex").ac("container").acc(t.official, "official").a(
+                    Div().w(300).ac("tourneyname").a(Hlink(thref, t.fullName, true)),
+                    Div().w(150).html("<b>" + t.nbPlayers + "</b> <font size='1'>player(s)</font>").c("#700").ae("mousedown", clickhref).cp(),
+                    Div().w(150).ac("createdby").acc(t.official, "official").html(t.createdBy),
+                    Div().w(200).html(t.perfName + " " + t.clock),
+                    Div().w(200).html(t.minutesVerbal()),
+                    tinfodiv
+                )
+                tdiv.ac("tourney")                
+                tdiv.ac("status" + t.status)
+                tablediv.a(tdiv)
+            }
+            if(uptodate) infodiv.html("everything is up to date")
+        }
+
+        function gettourneys(){
+            infodiv.html("updating tourneys")
+            fetchjson("https://lichess.org/api/tournament", obj=>{
+                tourneysobj = obj
+                updatelist(true)                
+                setTimeout(gettourneys, 60000)
+            },(errdescription, url, content, err)=>{
+                infodiv.html(errdescription + ", trying again soon")
+                setTimeout(gettourneys, 60000)
+            }
+            )
+        }
+
+        tourneyqueue = []
+
+        function inittourneyqueue(){
+            tourneyqueue = []
+            for(tourney of seltourneys){                
+                if( (tourney.status == 20) && !( tourney.createdBy == "lichess" ) ) tourneyqueue.push(tourney)
+            }
+        }
+
+        function processtourney(id, obj){            
+            totalgames = obj.length                        
+            playing = []         
+            for(game of obj){                
+                if(game.status == "started"){
+                    playing.push(game)
+                }
+            }
+            tourneysinfo[id] = {
+                "totalgames": totalgames,
+                "playing": playing
+            }   
+            updatelist()
+        }
+
+        POPDELAY = 1000
+
+        function poptourney(){                   
+            if(tourneyqueue.length == 0){
+                inittourneyqueue()
+                setTimeout(poptourney, POPDELAY)
+            }else{
+                tourney = tourneyqueue.pop()                
+                fetchallndjson("https://lichess.org/api/tournament/" + tourney["id"] + "/games", obj=>{
+                    processtourney(tourney["id"], obj)
+                    setTimeout(poptourney, POPDELAY)
+                },(errdescription, url, content, err)=>{
+                    infodiv.html(errdescription + ", trying again soon")
+                    setTimeout(poptourney, 60000)
+                }
+                )
+            }            
+        }
+
+        linkdiv = Div().ac("linkdiv")
+
+        maindiv = Div().a(
+            perfdiv,
+            ttdiv,
+            linkdiv,
+            tablediv
+        )
+
+        document.getElementById("root").appendChild(maindiv.e)
+
+        gettourneys()
+
+        inittourneyqueue()
+
+        poptourney()
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Fbserv</title>
+
+    <link rel="stylesheet" href="static/css/reset.css">
+    <link rel="stylesheet" href="static/css/dom.css?ver=1536818145">
+    <link rel="stylesheet" href="static/css/system.css?ver=1534435934">
+    <link rel="stylesheet" href="static/css/app.css?ver=1536813519">
+    <link rel="stylesheet" href="static/css/board.css?ver=1537974173">
+    <link rel="stylesheet" href="static/piece/alpha.css">
+    
+    <link rel="stylesheet" href="static/css/firebaseui.css">
+
+    <link rel="shortcut icon" href="{{ url_for("static", filename="img/favicon.ico") }}">    
+
+    <script type="text/javascript" src="static/js/socket.io.min.js"></script>
+    <script type="text/javascript" src="static/js/showdown.min.js"></script>
+    
+    <script type="text/javascript" src="static/js/firebase-app.js"></script>
+    <script type="text/javascript" src="static/js/firebase-auth.js"></script>        
+    <script type="text/javascript" src="static/js/firebaseui.js"></script>        
+
+</head>
+
+<body>        
+
+    <div id="clientroot">
+        <div class="connecting">
+            <div class="connecting message" id="connectmsg">
+                Connecting to server, please wait...
+            </div>            
+        </div>
+    </div>
+
+    <script src="static/js/app.js?ver=1552052829"></script>
+
+</body>
+
+</html>

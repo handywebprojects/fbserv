@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Games</title>
+
+    <link rel="shortcut icon" href="static/img/favicon.ico"">
+
+    <link rel="stylesheet" href="static/css/staticpage.css?ver=1549100598">
+
+    <script src="static/js/can-ndjson-stream.js"></script>
+    <script src="static/js/dom.js?ver=1552144735"></script>
+    <script src="static/js/lichess.js?ver=1552835295"></script>
+
+</head>
+
+<body>        
+
+    <div id="main" style="overflow: scroll; background-color: #ffe;">
+        <div class="inputdiv" style="display: flex; align-items: center;" id="userdiv"></div>
+
+        <div id="link" class="linkdiv"></div>
+
+        <div id="form"></div>
+
+        <div class="inputdiv">
+            <div style="display: flex;">
+                <div id="code">
+                    Code:<br>
+                </div>
+                <div id="aggrcode" style="margin-left: 10px;">
+                    Aggregation code:<br>
+                </div>
+            </div>
+        </div>
+
+        <div id="search" style="display: flex; align-items: center;"></div>
+
+        <div id="info" class="infodiv"></div>
+
+        <div id="aggrinfo" class="infodiv"></div>
+
+        <div id="oppinfo" class="infodiv"></div>
+
+        <div id="games" class="tablediv" style="min-height: 50px;"></div>
+    </div>
+
+    <script>              
+        allopponents = {}
+        MAXOPPS = parseInt(params["maxopps"])
+        if(isNaN(MAXOPPS)) MAXOPPS = 10        
+        
+        function maxoppschanged(){
+            MAXOPPS = parseInt(selectmaxopps.v())
+        }
+        selectmaxopps = Select().ae("change", maxoppschanged)
+        
+        OPTIONS_DATA = {
+            perf:{
+                selected: "any",
+                obj: "game.perf",
+                ref: "fromdate",
+                quoted: true,
+                data:[
+                    ["any", "All Perfs"],
+                    ["ultraBullet", "Ultra Bullet"],
+                    ["bullet", "Bullet"],
+                    ["blitz", "Blitz"],
+                    ["rapid", "Rapid"],
+                    ["classical", "Classical"],
+                    ["correspondence", "Correspondence"],
+                    ["chess960", "Chess960"],
+                    ["crazyhouse", "Crazyhouse"],
+                    ["antichess", "Antichess"],
+                    ["atomic", "Atomic"],
+                    ["horde", "Horde"],
+                    ["kingOfTheHill", "King of the Hill"],
+                    ["racingKings", "Racing Kings"],
+                    ["threeCheck", "Three Check"]                    
+                ]
+            },
+            variant:{
+                selected: "any",
+                obj: "game.variant",
+                ref: "fromdate",
+                quoted: true,
+                data:[
+                ["any", "All Variants"],
+                    ["standard", "Standard"],                    
+                    ["chess960", "Chess960"],
+                    ["crazyhouse", "Crazyhouse"],
+                    ["antichess", "Antichess"],
+                    ["atomic", "Atomic"],
+                    ["horde", "Horde"],
+                    ["kingOfTheHill", "King of the Hill"],
+                    ["racingKings", "Racing Kings"],
+                    ["threeCheck", "Three Check"]                    
+                ]
+            },
+            rated:{
+                selected: "any",
+                obj: "game.rated",
+                ref: "fromdate",
+                quoted: false,
+                data:[
+                    ["any", "Rated and Casual"],
+                    ["true", "Rated"],
+                    ["false", "Casual"]
+                ]
+            },
+            titled:{
+                selected: "any",
+                obj: "g.opponentTitle",
+                ref: "fromdate",
+                quoted: true,
+                data:[
+                    ["any", "Ignore title"],
+                    ["some", "Opponent Titled"],
+                    ["GM", "Opponent GM"],
+                    ["WGM", "Opponent WGM"],
+                    ["IM", "Opponent IM"],
+                    ["WIM", "Opponent WIM"],
+                    ["FM", "Opponent FM"],
+                    ["WFM", "Opponent WFM"],
+                    ["CM", "Opponent CM"],
+                    ["WCM", "Opponent WCM"],
+                    ["NM", "Opponent NM"],
+                    ["WNM", "Opponent WNM"]
+                ]
+            },
+            myresult:{
+                selected: "any",
+                obj: "g.myResult",
+                ref: "todate",
+                quoted: false,
+                data:[
+                    ["any", "All Results by Me"],
+                    ["1", "Won by Me"],
+                    ["0.5", "Draw"],
+                    ["0", "Lost by Me"]
+                ]
+            },
+            speed:{
+                selected: "any",
+                obj: "game.speed",
+                ref: "todate",
+                quoted: true,
+                data:[
+                    ["any", "All Speeds"],
+                    ["ultraBullet", "Ultra Bullet"],
+                    ["bullet", "Bullet"],
+                    ["blitzu", "Blitz"],
+                    ["rapid", "Rapid"],
+                    ["classical", "Classical"]
+                ]
+            },
+            status:{
+                selected: "any",
+                obj: "game.status",
+                ref: "todate",
+                quoted: true,
+                data:[
+                    ["any", "Ignore Status"],
+                    ["variantEnd", "Variant end"],
+                    ["resign", "Resignation"],
+                    ["outoftime", "Time out"],
+                    ["mate", "Mate"],
+                    ["stalemate", "Stalemate"],
+                    ["draw", "Draw"]
+                ]
+            },
+            winner:{
+                selected: "any",
+                obj: "game.winner",
+                ref: "todate",
+                quoted: true,
+                data:[
+                    ["any", "Ignore Winner Color"],
+                    ["white", "Won by White"],
+                    ["black", "Won by Black"]
+                ]
+            }
+        }
+
+        OPTIONS = {}
+
+        for(key in OPTIONS_DATA){
+            let od = OPTIONS_DATA[key]
+            let selected = params[key] || od.selected
+            let s = Select().setoptions(od.data, selected).ml(8).fs(16)
+            OPTIONS[key] =  s
+        }
+
+        function formtd(){return Td().pad(5).fs(14).fw("bold").c("#007")}
+
+        function createcode(){
+            myRatingrangecode = `( ( g.myRating >= ${myRatingrange.fromslider.value} ) && ( g.myRating <= ${myRatingrange.toslider.value} ) )`
+            opponentRatingrangecode = `( ( g.opponentRating >= ${opponentRatingrange.fromslider.value} ) && ( g.opponentRating <= ${opponentRatingrange.toslider.value} ) )`            
+            oppname = opponentinput.getText()
+            opponentCode = `&& ( g.opponentName.toLowerCase() == "${oppname}".toLowerCase() )`
+            code = `${myRatingrangecode} && ${opponentRatingrangecode}`
+            if(oppname != "") code = code + opponentCode
+            for(key in OPTIONS){
+                let v = OPTIONS[key].v()             
+                let odata = OPTIONS_DATA[key]
+                let obj = odata.obj
+                let quoted = odata.quoted
+                if(v!="any"){                                                            
+                    if((key=="titled")&&(v=="some")){
+                        code += ` && ( g.opponentTitled )`
+                    }else{
+                        if(quoted) v=`"${v}"`
+                        code += ` && ( ${obj} == ${v} )`
+                    }                    
+                }
+            }
+            let ecoline = ecoselect.v()
+            if(ecoline != "none"){
+                code += ` && ( game.moves.match(/^${ecoline}/) )`
+            }
+            codeinput.setText(code)
+        }
+
+        function createcodeandsearch(){
+            createcode()
+            search()
+        }        
+
+        var username = params["username"] || "randommoverbot"
+        usernameinput = FeaturedTextInput("Username").setText(username).bc("#efe")
+        token = params["token"] || "L8GHblP1Wc57Oegi"
+        tokeninput = FeaturedTextInput("Token").setText(token).bc("#eef")
+        opponent = params["opponent"] || ""
+        opponentinput = FeaturedTextInput("Opponent").setText(opponent).bc("#fee")
+        userdive = document.getElementById("userdiv")
+        userdive.appendChild(usernameinput.e)
+        userdive.appendChild(opponentinput.e)
+        userdive.appendChild(tokeninput.e)
+        forme = document.getElementById("form")
+        form = Table()
+        myRatingrange = Range(800,3500,100,params["myRatingmin"] || 800,800,3500,100,params["myRatingmax"] || 3500)
+        opponentRatingrange = Range(800,3500,100,params["opponentRatingmin"] || 800,800,3500,100,params["opponentRatingmax"] || 3500)
+        form.a(Tr().a(formtd().html("My rating"), Td().a(myRatingrange)))        
+        form.a(Tr().a(formtd().html("Opp. rating"), Td().a(opponentRatingrange)))        
+        offerdownload = Check().ml(10).set(params["download"]).ae("change", createLink)
+        autocreatecode = Check().ml(10).set(params["autocreatecode"]).ae("change", createLink)
+        autostart = Check().ml(10).set(params["autostart"]).ae("change", createLink)        
+        form.a(Tr().a(formtd().html("Search"),Td().a(
+                Button("Create code and search", createcodeandsearch).mar(3).fs(18).curlyborder().pad(5).bc("#cfc").cp(),
+                Button("Stop", stopreader).mar(3).fs(16).curlyborder().pad(5).bc("#fcc").cp(),
+                Button("Download", downloadgames).mar(3).fs(16).curlyborder().pad(5).bc("#ccf").cp(),
+                Button("Create link", createLink).mar(3),
+                Button("Create code", createcode).mar(3),
+                Button("Search", search).mar(3),
+                offerdownload,
+                Div().disp("inline-block").html("Auto offer download").ml(5),
+                autocreatecode,
+                Div().disp("inline-block").html("Auto create code").ml(5),
+                autostart,
+                Div().disp("inline-block").html("Auto start").ml(5)
+        )))     
+        fromdate = DateInput().set(params["fromdate"] || "2000-01-01")        
+        form.a(Tr().a(formtd().html("From date"),(fromdatetd = Td()).a(
+                fromdate
+        )))                
+        todate = DateInput().set(params["todate"] || dateToDateInputStr(new Date()))
+        form.a(Tr().a(formtd().html("To date"),(todatetd = Td()).a(
+                todate
+        )))        
+        ecooptsdata = [["none", "Ignore ECO code"]]
+        for(let item of ECO_CODES){
+            let disp = `${item[0]}&nbsp;&nbsp;"${item[1]}"&nbsp;&nbsp;${item[2]}`
+            ecooptsdata.push([item[2], disp])
+        }        
+        seleco = params["eco"] || "none"
+        seleco = seleco.replace(/%20/g, " ")        
+        function ecoselectchanged(){
+            seleco = ecoselect.v()
+        }
+        ecoselect = Select().setoptions(ecooptsdata, seleco).ff("monospace").ae("change", ecoselectchanged)
+        form.a(Tr().a(formtd().html("ECO:"),(ecotd = Td()).a(
+                ecoselect
+        )))        
+        for(key in OPTIONS_DATA){
+            let odata = OPTIONS_DATA[key]
+            if(odata.ref == "fromdate") fromdatetd.a(OPTIONS[key])
+            else if (odata.ref == "todate") todatetd.a(OPTIONS[key])
+        }
+        forme.appendChild(form.e)
+        code = unescape(params["code"] || `true`)        
+        codeinput = TextArea().w(600).h(110).setText(code)
+        ae("code",codeinput)
+        aggrcode = unescape(params["aggrcode"] || `initaggr = function (){${"\n\t"}aggrinfoe.innerHTML="init";sum=0${"\n"}}${"\n\n"}aggr = function(game, g){${"\n\t"}sum+=g.myRating;aggrinfoe.innerHTML="avg rating: "+sum/found${"\n"}}`)        
+        aggrcodeinput = TextArea().w(600).h(110).setText(aggrcode)
+        ae("aggrcode",aggrcodeinput)
+        aggrinfoe = document.getElementById("aggrinfo")        
+        oppinfo = Div()
+        se("oppinfo", oppinfo)
+        createopptable()
+
+        function createLink(){
+            username = usernameinput.getText()            
+            link = "games.html?username=" + username
+            link += "&token=" + tokeninput.getText()            
+            link += "&eco=" + ecoselect.v()
+            link += "&maxopps=" + selectmaxopps.v()
+            for(key in OPTIONS){
+                link += `&${key}=${OPTIONS[key].v()}`
+            }            
+            link += "&fromdate=" + fromdate.v()
+            link += "&todate=" + todate.v()
+            link += "&myRatingmin=" + myRatingrange.fromslider.value
+            link += "&myRatingmax=" + myRatingrange.toslider.value
+            link += "&opponentRatingmin=" + opponentRatingrange.fromslider.value
+            link += "&opponentRatingmax=" + opponentRatingrange.toslider.value
+            codeescaped = escape(codeinput.getText())
+            codeescaped = codeescaped.replace(" ", "%20")
+            link += "&code=" + codeescaped
+            aggrcodeescaped = escape(aggrcodeinput.getText())
+            aggrcodeescaped = aggrcodeescaped.replace(" ", "%20")
+            link += "&aggrcode=" + aggrcodeescaped
+            if(offerdownload.checked){
+                link += "&download=true"
+            }
+            if(autocreatecode.checked){
+                link += "&autocreatecode=true"
+            }
+            if(autostart.checked){
+                link += "&autostart=true"
+            }
+            se("link", Hlink(link, link))
+        }
+
+        createLink()
+
+        function downloadfunc(){
+            let payload = allgameids.join(",")
+            fetch("https://lichess.org/games/export/_ids", {
+                "method": "POST",
+                "body": payload
+            }).then(
+                response => response.text().then(
+                    content => {
+                        file = new Blob([content])
+                        let a = document.createElement("a")
+                        let url = URL.createObjectURL(file)
+                        a.href = url
+                        a.download = "customsearch.pgn"
+                        document.body.appendChild(a)
+                        maine.style.backgroundColor = "#ffe"
+                        searchinfodiv.html("")            
+                        a.click()
+                        setTimeout(function() {
+                            document.body.removeChild(a)
+                            window.URL.revokeObjectURL(url)
+                        }, 0);
+                    },
+                    err => {
+                        console.log(err)
+                        window.alert("Error. Something went wrong with downloading games.")    
+                        searchinfodiv.html("")
+                    }
+                ),
+                err => {
+                    console.log(err)
+                    window.alert("Error. Something went wrong with downloading games.")
+                    searchinfodiv.html("")
+                }
+            )
+        }
+
+        function downloadgames(){
+            if(searchon){
+                window.alert("Wait for the search to finish or stop search before downloading.")
+                return
+            }
+            //console.log("download games")
+            if(allgameids.length == 0){
+                window.alert("No games found. Please perform a search and find some games.")
+                return
+            }
+            maine.style.backgroundColor = "#eef"
+            searchinfodiv.html("Downloading games, please wait ...")
+            setTimeout(downloadfunc, 10)
+        }
+
+        streamErr = e => {
+            console.warn("Stream error")
+            console.warn(e)
+        }
+
+        var started
+        var counter
+        var found
+
+        var reader
+
+        var gametable
+
+        function searchdone(){
+            //console.log(allgameids)
+            createopptable()
+            maine.style.backgroundColor = "#ffe"
+            if(offerdownload.checked){
+                downloadgames()
+            }else{
+                setTimeout(function(){window.alert("Search finished. Press 'Download' to download all found games as PGN.")}, 10)            
+            }            
+        }
+
+        searchon = false
+        maine = document.getElementById("main")
+        function search(){            
+            allgameids = []
+            allopponents = {}
+            createopptable()
+            maine.style.backgroundColor = "#cfc"
+            searchon = true
+            searchbutton.e.scrollIntoView({behavior: "smooth", block: "center", inline: "center"})
+            createLink()
+            counter = 0
+            found = 0
+            eval(aggrcodeinput.getText())
+            initaggr()
+            started = new Date().getTime()
+            ge("games").innerHTML = ""
+            gametable = Table().ac("gametable")
+            ae("games", gametable)            
+            ge("info").innerHTML = ""
+            headers = {
+                "Accept": "application/x-ndjson"
+            }
+            token = tokeninput.getText()
+            if(!(token === "")) headers.Authorization = "Bearer " + token
+            url = `https://lichess.org/api/games/user/${username}?since=${fromdate.asms()}&until=${todate.asms() + ONE_DAY}`
+            fetch(url, {
+                headers: headers
+            }).then(response => can.ndjsonStream(response.body)).then(todosStream => {
+                reader = todosStream.getReader()
+
+                read = result => {
+                    if(result.done){
+                        if(searchon){
+                            searchon = false
+                            searchdone()                            
+                        }
+                        return
+                    }
+                    try{
+                        render(result.value)                        
+                    }catch(e){
+                        console.log("could not render result value", result.value, e)                        
+                    }
+                    reader.read().then(read, streamErr)            
+                }
+
+                reader.read().then(read, streamErr)
+            })
+        }
+
+        function stopreader(){
+            reader.cancel("stop reader button pressed")
+        }
+
+        ae("search", searchbutton = Button("Search", search))
+        ae("search", Button("Stop", stopreader))
+        ae("search", Button("Download", downloadgames))
+        searchinfodiv = Div().ml(10).fs(18).fw("bold").c("#007")
+        ae("search", searchinfodiv)
+
+        allgameids = []
+
+        function OppTd(){return Td().pad(3).curlyborder().w(80).bc("#efe").ta("center")}
+
+        render = game => {                                    
+            let gid = game.id
+            g = Game(game, username)            
+            logic = codeinput.getText()                        
+            ok = eval(logic)                                    
+            if(ok){
+                allgameids.push(game.id)
+                resultcolor = ["#700", "#007", "#070"][g.myResult * 2]
+                Hlink("https://lichess.org/" + game.id, g.summary, true)
+                gametable.a(Tr().cp().bc(found % 2 ? "#ffe" : "#eff").a(
+                    Td().w(90).html(new Date(game.createdAt).toLocaleDateString()).fs(11).c("#007").fst("italic"),
+                    Td().w(225).html(g.whiteTitledName + " ( " + g.whiteRating + " )").c(g.meWhite ? resultcolor : "000").fw(g.meWhite ? "normal" : "bold"),
+                    Td().w(225).html(g.blackTitledName + " ( " + g.blackRating + " )").c(g.meBlack ? resultcolor : "000").fw(g.meBlack ? "normal" : "bold"),
+                    Td().w(200).html(g.perf + " " + g.clockStr).fst("italic").fs(11).c("#007"),                    
+                    Td().w(100).html(g.rated ? "rated" : "casual").c(g.rated ? "#030" : "#007"),
+                    Td().w(100).html(g.resultStr).c(resultcolor).fw("bold")                    
+                ).ae("mousedown", function(){window.open("https://lichess.org/" + gid)}, "_blank"))
+                found++
+                oppname = g.opponentTitledName
+                
+                if(!allopponents[oppname]) allopponents[oppname] = {wins:0,draws:0,losses:0,total:0}
+                
+                let opprec = allopponents[oppname]
+                if(g.myResult == 1) opprec.wins++
+                else if(g.myResult == 0.5) opprec.draws++
+                else opprec.losses++
+                opprec.total++
+                
+                if((found % 25) == 0){
+                    createopptable()
+                }
+                eval("aggr(game, g)")
+            }
+            elapsed = ( new Date().getTime() - started ) / 1000
+            let info = document.getElementById('info')
+            info.innerHTML = `total games <div class='infoelement'>${counter}</div> found <div class='infoelement' style='color: #070;'>${found}</div> searching <div class='infoelement' style='width: 200px; color: #007;;'>${new Date(game.createdAt).toLocaleString()}</div> elapsed <div class='infoelement'>${elapsed.toLocaleString()}</div> games/sec <div class='infoelement'>${(counter/elapsed).toLocaleString()}</div>`
+            counter++
+        }
+
+        if(autocreatecode.checked){
+            createcode()
+        }
+
+        if(autostart.checked){
+            search()
+        }
+
+        function createopptable(){            
+            let opptable = Table()                
+            opptable.a(Tr().a(
+                OppTd().bc("#fee").html("Rank"),
+                OppTd().w(200).bc("#fee").html("Opponent name"),
+                OppTd().bc("#fee").html("Total games"),
+                OppTd().bc("#fee").html("Wins"),
+                OppTd().bc("#fee").html("Draws"),
+                OppTd().bc("#fee").html("Losses"),
+                OppTd().bc("#fee").html("Balance")
+            ))            
+            selectmaxopps.setoptions([
+                ["5", "5"],
+                ["10", "10"],
+                ["20", "20"],
+                ["50", "50"],
+                ["100", "100"],
+                ["1000", "1000"]
+            ], `${MAXOPPS}`).mar(3)
+            maxoppsdiv = Div().disp("flex").a(Div().pad(3).html("Max opponensts:"), selectmaxopps)
+            oppinfo.x.a(maxoppsdiv, opptable)
+            let oppnames = Object.keys(allopponents)
+            oppnames = oppnames.sort((a, b) => allopponents[b].total - allopponents[a].total)
+            if(oppnames.length > MAXOPPS) oppnames = oppnames.slice(0, MAXOPPS)
+            for(oppi=0; oppi<oppnames.length; oppi++){
+                let oppname = oppnames[oppi]
+                let opprec = allopponents[oppname]
+                let balance = opprec.wins - opprec.losses
+                let balcol = "#ffc"
+                if(balance < 0) balcol = "#fcc"
+                if(balance > 0) balcol = "#cfc"
+                let oppurl = `https://lichess.org/@/${oppname}`
+                opptable.a(Tr().a(
+                    OppTd().bc("#eee").html(`${oppi + 1}`),
+                    OppTd().w(200).c("#007").fw("bold").a(Hlink(oppurl, oppname, true)),
+                    OppTd().html(opprec.total),
+                    OppTd().bc("#afa").html(opprec.wins),
+                    OppTd().bc("#ffa").html(opprec.draws),
+                    OppTd().bc("#faa").html(opprec.losses),
+                    OppTd().bc(balcol).html(balance)
+                ))
+            }                
+        }
+    </script>
+
+</body>
+
+</html>,

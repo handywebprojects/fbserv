@@ -1,0 +1,1 @@
+s\r python config.py

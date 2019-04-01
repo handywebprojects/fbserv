@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Tourney response</title>
+
+</head>
+
+<body>        
+<pre>
+{% autoescape false %}
+{{ tourneyresponse.content }}
+{% endautoescape %}
+</pre>
+
+    <script>
+        window.open("{{ tourneyresponse.url }}", "_blank")
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+heroku logs -t -a fbserv2

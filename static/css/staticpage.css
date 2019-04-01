@@ -1,0 +1,213 @@
+body {
+    font-family: monospace;
+}
+
+.botname {
+    color: #007;
+    font-weight: bold;
+}
+
+.status {
+    color: #770;
+}
+
+.followers {
+    color: #007;
+    font-weight: bold;
+}
+
+.totalgames {
+    color: #070;
+    font-weight: bold;
+}
+
+.lastplayed {
+    color: #077;
+    font-weight: bold;
+}
+
+.gamesummary {
+    color: #700;
+}
+
+.inputdiv {
+    padding: 5px;
+    padding-left: 10px;
+    margin: 5px;
+    background-color: #eee;
+    border-radius: 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #aaa;
+}
+
+.linkdiv {
+    padding: 5px;
+    padding-left: 10px;
+    margin: 5px;
+    background-color: #fee;
+    border-radius: 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #aaa;
+    white-space: nowrap;
+}
+
+.infodiv {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px;
+    background-color: #ffe;
+    border-radius: 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #aaa;
+    white-space: nowrap;
+}
+
+.tablediv {
+    padding: 5px;
+    padding-left: 10px;
+    margin: 5px;
+    background-color: #cfc;
+    border-radius: 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #aaa;
+}
+
+.maintable {
+    background-color: #fff;
+}
+
+.playercolumn2 {
+    color: #770;
+    font-weight: bold;
+}
+
+.logtime {
+    width: 150px;
+    background-color: #eef;
+    margin: 1px;
+    padding: 5px;
+    border-style: solid;
+    border-width: 0;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.logip {
+    width: 150px;
+    background-color: inherit;
+    margin: 1px;
+    padding: 1px;    
+    text-align: center;
+    color: #700;
+}
+
+.logmsg {
+    width: 1000px;
+    background-color: #ffe;
+    overflow: scroll;
+    margin: 1px;
+    padding: 2px;    
+    white-space: nowrap;
+}
+
+.logreferer {
+    width: 1000px;
+    background-color: #fee;
+    margin: 1px;
+    padding: 1px;    
+    white-space: nowrap;
+}
+
+.playingdiv {
+    width: 80px;
+    display: inline-block;
+    font-size: 12px;
+}
+
+.playingtd {
+    background-color: #afa;
+}
+
+.tourney.status10 {
+    background-color: #ddf;
+}
+
+.tourney.status20 {
+    background-color: #efe;
+}
+
+.tourney.status30 {
+    background-color: #fcc;
+}
+
+.container {
+    padding: 1px;
+    padding-left: 5px;
+    margin: 2px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: #0f0;
+}
+
+.container.official {        
+    border-color: #00f;    
+    border-width: 1px;
+}
+
+.createdby {
+    font-weight: bold;
+}
+
+.createdby.official {
+    color: #770;
+}
+
+.tourneyname {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.logcontainer {
+    display: flex;
+}
+
+.logmul {    
+    font-size: 18px;
+    color: #00f;
+    width: 30px;
+    background-color: #ddd;
+    padding: 3px;
+    text-align: center;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.appstatediv {    
+    background-color: #efe;
+    padding: 3px;
+}
+
+.appstatelabel {
+    display: inline-block;
+    width: 200px;
+    background-color: #eee;
+    margin: 1px;
+}
+
+.infoelement {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    width: 75px;
+    margin-left: 10px;
+}
+
+.gametable {
+    background-color: #f7f7f7;
+}

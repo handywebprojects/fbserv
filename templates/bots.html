@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Bots</title>
+
+    <link rel="shortcut icon" href="{{ url_for("static", filename="img/favicon.ico") }}">    
+
+    <link rel="stylesheet" href="static/css/staticpage.css?ver=1549100598">
+
+</head>
+
+<body style="font-size: {{ fontsize }}px;">        
+
+    <a href="/">Fbserv analysis home</a>
+    |
+    <a target="_blank" rel="noopener noreferrer" href="https://github.com/handywebprojects/fbserv/commits/master">Fbserv source GitHub</a>
+    |
+    <a target="_blank" rel="noopener noreferrer" href="https://gitlab.com/handywebprojects/fbserv/commits/master">Fbserv source GitLab</a>
+    |
+    <a target="_blank" rel="noopener noreferrer" href="https://lichess.org/api">Lichess API</a>
+    |
+    <a target="_blank" rel="noopener noreferrer" href="https://lichess.org/forum/team-lichess-bots">Lichess bots team forum</a>            
+    |
+    <a target="_blank" rel="noopener noreferrer" href="https://lichess.org/forum/general-chess-discussion">Lichess general forum</a>
+    |
+    <a target="_blank" rel="noopener noreferrer" href="https://lichess.org/forum/lichess-feedback">Lichess feedback forum</a>
+    |
+    <a target="_blank" rel="noopener noreferrer" href="https://lichess.org/forum/team-atomic-chess-theoreticians">Atomic forum</a>
+    |
+    <a target="_blank" rel="noopener noreferrer" href="https://github.com/ornicar/lila/issues">Lila feedback</a>    
+
+    <br>
+    <br>
+    <div id="elapsed"></div>
+    <br>
+
+    <table cellpadding="5" cellspacing="3" border="1">
+        <tr>
+            <td class="botname">Name</td>
+            <td class="status">Status</td>
+            <td class="followers">Followers</td>
+            <td class="totalgames">Total games</td>
+            <td class="lastplayed">Last played</td>
+            <td class="gamesummary">Latest game</td>
+        </tr>
+        {% for id in botprofiles %}
+        <tr>
+            <td class="botname">
+                <a target="_blank" rel="noopener noreferrer" href="https://lichess.org/@/{{botprofiles[id]["username"]}}">{{ botprofiles[id]["username"] }}</a>                
+            </td>
+            <td class="status">{{ botprofiles[id]["onlinestr"] }}</td>
+            <td class="followers">{{ botprofiles[id]["nbFollowers"] }}</td>
+            <td class="totalgames">{{ botprofiles[id]["count"]["all"] }}</td>
+            <td class="lastplayed">{{ botprofiles[id]["lastmoveago"] }}</td>
+            <td class="gamesummary">{{ botprofiles[id]["lastgameclass"].summary() }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>        
+        var elapsed = 0
+        const REFRESH_DELAY = 600
+        function countdown(){
+            elapsed += 1000            
+            elapsedstr = ("" + ( elapsed / 1000 )).padStart(3, " ").replace(" ", "&nbsp;")
+            document.getElementById("elapsed").innerHTML = "elapsed since refresh " + elapsedstr + " / next refresh at " + REFRESH_DELAY
+            if(elapsed >= REFRESH_DELAY * 1000){
+                console.log("reload page")
+                location.reload()
+            } else setTimeout(countdown, 1000)
+        }
+        countdown()
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,2 @@
+web: bash startserver.sh
+worker: python chatbot.py

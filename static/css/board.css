@@ -1,0 +1,383 @@
+:root {        
+    --boardcontrolpanelheight: 40px;
+    --multipvinfoheight: 30px;
+}
+
+.boardoutercontainer {
+    position: relative;
+    background-image: url(/static/img/backgrounds/wood.jpg)
+}
+
+.boardcontainer {
+    position: absolute;
+    background-image: url(/static/img/backgrounds/wood.jpg)
+}
+
+.boardsquare {
+    position: absolute;
+    opacity: 0.2;
+}
+
+.boardsquaredark {
+    background-color: #777;
+}
+
+.boardsquarelight {
+    background-color: #fff;
+}
+
+.boardpiece {
+    position: absolute;    
+}
+
+.variantoptionfirst {
+    font-weight: normal;    
+}
+
+.variantoption {
+    font-weight: normal;    
+}
+
+.boardcontrolpanel {
+    display: flex; justify-content: space-around; align-items: center;
+    height: var(--boardcontrolpanelheight);
+}
+
+.boardpromotionsquare {
+    background-color: #ff0;
+}
+
+.boardfendiv {
+    display: flex; justify-content: space-around; align-items: center;
+}
+
+.boardstorediv { 
+    display: flex; justify-content: space-around; align-items: center;
+    background-image: url(/static/img/backgrounds/wood.jpg)
+}
+
+.boardsectioncontainer {
+    background-image: url(/static/img/backgrounds/wood.jpg)
+}
+
+.bigboardsectioncontainer {
+    background-image: url(/static/img/backgrounds/wood.jpg)
+}
+
+.storemuldiv {
+    display: flex; justify-content: space-around; align-items: center;
+    font-weight: bold; color: #ff0;
+}
+
+.boardthreechecklifesdiv {
+    font-weight: bold;
+}
+
+.bigboardverticalcontainer {
+    display: flex;
+}
+
+.bigboardmovelist {
+    background-color: #def;
+    overflow: scroll;
+    text-align: center;    
+}
+
+.bigboardenginebar {
+    background-color: #bbb;
+}
+
+.bigboardshowmove {
+    padding: 2px;
+    cursor: pointer;
+    color: #007;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+.multipvinfocontainer {
+    display: flex;
+    margin: 2px;
+}
+
+.multipvinfoi {
+    display: flex; justify-content: space-around; align-items: center;    
+    font-size: 14px;
+    width: 40px;
+    min-width: 40px;
+    height: var(--multipvinfoheight);
+    background-color: #ddd;
+    margin: 1px;
+}
+
+.multipvinfobestmovesan {
+    display: flex; justify-content: space-around; align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+    width: 80px;
+    min-width: 80px;
+    height: var(--multipvinfoheight);
+    background-color: #eee;
+    margin: 1px;
+    cursor: pointer;
+}
+
+.multipvinfoscorenumerical {    
+    display: flex; justify-content: space-around; align-items: center;
+    font-weight: bold;
+    width: 80px;
+    min-width: 80px;
+    font-size: 18px;
+    height: var(--multipvinfoheight);
+    background-color: #eee;
+    margin: 1px;
+}
+
+.multipvinfobonussliderdiv {
+    display: flex; justify-content: space-around; align-items: center;
+    width: 150px;    
+    min-width: 150px;    
+    height: var(--multipvinfoheight);
+    background-color: #ffd;
+    margin: 1px;
+}
+
+.multipvinfobonusslider {
+    width: 140px;    
+}
+
+.multipvinfodepth {
+    display: flex; justify-content: space-around; align-items: center;
+    width: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    height: var(--multipvinfoheight);
+    background-color: #ddd;
+    margin: 1px;
+    color: #007;
+}
+
+.multipvinfomisc {
+    display: flex; justify-content: space-around; align-items: center;
+    width: 80px;
+    font-size: 12px;
+    height: var(--multipvinfoheight);
+    background-color: #ddd;
+    margin: 1px;    
+    color: #777
+}
+
+.multipvinfopv {
+    display: flex; justify-content: left; align-items: center;
+    width: 250px;
+    font-size: 14px;
+    height: var(--multipvinfoheight);
+    background-color: #ddd;
+    margin: 1px;
+    padding-left: 10px;
+}
+
+.bigboardanalysiscontrolpanel {
+    width: 600px;
+    display: flex; justify-content: space-around; align-items: center;
+    height: 30px;
+    margin: 3px;
+    background-color: #eee;
+}
+
+.boardmultipvcomboselect {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.boardmultipvcombooptionfirst {
+    font-weight: normal;
+}
+
+.boardmultipvcombooption {
+    font-weight: normal;
+}
+
+.pgninfocontainer {
+    height: 24px;
+    width: 650px;
+    display: flex; justify-content: space-around; align-items: center;
+    margin: 2px;
+    background-color: #eee;
+}
+
+.pgninfotcdiv {
+    padding: 2px;
+    width: 80px;
+    height: 16px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;    
+    background-color: #ddd;
+    font-family: monospace;
+}
+
+.pgninfoplayerdiv {
+    padding: 2px;
+    width: 120px;
+    height: 16px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;    
+    background-color: #eee;
+    font-family: monospace;
+}
+
+.pgninfoplayerelodiv {
+    padding: 2px;
+    width: 60px;
+    height: 16px;    
+    background-color: #eee;
+    font-family: monospace;
+}
+
+.pgninforesultdiv {
+    padding: 2px;
+    width: 60px;
+    height: 16px;    
+    background-color: #fff;
+    font-family: monospace;
+    text-align: center;
+}
+
+.pgninfoiddiv {
+    padding: 2px;
+    width: 70px;
+    height: 16px;    
+    background-color: #ccf;
+    font-family: monospace;
+    text-align: center;
+    cursor: pointer;
+    color: #555;
+}
+
+.pgninfotheyplayerdiv {
+    color: #00a;
+    font-weight: bold;
+    background-color: #ffc;
+}
+
+.boardposdiv {  
+    width: 400px;      
+    display: flex; justify-content: space-around; align-items: center;
+    margin: 1px; 
+    font-family: monospace;
+    cursor: pointer;
+    background-color: #ddd;
+}
+
+.boardposdivselected {
+    background-color: #ff7;
+}
+
+.boardposmovediv {
+    padding: 2px;    
+    width: 100px;
+    font-size: 30px;
+    text-align: center;
+    background-color: #fff;
+    font-weight: bold;
+}
+
+.boardposfendiv {
+    padding: 2px;    
+    font-size: 10px;
+    vertical-align: middle;
+    background-color: #eee;
+}
+
+.pgninfowhitewin {
+    background-color: #7f7;
+}
+
+.pgninfoblackwin {
+    background-color: #f33;
+}
+
+.pgninfodraw {
+    background-color: #ff7;
+}
+
+.pgntextcontainer {
+    padding: 2px;
+}
+
+.analysismake {
+    background-color: #afa;
+}
+
+.analysisstop {
+    background-color: #faa;
+}
+
+.analysisstore {
+    background-color: #aaf;
+}
+
+.analysiscontrol {
+    background-color: #ffa;
+}
+
+.analysisanalyze {
+    background-color: #aff;
+}
+
+.pbookediv {
+    width: 250px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 5px;
+    margin: 3px;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.pucidiv {
+    width: 70px;
+    color: #990;
+}
+
+.psandiv {
+    width: 70px;
+    color: #070;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.pweightdiv {
+    width: 70px;
+    color: #007;
+    text-align: right;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.bookpathdiv {
+    padding: 2px;
+    padding-left: 6px;
+    width: 300px;
+    height: 16px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;    
+    background-color: #eee;
+    font-family: monospace;
+}
+
+.movelistaddmovemode {
+    background-color: #0f0;
+}
+
+.chartdatatd {
+    padding: 5px;
+    background-color: #ffc;
+}
+
+.chartdataheadtd {
+    padding: 5px;
+    background-color: #eee;
+}

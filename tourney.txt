@@ -1,0 +1,5952 @@
+{
+  "created": [
+    {
+      "id": "ls2ltYmH",
+      "createdBy": "bunyas",
+      "system": "arena",
+      "minutes": 45,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": false,
+      "fullName": "Fatalibekova Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 505,
+      "startsAt": 1548144547842,
+      "finishesAt": 1548147247842,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "qdYBfcz7",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 1758,
+      "startsAt": 1548145800000,
+      "finishesAt": 1548147420000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "lQSzwiJj",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "U1500 Bullet Inc Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 1758,
+      "startsAt": 1548145800000,
+      "finishesAt": 1548147420000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "DKEpKlbY",
+      "createdBy": "atomicchessbot",
+      "system": "arena",
+      "minutes": 360,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "AtomicChessBot Blitz Tourney Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "atomic",
+        "short": "Atom",
+        "name": "Atomic"
+      },
+      "secondsToStart": 3175,
+      "startsAt": 1548147217578,
+      "finishesAt": 1548168817578,
+      "status": 10,
+      "perf": {
+        "icon": ">",
+        "key": "atomic",
+        "name": "Atomic",
+        "position": 9
+      },
+      "winner": null,
+      "major": true
+    },
+    {
+      "id": "RZpSAjXR",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U2000 Rapid Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 3558,
+      "startsAt": 1548147600000,
+      "finishesAt": 1548151020000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": null
+    },
+    {
+      "id": "pdw44Txx",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1700 Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 3558,
+      "startsAt": 1548147600000,
+      "finishesAt": 1548149220000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "xM9k5pPn",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Blitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 3558,
+      "startsAt": 1548147600000,
+      "finishesAt": 1548151020000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "x4LqkoIh",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 3558,
+      "startsAt": 1548147600000,
+      "finishesAt": 1548149220000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "yUuoU4IG",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly SuperBlitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 3558,
+      "startsAt": 1548147600000,
+      "finishesAt": 1548151020000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "Rr3EznfK",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Crazyhouse Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "crazyhouse",
+        "short": "Crazy",
+        "name": "Crazyhouse"
+      },
+      "secondsToStart": 3558,
+      "startsAt": 1548147600000,
+      "finishesAt": 1548149220000,
+      "status": 10,
+      "perf": {
+        "icon": "\ue00b",
+        "key": "crazyhouse",
+        "name": "Crazyhouse",
+        "position": 4
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "HZjwmhuh",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1500 SuperBlitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 3558,
+      "startsAt": 1548147600000,
+      "finishesAt": 1548151020000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "EDHY96c1",
+      "createdBy": "see_gsh",
+      "system": "arena",
+      "minutes": 55,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Ulvestad Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 4458,
+      "startsAt": 1548148500000,
+      "finishesAt": 1548151800000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "BfcAsffB",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "U1700 Bullet Inc Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 5358,
+      "startsAt": 1548149400000,
+      "finishesAt": 1548151020000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "OdjPBJAx",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 5358,
+      "startsAt": 1548149400000,
+      "finishesAt": 1548151020000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "PMyQRmgz",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Crazyhouse Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "crazyhouse",
+        "short": "Crazy",
+        "name": "Crazyhouse"
+      },
+      "secondsToStart": 5358,
+      "startsAt": 1548149400000,
+      "finishesAt": 1548151020000,
+      "status": 10,
+      "perf": {
+        "icon": "\ue00b",
+        "key": "crazyhouse",
+        "name": "Crazyhouse",
+        "position": 4
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "fs9qDSUx",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U2000 Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 7158,
+      "startsAt": 1548151200000,
+      "finishesAt": 1548152820000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "fyYOR9qk",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1700 SuperBlitz Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 7158,
+      "startsAt": 1548151200000,
+      "finishesAt": 1548154620000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "eF0JXgPm",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 7158,
+      "startsAt": 1548151200000,
+      "finishesAt": 1548152820000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "b7x5oN2B",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Blitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 7158,
+      "startsAt": 1548151200000,
+      "finishesAt": 1548154620000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "q8OY340l",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1500 Blitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 7158,
+      "startsAt": 1548151200000,
+      "finishesAt": 1548154620000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "jdwZI7L9",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly SuperBlitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 7158,
+      "startsAt": 1548151200000,
+      "finishesAt": 1548154620000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "BzYjRl8F",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "Crazyhouse SuperBlitz Inc Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "crazyhouse",
+        "short": "Crazy",
+        "name": "Crazyhouse"
+      },
+      "secondsToStart": 7158,
+      "startsAt": 1548151200000,
+      "finishesAt": 1548154620000,
+      "status": 10,
+      "perf": {
+        "icon": "\ue00b",
+        "key": "crazyhouse",
+        "name": "Crazyhouse",
+        "position": 4
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "fHUiqBm4",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 117,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Rapid Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 7158,
+      "startsAt": 1548151200000,
+      "finishesAt": 1548158220000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": null
+    },
+    {
+      "id": "cvgfaWX2",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "U2000 Bullet Inc Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 8958,
+      "startsAt": 1548153000000,
+      "finishesAt": 1548154620000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "5VjGWAAK",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 8958,
+      "startsAt": 1548153000000,
+      "finishesAt": 1548154620000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "YIk63x3z",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "King's Indian Defence Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 10758,
+      "startsAt": 1548154800000,
+      "finishesAt": 1548156420000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "position": {
+        "eco": "E77",
+        "name": "King's Indian Defence: 4.e4",
+        "wikiPath": "King's_Indian_Defence",
+        "fen": "rnbqk2r/ppp1ppbp/3p1np1/8/2PPP3/2N5/PP3PPP/R1BQKBNR w KQkq - 1 5"
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "QL6T62Ui",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U2000 SuperBlitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 10758,
+      "startsAt": 1548154800000,
+      "finishesAt": 1548158220000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "Ymo1Q8eZ",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1700 Blitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 10758,
+      "startsAt": 1548154800000,
+      "finishesAt": 1548158220000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "ipzRl1jQ",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly SuperBlitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 10758,
+      "startsAt": 1548154800000,
+      "finishesAt": 1548158220000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "6sQ8sLo3",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1500 Rapid Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 10758,
+      "startsAt": 1548154800000,
+      "finishesAt": 1548158220000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": null
+    },
+    {
+      "id": "7c0gtCB3",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Blitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 10758,
+      "startsAt": 1548154800000,
+      "finishesAt": 1548158220000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "knNbXTLV",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 120,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Crazyhouse HippoBullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "crazyhouse",
+        "short": "Crazy",
+        "name": "Crazyhouse"
+      },
+      "secondsToStart": 10758,
+      "startsAt": 1548154800000,
+      "finishesAt": 1548158220000,
+      "status": 10,
+      "perf": {
+        "icon": "\ue00b",
+        "key": "crazyhouse",
+        "name": "Crazyhouse",
+        "position": 4
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "hippobullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "FVuJPClC",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 30,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly HyperBullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 12558,
+      "startsAt": 1548156600000,
+      "finishesAt": 1548158220000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "hyperbullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "atfHaMGV",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "King's Indian Defence SuperBlitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 14358,
+      "startsAt": 1548158400000,
+      "finishesAt": 1548161820000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "position": {
+        "eco": "E77",
+        "name": "King's Indian Defence: 4.e4",
+        "wikiPath": "King's_Indian_Defence",
+        "fen": "rnbqk2r/ppp1ppbp/3p1np1/8/2PPP3/2N5/PP3PPP/R1BQKBNR w KQkq - 1 5"
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "xiL4kXwu",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U2000 Blitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 14358,
+      "startsAt": 1548158400000,
+      "finishesAt": 1548161820000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "fO9uyiBQ",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1700 Rapid Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 14358,
+      "startsAt": 1548158400000,
+      "finishesAt": 1548161820000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": null
+    },
+    {
+      "id": "dmPH9j3J",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Blitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 14358,
+      "startsAt": 1548158400000,
+      "finishesAt": 1548161820000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "gdCBcerf",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 117,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Rapid Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 14358,
+      "startsAt": 1548158400000,
+      "finishesAt": 1548165420000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": null
+    },
+    {
+      "id": "E5xkXgx3",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1500 Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 14358,
+      "startsAt": 1548158400000,
+      "finishesAt": 1548160020000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "wLABZt8A",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 14358,
+      "startsAt": 1548158400000,
+      "finishesAt": 1548160020000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "vOhn4uL1",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Crazyhouse Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "crazyhouse",
+        "short": "Crazy",
+        "name": "Crazyhouse"
+      },
+      "secondsToStart": 14358,
+      "startsAt": 1548158400000,
+      "finishesAt": 1548160020000,
+      "status": 10,
+      "perf": {
+        "icon": "\ue00b",
+        "key": "crazyhouse",
+        "name": "Crazyhouse",
+        "position": 4
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "AGACwoXX",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 16158,
+      "startsAt": 1548160200000,
+      "finishesAt": 1548161820000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "jC95UVRP",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Crazyhouse Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "crazyhouse",
+        "short": "Crazy",
+        "name": "Crazyhouse"
+      },
+      "secondsToStart": 16158,
+      "startsAt": 1548160200000,
+      "finishesAt": 1548161820000,
+      "status": 10,
+      "perf": {
+        "icon": "\ue00b",
+        "key": "crazyhouse",
+        "name": "Crazyhouse",
+        "position": 4
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "05RJ05eR",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "U1500 Bullet Inc Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 16158,
+      "startsAt": 1548160200000,
+      "finishesAt": 1548161820000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "9dUKIBFY",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "King's Indian Defence Blitz Inc Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 17958,
+      "startsAt": 1548162000000,
+      "finishesAt": 1548165420000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "position": {
+        "eco": "E77",
+        "name": "King's Indian Defence: 4.e4",
+        "wikiPath": "King's_Indian_Defence",
+        "fen": "rnbqk2r/ppp1ppbp/3p1np1/8/2PPP3/2N5/PP3PPP/R1BQKBNR w KQkq - 1 5"
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "b1jwFwNy",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U2000 Rapid Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 17958,
+      "startsAt": 1548162000000,
+      "finishesAt": 1548165420000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": null
+    },
+    {
+      "id": "5PJSXYMl",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1700 Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 17958,
+      "startsAt": 1548162000000,
+      "finishesAt": 1548163620000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "pCDK3vYZ",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 15,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly UltraBullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 17958,
+      "startsAt": 1548162000000,
+      "finishesAt": 1548163620000,
+      "status": 10,
+      "perf": {
+        "icon": "{",
+        "key": "ultraBullet",
+        "name": "UltraBullet",
+        "position": 3
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "ultrabullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "oEqROxnT",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly SuperBlitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 17958,
+      "startsAt": 1548162000000,
+      "finishesAt": 1548165420000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "2zRKpvy0",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Crazyhouse SuperBlitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "crazyhouse",
+        "short": "Crazy",
+        "name": "Crazyhouse"
+      },
+      "secondsToStart": 17958,
+      "startsAt": 1548162000000,
+      "finishesAt": 1548165420000,
+      "status": 10,
+      "perf": {
+        "icon": "\ue00b",
+        "key": "crazyhouse",
+        "name": "Crazyhouse",
+        "position": 4
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "SXgCFtp0",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 17958,
+      "startsAt": 1548162000000,
+      "finishesAt": 1548163620000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "7aPFsDvR",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1500 SuperBlitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 17958,
+      "startsAt": 1548162000000,
+      "finishesAt": 1548165420000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "Fy73KyYZ",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "U1700 Bullet Inc Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 19758,
+      "startsAt": 1548163800000,
+      "finishesAt": 1548165420000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "tJEIrOYh",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 15,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly UltraBullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 19758,
+      "startsAt": 1548163800000,
+      "finishesAt": 1548165420000,
+      "status": 10,
+      "perf": {
+        "icon": "{",
+        "key": "ultraBullet",
+        "name": "UltraBullet",
+        "position": 3
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "ultrabullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "tcTFRs0W",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 19758,
+      "startsAt": 1548163800000,
+      "finishesAt": 1548165420000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "OLt22x6W",
+      "createdBy": "eternalchessplayer",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 300,
+        "increment": 15
+      },
+      "rated": true,
+      "fullName": "GM practice group  Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 19758,
+      "startsAt": 1548163800000,
+      "finishesAt": 1548169200000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "winner": null
+    },
+    {
+      "id": "7QekZica",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 117,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "King's Indian Defence Rapid Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 21558,
+      "startsAt": 1548165600000,
+      "finishesAt": 1548172620000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "position": {
+        "eco": "E77",
+        "name": "King's Indian Defence: 4.e4",
+        "wikiPath": "King's_Indian_Defence",
+        "fen": "rnbqk2r/ppp1ppbp/3p1np1/8/2PPP3/2N5/PP3PPP/R1BQKBNR w KQkq - 1 5"
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": null
+    },
+    {
+      "id": "L34LLc1A",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U2000 Bullet Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 21558,
+      "startsAt": 1548165600000,
+      "finishesAt": 1548167220000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "RpQ5fD5R",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1700 SuperBlitz Arena",
+      "nbPlayers": 0,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 21558,
+      "startsAt": 1548165600000,
+      "finishesAt": 1548169020000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "ezNq0gFu",
+      "createdBy": "stippi",
+      "system": "arena",
+      "minutes": 45,
+      "clock": {
+        "limit": 120,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "\u041c\u0410\u0428\u0410 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 25158,
+      "startsAt": 1548169200000,
+      "finishesAt": 1548171900000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "winner": null
+    },
+    {
+      "id": "4uSdzjsM",
+      "createdBy": "stippi",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 420,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "\u041c\u0415\u0414\u0412\u0415\u0414\u042c Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 28758,
+      "startsAt": 1548172800000,
+      "finishesAt": 1548176400000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "winner": null
+    },
+    {
+      "id": "X7VaRtbo",
+      "createdBy": "eternalchessplayer",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "GM practice group  Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 28758,
+      "startsAt": 1548172800000,
+      "finishesAt": 1548176400000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "XGlzJtms",
+      "createdBy": "janpor",
+      "system": "arena",
+      "minutes": 120,
+      "clock": {
+        "limit": 600,
+        "increment": 2
+      },
+      "rated": false,
+      "fullName": "Gambit kr\u00f3lewski Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 32358,
+      "startsAt": 1548176400000,
+      "finishesAt": 1548183600000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "private": true,
+      "position": {
+        "eco": "C30",
+        "name": "King's Gambit",
+        "wikiPath": "King's_Gambit",
+        "fen": "rnbqkbnr/pppp1ppp/8/4p3/4PP2/8/PPPP2PP/RNBQKBNR b KQkq f3 1 2"
+      },
+      "winner": null
+    },
+    {
+      "id": "7OeenRrQ",
+      "createdBy": "alanji",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "\u0633\u0648\u0645\u06cc\u0646 \u0645\u0633\u0627\u0628\u0642\u0647 \u0645\u062f\u0631\u0633\u0647 \u0634\u0637\u0631\u0646\u062c17 \u062a\u0647\u0631 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 34158,
+      "startsAt": 1548178200000,
+      "finishesAt": 1548181800000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "unEMYAxV",
+      "createdBy": "psrivero",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Ajedrez ULP Arena",
+      "nbPlayers": 4,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 35958,
+      "startsAt": 1548180000000,
+      "finishesAt": 1548183600000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "6qbwGDYP",
+      "createdBy": "ginomalkin71",
+      "system": "arena",
+      "minutes": 20,
+      "clock": {
+        "limit": 120,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "GINOMALKIN71 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "threeCheck",
+        "short": "3check",
+        "name": "Three-check"
+      },
+      "secondsToStart": 35958,
+      "startsAt": 1548180000000,
+      "finishesAt": 1548181200000,
+      "status": 10,
+      "perf": {
+        "icon": ".",
+        "key": "threeCheck",
+        "name": "Three-check",
+        "position": 7
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "dUcl81Xu",
+      "createdBy": "ssmoletov",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 300,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "Bukovyna Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 37758,
+      "startsAt": 1548181800000,
+      "finishesAt": 1548187200000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "PZ63pLA8",
+      "createdBy": "ajedrezgualeguaychu",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 240,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "ajedrezgualeguaychu Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 39558,
+      "startsAt": 1548183600000,
+      "finishesAt": 1548187200000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "4vRv2Dvs",
+      "createdBy": "doctorcapablanca85",
+      "system": "arena",
+      "minutes": 40,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": false,
+      "fullName": "Priprema za skolsko Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 41658,
+      "startsAt": 1548185700000,
+      "finishesAt": 1548188100000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "4dUU6DPO",
+      "createdBy": "chesspatzerwal",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "ChesspatZerZ Daily Arena",
+      "nbPlayers": 3,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 46758,
+      "startsAt": 1548190800000,
+      "finishesAt": 1548196200000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "F5XzEV7C",
+      "createdBy": "obscure_hombre",
+      "system": "arena",
+      "minutes": 35,
+      "clock": {
+        "limit": 240,
+        "increment": 2
+      },
+      "rated": false,
+      "fullName": "TEXAS TWO STEP  step1 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "antichess",
+        "short": "Anti",
+        "name": "Antichess"
+      },
+      "secondsToStart": 61158,
+      "startsAt": 1548205200000,
+      "finishesAt": 1548207300000,
+      "status": 10,
+      "perf": {
+        "icon": "@",
+        "key": "antichess",
+        "name": "Antichess",
+        "position": 8
+      },
+      "winner": null
+    },
+    {
+      "id": "aTSAbkWO",
+      "createdBy": "jeffreyashton",
+      "system": "arena",
+      "minutes": 120,
+      "clock": {
+        "limit": 900,
+        "increment": 5
+      },
+      "rated": true,
+      "fullName": "chesspanda Tuesday 7:00pm Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 61158,
+      "startsAt": 1548205200000,
+      "finishesAt": 1548212400000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "winner": null
+    },
+    {
+      "id": "vB3Tpemv",
+      "createdBy": "darkporunga",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "Torneo Pinguino es un bebe Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 61158,
+      "startsAt": 1548205200000,
+      "finishesAt": 1548210600000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "aD0D6Mev",
+      "createdBy": "iarias",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Torneo ELO mayor a 1800 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 61158,
+      "startsAt": 1548205200000,
+      "finishesAt": 1548208800000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "uj90geZd",
+      "createdBy": "j_coca",
+      "system": "arena",
+      "minutes": 50,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "AtahualpaBlitz Enero2019 Fase7 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 62958,
+      "startsAt": 1548207000000,
+      "finishesAt": 1548210000000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null,
+      "major": true
+    },
+    {
+      "id": "BLsH54Rc",
+      "createdBy": "obscure_hombre",
+      "system": "arena",
+      "minutes": 35,
+      "clock": {
+        "limit": 240,
+        "increment": 2
+      },
+      "rated": false,
+      "fullName": "TEXAS TWO STEP  step 2 Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "atomic",
+        "short": "Atom",
+        "name": "Atomic"
+      },
+      "secondsToStart": 63558,
+      "startsAt": 1548207600000,
+      "finishesAt": 1548209700000,
+      "status": 10,
+      "perf": {
+        "icon": ">",
+        "key": "atomic",
+        "name": "Atomic",
+        "position": 9
+      },
+      "winner": null
+    },
+    {
+      "id": "rzQ03tFX",
+      "createdBy": "arturo_vidal",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Etapa 5 - Chessmaster Lichess Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 64758,
+      "startsAt": 1548208800000,
+      "finishesAt": 1548212400000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "1WOcnsy1",
+      "createdBy": "t_torlopov_nikita",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "January Tinkoff Arena",
+      "nbPlayers": 13,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 116958,
+      "startsAt": 1548261000000,
+      "finishesAt": 1548266400000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "AMmPcQOL",
+      "createdBy": "psrivero",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Ajedrez ULP Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 122358,
+      "startsAt": 1548266400000,
+      "finishesAt": 1548270000000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "MBfli8Rq",
+      "createdBy": "lzap80",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Red Hat for Fun January 2019 Arena",
+      "nbPlayers": 39,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 133158,
+      "startsAt": 1548277200000,
+      "finishesAt": 1548282600000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "A2pjV8qo",
+      "createdBy": "chesspatzerwal",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "ChesspatZerZ Daily Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 133158,
+      "startsAt": 1548277200000,
+      "finishesAt": 1548282600000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "RPt9fkMe",
+      "createdBy": "adriano_bsb",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 420,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "ChessClub Bras\u00edlia Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 140358,
+      "startsAt": 1548284400000,
+      "finishesAt": 1548288000000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "QUcY7yD6",
+      "createdBy": "jeffreyashton",
+      "system": "arena",
+      "minutes": 120,
+      "clock": {
+        "limit": 900,
+        "increment": 5
+      },
+      "rated": true,
+      "fullName": "chesspanda Wednesday 7:00pm Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 147558,
+      "startsAt": 1548291600000,
+      "finishesAt": 1548298800000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "winner": null
+    },
+    {
+      "id": "aRQS343A",
+      "createdBy": "darkporunga",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "Torneo Rapido como DarkPorunga Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 147558,
+      "startsAt": 1548291600000,
+      "finishesAt": 1548297000000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "zLYNgl02",
+      "createdBy": "obscure_hombre",
+      "system": "arena",
+      "minutes": 55,
+      "clock": {
+        "limit": 420,
+        "increment": 2
+      },
+      "rated": false,
+      "fullName": "TEXAS CACTUS LEAGUE  Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 147858,
+      "startsAt": 1548291900000,
+      "finishesAt": 1548295200000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "winner": null
+    },
+    {
+      "id": "P6nex1Qk",
+      "createdBy": "anonymouschess1",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 300,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "anonymouschess Arena",
+      "nbPlayers": 9,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 205158,
+      "startsAt": 1548349200000,
+      "finishesAt": 1548354600000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "acrEimSo",
+      "createdBy": "psrivero",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Ajedrez ULP Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 208758,
+      "startsAt": 1548352800000,
+      "finishesAt": 1548356400000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "rsMAvB1M",
+      "createdBy": "chessmageddon",
+      "system": "arena",
+      "minutes": 300,
+      "clock": {
+        "limit": 1800,
+        "increment": 30
+      },
+      "rated": true,
+      "fullName": "Slow Chess Union Arena",
+      "nbPlayers": 3,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 208798,
+      "startsAt": 1548352840000,
+      "finishesAt": 1548370840000,
+      "status": 10,
+      "perf": {
+        "icon": "+",
+        "key": "classical",
+        "name": "Classical",
+        "position": 0
+      },
+      "winner": null
+    },
+    {
+      "id": "DmQQqSwk",
+      "createdBy": "ssmoletov",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 300,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "Bukovyna Arena",
+      "nbPlayers": 4,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 210558,
+      "startsAt": 1548354600000,
+      "finishesAt": 1548360000000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "dGW00tCr",
+      "createdBy": "skakier",
+      "system": "arena",
+      "minutes": 55,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "skakier Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 215958,
+      "startsAt": 1548360000000,
+      "finishesAt": 1548363300000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "W5bdlBei",
+      "createdBy": "skakier",
+      "system": "arena",
+      "minutes": 55,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "SillogosIoannitonSkakiston 2nd Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 215958,
+      "startsAt": 1548360000000,
+      "finishesAt": 1548363300000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "RZebaLP0",
+      "createdBy": "chesspatzerswan",
+      "system": "arena",
+      "minutes": 45,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "ChesspatZerZ  Arena",
+      "nbPlayers": 3,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 219558,
+      "startsAt": 1548363600000,
+      "finishesAt": 1548366300000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "PloziVlt",
+      "createdBy": "domateclan",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Torneio CXSSP 24 de Janeiro Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 223158,
+      "startsAt": 1548367200000,
+      "finishesAt": 1548370800000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "N4lhrtI1",
+      "createdBy": "j_coca",
+      "system": "arena",
+      "minutes": 50,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "AtahualpaBlitz Enero2019 Fase8 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 235758,
+      "startsAt": 1548379800000,
+      "finishesAt": 1548382800000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null,
+      "major": true
+    },
+    {
+      "id": "fzRdWQuh",
+      "createdBy": "arturo_vidal",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": false,
+      "fullName": "Etapa 6 - Sub1800 Lichess Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 237558,
+      "startsAt": 1548381600000,
+      "finishesAt": 1548385200000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "winner": null
+    },
+    {
+      "id": "ASrooj4G",
+      "createdBy": "xiaomimax",
+      "system": "arena",
+      "minutes": 120,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "Pemanasan 3M Turnamen Arena",
+      "nbPlayers": 13,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 262758,
+      "startsAt": 1548406800000,
+      "finishesAt": 1548414000000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "hqBpKWwk",
+      "createdBy": "sir_voncarl",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 300,
+        "increment": 3
+      },
+      "rated": true,
+      "fullName": "Legacy Philippines Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 266358,
+      "startsAt": 1548410400000,
+      "finishesAt": 1548414000000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "sOAZZanD",
+      "createdBy": "votarychess",
+      "system": "arena",
+      "minutes": 180,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": false,
+      "fullName": "VotaryChess Fan Club Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 287958,
+      "startsAt": 1548432000000,
+      "finishesAt": 1548442800000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "FnVSZYiO",
+      "createdBy": "razuvaev",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "lichess Madagascar Dames Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 291558,
+      "startsAt": 1548435600000,
+      "finishesAt": 1548441000000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "LFkiFlVu",
+      "createdBy": "pablorivero",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Ajedrez ULP Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 295158,
+      "startsAt": 1548439200000,
+      "finishesAt": 1548442800000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "xUc6CxOt",
+      "createdBy": "zzzzeyezzzz",
+      "system": "arena",
+      "minutes": 120,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "The ChessCoin Team Arena",
+      "nbPlayers": 8,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 298758,
+      "startsAt": 1548442800000,
+      "finishesAt": 1548450000000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "tx6kuW5z",
+      "createdBy": "safrad",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 120,
+        "increment": 3
+      },
+      "rated": true,
+      "fullName": "Online p\u0159ebor DDM Praha 6 Arena",
+      "nbPlayers": 5,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 298758,
+      "startsAt": 1548442800000,
+      "finishesAt": 1548446400000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "fHeoJH0i",
+      "createdBy": "chesspatzerswan",
+      "system": "arena",
+      "minutes": 45,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "ChesspatZerZ  Arena",
+      "nbPlayers": 3,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 305958,
+      "startsAt": 1548450000000,
+      "finishesAt": 1548452700000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "zDXhD87l",
+      "createdBy": "mark-163",
+      "system": "arena",
+      "minutes": 360,
+      "clock": {
+        "limit": 1800,
+        "increment": 0
+      },
+      "rated": false,
+      "fullName": "mark-163 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 309558,
+      "startsAt": 1548453600000,
+      "finishesAt": 1548475200000,
+      "status": 10,
+      "perf": {
+        "icon": "+",
+        "key": "classical",
+        "name": "Classical",
+        "position": 0
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "v25XhR2D",
+      "createdBy": "adriano_bsb",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "ChessClub Bras\u00edlia Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 313158,
+      "startsAt": 1548457200000,
+      "finishesAt": 1548460800000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "winner": null
+    },
+    {
+      "id": "kGI5wDZj",
+      "createdBy": "squarelogy",
+      "system": "arena",
+      "minutes": 120,
+      "clock": {
+        "limit": 120,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "SL Masters Knockout Qualifier Arena",
+      "nbPlayers": 9,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 372558,
+      "startsAt": 1548516600000,
+      "finishesAt": 1548523800000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "winner": null
+    },
+    {
+      "id": "h2s9J2Us",
+      "createdBy": "orzik",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "TJournal Arena",
+      "nbPlayers": 6,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 374358,
+      "startsAt": 1548518400000,
+      "finishesAt": 1548523800000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "HZFpTBIi",
+      "createdBy": "chesspatzerswan",
+      "system": "arena",
+      "minutes": 45,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "ChesspatZerZ  Arena",
+      "nbPlayers": 3,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 392358,
+      "startsAt": 1548536400000,
+      "finishesAt": 1548539100000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "6BDG9kWM",
+      "createdBy": "iarias",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "4ta Etapa Torneo Multigrupo Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 410358,
+      "startsAt": 1548554400000,
+      "finishesAt": 1548559800000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "P6YDjEwt",
+      "createdBy": "adriano_bsb",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "ChessClub Bras\u00edlia Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 485958,
+      "startsAt": 1548630000000,
+      "finishesAt": 1548633600000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "qlMWe7Ym",
+      "createdBy": "antony20",
+      "system": "arena",
+      "minutes": 45,
+      "clock": {
+        "limit": 15,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Romanov Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 489258,
+      "startsAt": 1548633300000,
+      "finishesAt": 1548636000000,
+      "status": 10,
+      "perf": {
+        "icon": "{",
+        "key": "ultraBullet",
+        "name": "UltraBullet",
+        "position": 3
+      },
+      "winner": null
+    },
+    {
+      "id": "3Ffmgy3a",
+      "createdBy": "ethanshane",
+      "system": "arena",
+      "minutes": 360,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "Sunday after-noon 5:15 pm Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 490458,
+      "startsAt": 1548634500000,
+      "finishesAt": 1548656100000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "DfW3SMlD",
+      "createdBy": "crown777",
+      "system": "arena",
+      "minutes": 360,
+      "clock": {
+        "limit": 180,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "yvdsjdhhfr050mb089bofldl Arena",
+      "nbPlayers": 3,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 525558,
+      "startsAt": 1548669600000,
+      "finishesAt": 1548691200000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "q7bKn6Xi",
+      "createdBy": "adriano_bsb",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "ChessClub Bras\u00edlia Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 572358,
+      "startsAt": 1548716400000,
+      "finishesAt": 1548720000000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "A1KcyRYV",
+      "createdBy": "j_coca",
+      "system": "arena",
+      "minutes": 50,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "AtahualpaBlitz Enero2019 Fase9 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 581358,
+      "startsAt": 1548725400000,
+      "finishesAt": 1548728400000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null,
+      "major": true
+    },
+    {
+      "id": "BqeICyQk",
+      "createdBy": "artemalexey",
+      "system": "arena",
+      "minutes": 360,
+      "clock": {
+        "limit": 300,
+        "increment": 40
+      },
+      "rated": true,
+      "fullName": "ArtemAlexey Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 614658,
+      "startsAt": 1548758700000,
+      "finishesAt": 1548780300000,
+      "status": 10,
+      "perf": {
+        "icon": "+",
+        "key": "classical",
+        "name": "Classical",
+        "position": 0
+      },
+      "private": true,
+      "position": {
+        "eco": "A00",
+        "name": "Hungarian Opening",
+        "wikiPath": "King's_Fianchetto_Opening",
+        "fen": "rnbqkbnr/pppppppp/8/8/8/6P1/PPPPPP1P/RNBQKBNR b KQkq - 1 1"
+      },
+      "winner": null
+    },
+    {
+      "id": "96Wm97Wx",
+      "createdBy": "lzap80",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Red Hat for Fun 2019-01-29 Arena",
+      "nbPlayers": 3,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 622758,
+      "startsAt": 1548766800000,
+      "finishesAt": 1548772200000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "6IPNT3PQ",
+      "createdBy": "quicksilver2099",
+      "system": "arena",
+      "minutes": 80,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Paul Keres Tournament Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 633558,
+      "startsAt": 1548777600000,
+      "finishesAt": 1548782400000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "44P6TBXx",
+      "createdBy": "chess_english",
+      "system": "arena",
+      "minutes": 70,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "Fischer Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "chess960",
+        "short": "960",
+        "name": "Chess960"
+      },
+      "secondsToStart": 642558,
+      "startsAt": 1548786600000,
+      "finishesAt": 1548790800000,
+      "status": 10,
+      "perf": {
+        "icon": "'",
+        "key": "chess960",
+        "name": "Chess960",
+        "position": 5
+      },
+      "winner": null
+    },
+    {
+      "id": "2deh8yd4",
+      "createdBy": "panosch249",
+      "system": "arena",
+      "minutes": 25,
+      "clock": {
+        "limit": 15,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "GCP Ultrabullet 01 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 698358,
+      "startsAt": 1548842400000,
+      "finishesAt": 1548843900000,
+      "status": 10,
+      "perf": {
+        "icon": "{",
+        "key": "ultraBullet",
+        "name": "UltraBullet",
+        "position": 3
+      },
+      "winner": null
+    },
+    {
+      "id": "AwmyzlAq",
+      "createdBy": "panosch249",
+      "system": "arena",
+      "minutes": 40,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "GCP Bullet 01 Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 701958,
+      "startsAt": 1548846000000,
+      "finishesAt": 1548848400000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "winner": null
+    },
+    {
+      "id": "MGqLXHYI",
+      "createdBy": "panosch249",
+      "system": "arena",
+      "minutes": 40,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": " GCP Bullet 01 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 701958,
+      "startsAt": 1548846000000,
+      "finishesAt": 1548848400000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "winner": null
+    },
+    {
+      "id": "d9O750np",
+      "createdBy": "quicksilver2099",
+      "system": "arena",
+      "minutes": 80,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Torneo Paul Keres Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 719958,
+      "startsAt": 1548864000000,
+      "finishesAt": 1548868800000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "1WY13wr1",
+      "createdBy": "adriano_maximo",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 420,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "ChessClub Bras\u00edlia Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 745158,
+      "startsAt": 1548889200000,
+      "finishesAt": 1548892800000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "Rx6WC7nG",
+      "createdBy": "claudefics",
+      "system": "arena",
+      "minutes": 150,
+      "clock": {
+        "limit": 600,
+        "increment": 5
+      },
+      "rated": false,
+      "fullName": "asCMCIC Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 818958,
+      "startsAt": 1548963000000,
+      "finishesAt": 1548972000000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "winner": null
+    },
+    {
+      "id": "TrRpSoxo",
+      "createdBy": "ethanshane",
+      "system": "arena",
+      "minutes": 360,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "The Blitz game Arena",
+      "nbPlayers": 3,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 820758,
+      "startsAt": 1548964800000,
+      "finishesAt": 1548986400000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "evUGNmhX",
+      "createdBy": "unukr1",
+      "system": "arena",
+      "minutes": 210,
+      "clock": {
+        "limit": 300,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "\u0427\u0435\u043c\u043f\u0438\u043e\u043d\u0430\u0442 \u0428\u0430\u0445\u043e\u0432\u043e\u0439 \u0428\u043a\u043e\u043b\u044b Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 824358,
+      "startsAt": 1548968400000,
+      "finishesAt": 1548981000000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "dnbtsna4",
+      "createdBy": "j_coca",
+      "system": "arena",
+      "minutes": 50,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "AtahualpaBlitzEnero2019 Fase10 Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 840558,
+      "startsAt": 1548984600000,
+      "finishesAt": 1548987600000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null,
+      "major": true
+    },
+    {
+      "id": "HYesuVRn",
+      "createdBy": "winnersdontlose",
+      "system": "arena",
+      "minutes": 150,
+      "clock": {
+        "limit": 30,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "2 Hours Of Antichess Arena",
+      "nbPlayers": 3,
+      "variant": {
+        "key": "antichess",
+        "short": "Anti",
+        "name": "Antichess"
+      },
+      "secondsToStart": 894558,
+      "startsAt": 1549038600000,
+      "finishesAt": 1549047600000,
+      "status": 10,
+      "perf": {
+        "icon": "@",
+        "key": "antichess",
+        "name": "Antichess",
+        "position": 8
+      },
+      "winner": null
+    },
+    {
+      "id": "2GXcSbif",
+      "createdBy": "panemoody",
+      "system": "arena",
+      "minutes": 180,
+      "clock": {
+        "limit": 1200,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Tomsk Arena",
+      "nbPlayers": 6,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 896358,
+      "startsAt": 1549040400000,
+      "finishesAt": 1549051200000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "GMFCtq0D",
+      "createdBy": "drbeco",
+      "system": "arena",
+      "minutes": 360,
+      "clock": {
+        "limit": 300,
+        "increment": 5
+      },
+      "rated": true,
+      "fullName": "Cabra Xadrez Anniversary 1 yo  Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 982758,
+      "startsAt": 1549126800000,
+      "finishesAt": 1549148400000,
+      "status": 10,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "winner": null
+    },
+    {
+      "id": "O1vjKYbH",
+      "createdBy": "racingkingsking",
+      "system": "arena",
+      "minutes": 45,
+      "clock": {
+        "limit": 30,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Elite Racing Kings Arena",
+      "nbPlayers": 17,
+      "variant": {
+        "key": "racingKings",
+        "short": "Racing",
+        "name": "Racing Kings"
+      },
+      "secondsToStart": 986358,
+      "startsAt": 1549130400000,
+      "finishesAt": 1549133100000,
+      "status": 10,
+      "perf": {
+        "icon": "\ue00a",
+        "key": "racingKings",
+        "name": "Racing Kings",
+        "position": 11
+      },
+      "winner": null
+    },
+    {
+      "id": "cNaMNfRB",
+      "createdBy": "juan_silva_gutierrez",
+      "system": "arena",
+      "minutes": 60,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": false,
+      "fullName": "AlumnosHungaski Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 1080258,
+      "startsAt": 1549224300000,
+      "finishesAt": 1549227900000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "C7jRD9HG",
+      "createdBy": "antony20",
+      "system": "arena",
+      "minutes": 45,
+      "clock": {
+        "limit": 120,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Traxler Arena",
+      "nbPlayers": 4,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 1384158,
+      "startsAt": 1549528200000,
+      "finishesAt": 1549530900000,
+      "status": 10,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "winner": null
+    },
+    {
+      "id": "BUXFFmdQ",
+      "createdBy": "antony20",
+      "system": "arena",
+      "minutes": 360,
+      "clock": {
+        "limit": 900,
+        "increment": 15
+      },
+      "rated": true,
+      "fullName": "von Kolisch Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 1524558,
+      "startsAt": 1549668600000,
+      "finishesAt": 1549690200000,
+      "status": 10,
+      "perf": {
+        "icon": "+",
+        "key": "classical",
+        "name": "Classical",
+        "position": 0
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "zJvOXlkm",
+      "createdBy": "cardosoz",
+      "system": "arena",
+      "minutes": 70,
+      "clock": {
+        "limit": 420,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "cardosoz Arena",
+      "nbPlayers": 1,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 1731558,
+      "startsAt": 1549875600000,
+      "finishesAt": 1549879800000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "g1K7J37D",
+      "createdBy": "dmitriydf",
+      "system": "arena",
+      "minutes": 20,
+      "clock": {
+        "limit": 15,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "DmitriyDF Arena",
+      "nbPlayers": 20,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 1846758,
+      "startsAt": 1549990800000,
+      "finishesAt": 1549992000000,
+      "status": 10,
+      "perf": {
+        "icon": "{",
+        "key": "ultraBullet",
+        "name": "UltraBullet",
+        "position": 3
+      },
+      "winner": null
+    },
+    {
+      "id": "LWrAxrqI",
+      "createdBy": "potseeslc",
+      "system": "arena",
+      "minutes": 120,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Reddit February  Arena",
+      "nbPlayers": 15,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 2203158,
+      "startsAt": 1550347200000,
+      "finishesAt": 1550354400000,
+      "status": 10,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    }
+  ],
+  "started": [
+    {
+      "id": "0CcWSvIB",
+      "createdBy": "pablos09",
+      "system": "arena",
+      "minutes": 20,
+      "clock": {
+        "limit": 0,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "PabloS09 Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "atomic",
+        "short": "Atom",
+        "name": "Atomic"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548143982181,
+      "finishesAt": 1548145182181,
+      "status": 20,
+      "perf": {
+        "icon": ">",
+        "key": "atomic",
+        "name": "Atomic",
+        "position": 9
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "OoUOcKAE",
+      "createdBy": "ligmanut",
+      "system": "arena",
+      "minutes": 80,
+      "clock": {
+        "limit": 120,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Deschapelles Arena",
+      "nbPlayers": 10,
+      "variant": {
+        "key": "antichess",
+        "short": "Anti",
+        "name": "Antichess"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548143337901,
+      "finishesAt": 1548148137901,
+      "status": 20,
+      "perf": {
+        "icon": "@",
+        "key": "antichess",
+        "name": "Antichess",
+        "position": 8
+      },
+      "winner": null
+    },
+    {
+      "id": "ibv2X2KH",
+      "createdBy": "vyacheslav71",
+      "system": "arena",
+      "minutes": 120,
+      "clock": {
+        "limit": 900,
+        "increment": 10
+      },
+      "rated": true,
+      "fullName": "Vyacheslav71 Arena",
+      "nbPlayers": 4,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548143848155,
+      "finishesAt": 1548151048155,
+      "status": 20,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "winner": null
+    },
+    {
+      "id": "CoeijG1Z",
+      "createdBy": "josemariar",
+      "system": "arena",
+      "minutes": 30,
+      "clock": {
+        "limit": 30,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Josemariar Arena",
+      "nbPlayers": 19,
+      "variant": {
+        "key": "atomic",
+        "short": "Atom",
+        "name": "Atomic"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548142805163,
+      "finishesAt": 1548144605163,
+      "status": 20,
+      "perf": {
+        "icon": ">",
+        "key": "atomic",
+        "name": "Atomic",
+        "position": 9
+      },
+      "winner": null
+    },
+    {
+      "id": "tWKpCXUk",
+      "createdBy": "alexlll",
+      "system": "arena",
+      "minutes": 30,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": false,
+      "fullName": "U 1500 Arena",
+      "nbPlayers": 8,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548142687235,
+      "finishesAt": 1548144487235,
+      "status": 20,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "F58rFfBM",
+      "createdBy": "baroma06",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Spielmann Arena",
+      "nbPlayers": 22,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548140837347,
+      "finishesAt": 1548146237347,
+      "status": 20,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "winner": null
+    },
+    {
+      "id": "A1VNmYSq",
+      "createdBy": "atomicchessbot",
+      "system": "arena",
+      "minutes": 360,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "AtomicChessBot Blitz Tourney Arena",
+      "nbPlayers": 6,
+      "variant": {
+        "key": "atomic",
+        "short": "Atom",
+        "name": "Atomic"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548143578977,
+      "finishesAt": 1548165178977,
+      "status": 20,
+      "perf": {
+        "icon": ">",
+        "key": "atomic",
+        "name": "Atomic",
+        "position": 9
+      },
+      "winner": null,
+      "major": true
+    },
+    {
+      "id": "ONLzcm87",
+      "createdBy": "tsinzato",
+      "system": "arena",
+      "minutes": 360,
+      "clock": {
+        "limit": 1800,
+        "increment": 25
+      },
+      "rated": true,
+      "fullName": "Boden Arena",
+      "nbPlayers": 2,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548129333421,
+      "finishesAt": 1548150933421,
+      "status": 20,
+      "perf": {
+        "icon": "+",
+        "key": "classical",
+        "name": "Classical",
+        "position": 0
+      },
+      "private": true,
+      "winner": null
+    },
+    {
+      "id": "pPRH8W5j",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 240,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "Crazyhouse Blitz Inc Arena",
+      "nbPlayers": 4,
+      "variant": {
+        "key": "crazyhouse",
+        "short": "Crazy",
+        "name": "Crazyhouse"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548144000000,
+      "finishesAt": 1548147420000,
+      "status": 20,
+      "perf": {
+        "icon": "\ue00b",
+        "key": "crazyhouse",
+        "name": "Crazyhouse",
+        "position": 4
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "NrF4yRJd",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1500 Bullet Arena",
+      "nbPlayers": 23,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548144000000,
+      "finishesAt": 1548145620000,
+      "status": 20,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "kEOdd0YX",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly SuperBlitz Arena",
+      "nbPlayers": 58,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548144000000,
+      "finishesAt": 1548147420000,
+      "status": 20,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "AsQx9faP",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 117,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Rapid Arena",
+      "nbPlayers": 32,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548144000000,
+      "finishesAt": 1548151020000,
+      "status": 20,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": null
+    },
+    {
+      "id": "9qgjJP30",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Blitz Arena",
+      "nbPlayers": 21,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548144000000,
+      "finishesAt": 1548147420000,
+      "status": 20,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": null
+    },
+    {
+      "id": "4OWioTPv",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 43,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548144000000,
+      "finishesAt": 1548145620000,
+      "status": 20,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": null
+    },
+    {
+      "id": "H1zqrOXP",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1700 Rapid Arena",
+      "nbPlayers": 44,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548144000000,
+      "finishesAt": 1548147420000,
+      "status": 20,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": null
+    },
+    {
+      "id": "2Uu3mV8v",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U2000 Blitz Arena",
+      "nbPlayers": 83,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548144000000,
+      "finishesAt": 1548147420000,
+      "status": 20,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": null
+    }
+  ],
+  "finished": [
+    {
+      "id": "7YeAj6y9",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 30,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly HyperBullet Arena",
+      "nbPlayers": 99,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548142200000,
+      "finishesAt": 1548143820000,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "hyperbullet"
+      },
+      "winner": {
+        "id": "chess-network",
+        "name": "Chess-Network",
+        "title": "NM"
+      }
+    },
+    {
+      "id": "olmXLVR1",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 30,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly HyperBullet Arena",
+      "nbPlayers": 83,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548140400000,
+      "finishesAt": 1548142020000,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "hyperbullet"
+      },
+      "winner": {
+        "id": "hoegi",
+        "name": "Hoegi",
+        "title": null
+      }
+    },
+    {
+      "id": "pX6POnet",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1500 Rapid Arena",
+      "nbPlayers": 96,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548140400000,
+      "finishesAt": 1548143820000,
+      "status": 30,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": {
+        "id": "mburak28",
+        "name": "mburak28",
+        "title": null
+      }
+    },
+    {
+      "id": "okuKa5aD",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Crazyhouse SuperBlitz Arena",
+      "nbPlayers": 26,
+      "variant": {
+        "key": "crazyhouse",
+        "short": "Crazy",
+        "name": "Crazyhouse"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548140400000,
+      "finishesAt": 1548143820000,
+      "status": 30,
+      "perf": {
+        "icon": "\ue00b",
+        "key": "crazyhouse",
+        "name": "Crazyhouse",
+        "position": 4
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": {
+        "id": "jkthebullfrog",
+        "name": "JKtheBullfrog",
+        "title": null
+      }
+    },
+    {
+      "id": "hFmFC7EO",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly SuperBlitz Arena",
+      "nbPlayers": 209,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548140400000,
+      "finishesAt": 1548143820000,
+      "status": 30,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": {
+        "id": "malabu",
+        "name": "Malabu",
+        "title": null
+      }
+    },
+    {
+      "id": "3jD4CUNE",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 2
+      },
+      "rated": true,
+      "fullName": "U1700 Blitz Inc Arena",
+      "nbPlayers": 159,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548140400000,
+      "finishesAt": 1548143820000,
+      "status": 30,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": {
+        "id": "kantu02",
+        "name": "Kantu02",
+        "title": null
+      }
+    },
+    {
+      "id": "bU52PjeV",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U2000 SuperBlitz Arena",
+      "nbPlayers": 216,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548140400000,
+      "finishesAt": 1548143820000,
+      "status": 30,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": {
+        "id": "borissm11",
+        "name": "borissm11",
+        "title": null
+      }
+    },
+    {
+      "id": "G150H3Dq",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 120,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548138600000,
+      "finishesAt": 1548140220000,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": {
+        "id": "kuzmaakimovich",
+        "name": "KuzmaAkimovich",
+        "title": null
+      }
+    },
+    {
+      "id": "nxpEdNtV",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "U2000 Bullet Inc Arena",
+      "nbPlayers": 92,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548138600000,
+      "finishesAt": 1548140220000,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": {
+        "id": "darhaa",
+        "name": "darhaa",
+        "title": null
+      }
+    },
+    {
+      "id": "LEpYKLw3",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly SuperBlitz Arena",
+      "nbPlayers": 51,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548136800000,
+      "finishesAt": 1548140220000,
+      "status": 30,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": {
+        "id": "sterrenburg",
+        "name": "Sterrenburg",
+        "title": null
+      }
+    },
+    {
+      "id": "bFCLGVJB",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Crazyhouse Bullet Arena",
+      "nbPlayers": 3,
+      "variant": {
+        "key": "crazyhouse",
+        "short": "Crazy",
+        "name": "Crazyhouse"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548136800000,
+      "finishesAt": 1548138420000,
+      "status": 30,
+      "perf": {
+        "icon": "\ue00b",
+        "key": "crazyhouse",
+        "name": "Crazyhouse",
+        "position": 4
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": {
+        "id": "hereisaccjr",
+        "name": "HereisACCjr",
+        "title": null
+      }
+    },
+    {
+      "id": "DbqkdgZd",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 105,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548136800000,
+      "finishesAt": 1548138420000,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": {
+        "id": "blitzmachine2003",
+        "name": "Blitzmachine2003",
+        "title": null
+      }
+    },
+    {
+      "id": "NR30SKxw",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1500 Blitz Arena",
+      "nbPlayers": 103,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548136800000,
+      "finishesAt": 1548140220000,
+      "status": 30,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": {
+        "id": "maratovichdan",
+        "name": "maratovichdan",
+        "title": null
+      }
+    },
+    {
+      "id": "tnWbJNnC",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1700 SuperBlitz Arena",
+      "nbPlayers": 142,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548136800000,
+      "finishesAt": 1548140220000,
+      "status": 30,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": {
+        "id": "alagosi",
+        "name": "alagosi",
+        "title": null
+      }
+    },
+    {
+      "id": "cwPzcNvo",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U2000 Bullet Arena",
+      "nbPlayers": 76,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548136800000,
+      "finishesAt": 1548138420000,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": {
+        "id": "kciowa",
+        "name": "KCIOWA",
+        "title": null
+      }
+    },
+    {
+      "id": "UmcOncCA",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 117,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Scandinavian Defence Rapid Arena",
+      "nbPlayers": 131,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548136800000,
+      "finishesAt": 1548143820000,
+      "status": 30,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "position": {
+        "eco": "B01",
+        "name": "Scandinavian Defence: Modern Variation",
+        "wikiPath": "Scandinavian_Defense#2...Nf6",
+        "fen": "rnbqkb1r/ppp1pppp/5n2/3P4/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3"
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": {
+        "id": "konykonyi",
+        "name": "konykonyi",
+        "title": null
+      }
+    },
+    {
+      "id": "MYzFpN7f",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 120,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Eastern Blitz Arena",
+      "nbPlayers": 589,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548136800000,
+      "finishesAt": 1548144000000,
+      "status": 30,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "eastern",
+        "speed": "blitz"
+      },
+      "winner": {
+        "id": "blackknight98",
+        "name": "BlackKnight98",
+        "title": null
+      }
+    },
+    {
+      "id": "g0kkFTCS",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 15,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly UltraBullet Arena",
+      "nbPlayers": 33,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548135000000,
+      "finishesAt": 1548136620000,
+      "status": 30,
+      "perf": {
+        "icon": "{",
+        "key": "ultraBullet",
+        "name": "UltraBullet",
+        "position": 3
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "ultrabullet"
+      },
+      "winner": {
+        "id": "jeff081692",
+        "name": "jeff081692",
+        "title": null
+      }
+    },
+    {
+      "id": "j308IABU",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 97,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548135000000,
+      "finishesAt": 1548136620000,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": {
+        "id": "superman89",
+        "name": "Superman89",
+        "title": null
+      }
+    },
+    {
+      "id": "nUncIZPK",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "U1700 Bullet Inc Arena",
+      "nbPlayers": 48,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548135000000,
+      "finishesAt": 1548136620000,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": {
+        "id": "hassankhairalla",
+        "name": "HassanKhairalla",
+        "title": null
+      }
+    },
+    {
+      "id": "k7em1Xji",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1500 SuperBlitz Arena",
+      "nbPlayers": 97,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548133200000,
+      "finishesAt": 1548136620000,
+      "status": 30,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "superblitz"
+      },
+      "winner": {
+        "id": "blanka35kapa",
+        "name": "blanka35kapa",
+        "title": null
+      }
+    },
+    {
+      "id": "gASpYDuY",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 120,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Crazyhouse HippoBullet Arena",
+      "nbPlayers": 18,
+      "variant": {
+        "key": "crazyhouse",
+        "short": "Crazy",
+        "name": "Crazyhouse"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548133200000,
+      "finishesAt": 1548136620000,
+      "status": 30,
+      "perf": {
+        "icon": "\ue00b",
+        "key": "crazyhouse",
+        "name": "Crazyhouse",
+        "position": 4
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "hippobullet"
+      },
+      "winner": {
+        "id": "hereisaccjr",
+        "name": "HereisACCjr",
+        "title": null
+      }
+    },
+    {
+      "id": "Y3Idk1vH",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 15,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly UltraBullet Arena",
+      "nbPlayers": 21,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548133200000,
+      "finishesAt": 1548134820000,
+      "status": 30,
+      "perf": {
+        "icon": "{",
+        "key": "ultraBullet",
+        "name": "UltraBullet",
+        "position": 3
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "ultrabullet"
+      },
+      "winner": {
+        "id": "vadrngapuski",
+        "name": "Vadrngapuski",
+        "title": null
+      }
+    },
+    {
+      "id": "q3ZedZzS",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Hourly Bullet Arena",
+      "nbPlayers": 88,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548133200000,
+      "finishesAt": 1548134820000,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": {
+        "id": "carajasiciliano",
+        "name": "CarajaSiciliano",
+        "title": null
+      }
+    },
+    {
+      "id": "YfI8aD4M",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U1700 Bullet Arena",
+      "nbPlayers": 71,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548133200000,
+      "finishesAt": 1548134820000,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": {
+        "id": "quantumechanix",
+        "name": "quantumechanix",
+        "title": null
+      }
+    },
+    {
+      "id": "xQwikUOX",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 600,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "U2000 Rapid Arena",
+      "nbPlayers": 144,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548133200000,
+      "finishesAt": 1548136620000,
+      "status": 30,
+      "perf": {
+        "icon": "#",
+        "key": "rapid",
+        "name": "Rapid",
+        "position": 2
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "rapid"
+      },
+      "winner": {
+        "id": "siaptempur86",
+        "name": "siaptempur86",
+        "title": null
+      }
+    },
+    {
+      "id": "0NQmYdHX",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 57,
+      "clock": {
+        "limit": 300,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Scandinavian Defence Blitz Arena",
+      "nbPlayers": 56,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548133200000,
+      "finishesAt": 1548136620000,
+      "status": 30,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "position": {
+        "eco": "B01",
+        "name": "Scandinavian Defence: Modern Variation",
+        "wikiPath": "Scandinavian_Defense#2...Nf6",
+        "fen": "rnbqkb1r/ppp1pppp/5n2/3P4/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3"
+      },
+      "schedule": {
+        "freq": "hourly",
+        "speed": "blitz"
+      },
+      "winner": {
+        "id": "gsoppe",
+        "name": "gsoppe",
+        "title": null
+      }
+    },
+    {
+      "id": "Q6y3Ne1P",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 180,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "Eastern SuperBlitz Arena",
+      "nbPlayers": 539,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548133200000,
+      "finishesAt": 1548138600000,
+      "status": 30,
+      "perf": {
+        "icon": ")",
+        "key": "blitz",
+        "name": "Blitz",
+        "position": 1
+      },
+      "schedule": {
+        "freq": "eastern",
+        "speed": "superblitz"
+      },
+      "winner": {
+        "id": "krackos91",
+        "name": "Krackos91",
+        "title": null
+      }
+    },
+    {
+      "id": "18IfOqXM",
+      "createdBy": "iohonon",
+      "system": "arena",
+      "minutes": 90,
+      "clock": {
+        "limit": 120,
+        "increment": 0
+      },
+      "rated": true,
+      "fullName": "chessSureste Arena",
+      "nbPlayers": 35,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548133109235,
+      "finishesAt": 1548138509235,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "winner": {
+        "id": "caracoleishon",
+        "name": "caracoleishon",
+        "title": null
+      }
+    },
+    {
+      "id": "n6CUebr5",
+      "createdBy": "lichess",
+      "system": "arena",
+      "minutes": 27,
+      "clock": {
+        "limit": 60,
+        "increment": 1
+      },
+      "rated": true,
+      "fullName": "U1500 Bullet Inc Arena",
+      "nbPlayers": 47,
+      "variant": {
+        "key": "standard",
+        "short": "Std",
+        "name": "Standard"
+      },
+      "secondsToStart": 0,
+      "startsAt": 1548131400000,
+      "finishesAt": 1548133020000,
+      "status": 30,
+      "perf": {
+        "icon": "T",
+        "key": "bullet",
+        "name": "Bullet",
+        "position": 0
+      },
+      "hasMaxRating": true,
+      "schedule": {
+        "freq": "hourly",
+        "speed": "bullet"
+      },
+      "winner": {
+        "id": "abdouch",
+        "name": "Abdouch",
+        "title": null
+      }
+    }
+  ]
+}

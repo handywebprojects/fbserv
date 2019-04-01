@@ -1,0 +1,1 @@
+Image file upload temporary directory.

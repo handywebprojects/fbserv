@@ -1,0 +1,173 @@
+:root {
+    --filename-width: 600px;
+    --isdir-width: 60px;
+    --rwx-width: 150px;
+    --size-width: 120px;
+    --mtime-width: 150px;
+    --filename-fontsize: 20px;
+    --diritem-height: 35px;
+    --diritem-boxheight: calc(var(--diritem-height) * 0.85);
+    --diritem-margin: 3px;
+}
+
+.diritem {
+    margin: var(--diritem-margin);
+    display: flex; justify-content: space-around; align-items: center;
+    width: calc(100% - 2 * var(--diritem-margin));
+    background-color: #ddd;
+    height: var(--diritem-height);
+    font-family: monospace;
+}
+
+.diritem.isdir {
+    background-color: #fff;
+}
+
+.diritem .filename {
+    display: flex; justify-content: space-between; align-items: center;
+    width: var(--filename-width);
+    height: var(--diritem-boxheight);
+    background-color: #fff;
+    font-size: var(--filename-fontsize);
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    color: #070;
+    font-weight: bold;
+}
+
+.diritem.isdir .filename{
+    background-color: #ff0;
+    color: #007;
+}
+
+.diritem.isdir .filename.parent{
+    background-color: #fcc;
+    color: #000;
+    font-size: calc(var(--filename-fontsize) * 1.2);    
+}
+
+.diritem .rwx {
+    display: flex; justify-content: space-around; align-items: center;
+    width: var(--rwx-width);
+    height: var(--diritem-boxheight);
+    background-color: #ffa;
+    font-size: calc(var(--filename-fontsize) * 0.8);    
+}
+
+.diritem .size {
+    display: flex; justify-content: space-around; align-items: center;
+    width: var(--size-width);
+    height: var(--diritem-boxheight);
+    background-color: #ffa;
+    font-size: calc(var(--filename-fontsize) * 0.8);    
+    font-weight: bold;
+}
+
+.diritem.isdir .size {
+    background-color: #ff0;
+}
+
+.diritem .mtime {
+    display: flex; justify-content: space-around; align-items: center;
+    width: var(--mtime-width);
+    height: var(--diritem-boxheight);
+    background-color: #ffa;
+    font-size: calc(var(--filename-fontsize) * 0.5);    
+}
+
+.diritem .delete {
+    background-color: #faa;
+}
+
+.diritem .isdir {
+    width: var(--isdir-width);
+}
+
+.dirbrowser .pathlabel {
+    font-size: 22px;
+    padding: 3px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #ffc;
+    font-family: monospace;
+}
+
+.processconsole .processinput {
+    width: 550px;
+    background-color: #ccc;
+    padding: 10px;
+}
+
+.processconsole .processinput .textinput {
+    width: 420px;
+    font-size: 25px;
+    padding: 3px;
+    font-family: monospace;
+}
+
+.processconsole .processinput .button {
+    font-size: 20px;
+}
+
+.processconsole .greenbutton {
+    font-size: 20px;
+}
+
+.processconsole .redbutton {
+    font-size: 20px;
+}
+
+.logitem {
+    font-family: monospace;
+    font-size: 18px;
+}
+
+.logitem .normal {
+    color: #000;
+}
+
+.logitem .info {
+    color: #00a;
+    font-weight: bold;
+}
+
+.logitem .success {
+    color: #0a0;
+    font-weight: bold;
+}
+
+.logitem .error {
+    color: #a00;
+    font-weight: bold;
+}
+
+.logitem .prompt {
+    color: #aa0;    
+}
+
+.socketlog {
+    margin: 8px;
+    background-color: #eee;
+    padding: 5px;
+    max-height: 100px;
+    overflow: auto;
+}
+
+.docdiv {
+    background-color: #ffe;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.srcdiv {
+    background-color: #ffe;
+    margin: 5px;
+    padding: 5px;
+    font-family: monospace;
+}
+
+.docref {    
+    background-color: #ff7;
+    cursor: pointer;    
+}
