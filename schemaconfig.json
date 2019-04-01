@@ -1,0 +1,955 @@
+{
+  "kind": "collection",
+  "disposition": "dict",
+  "key": null,
+  "value": "",
+  "minvalue": 0,
+  "maxvalue": 100,
+  "valuestep": 1,
+  "selected": false,
+  "childsarg": [
+    {
+      "kind": "collection",
+      "disposition": "list",
+      "key": "processes",
+      "value": "",
+      "minvalue": 0,
+      "maxvalue": 100,
+      "valuestep": 1,
+      "selected": false,
+      "childsarg": [
+        {
+          "kind": "collection",
+          "disposition": "dict",
+          "key": null,
+          "value": "",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "key",
+              "value": "cmd",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "displayname",
+              "value": "Cmd",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "command",
+              "value": "cmd.exe",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "collection",
+              "disposition": "list",
+              "key": "command_args",
+              "value": "",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            }
+          ],
+          "childsopened": true
+        },
+        {
+          "kind": "collection",
+          "disposition": "dict",
+          "key": null,
+          "value": "",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "key",
+              "value": "bash",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "displayname",
+              "value": "Bash",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "command",
+              "value": "bash",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "collection",
+              "disposition": "list",
+              "key": "command_args",
+              "value": "",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "collection",
+              "disposition": "dict",
+              "key": "shortcuts",
+              "value": "",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [
+                {
+                  "kind": "scalar",
+                  "disposition": "string",
+                  "key": "ls",
+                  "value": "-c \"ls -ls\"",
+                  "minvalue": 0,
+                  "maxvalue": 100,
+                  "valuestep": 1,
+                  "selected": false,
+                  "childsarg": [],
+                  "childsopened": false
+                },
+                {
+                  "kind": "scalar",
+                  "disposition": "string",
+                  "key": "ps",
+                  "value": "-c ps",
+                  "minvalue": 0,
+                  "maxvalue": 100,
+                  "valuestep": 1,
+                  "selected": false,
+                  "childsarg": [],
+                  "childsopened": false
+                }
+              ],
+              "childsopened": true
+            }
+          ],
+          "childsopened": true
+        },
+        {
+          "kind": "collection",
+          "disposition": "dict",
+          "key": null,
+          "value": "",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "key",
+              "value": "pythonfoo",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "displayname",
+              "value": " Python foo",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "command",
+              "value": "python",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "collection",
+              "disposition": "list",
+              "key": "command_args",
+              "value": "",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [
+                {
+                  "kind": "scalar",
+                  "disposition": "string",
+                  "key": null,
+                  "value": "-u",
+                  "minvalue": 0,
+                  "maxvalue": 100,
+                  "valuestep": 1,
+                  "selected": false,
+                  "childsarg": [],
+                  "childsopened": false
+                },
+                {
+                  "kind": "scalar",
+                  "disposition": "string",
+                  "key": null,
+                  "value": "foo.py",
+                  "minvalue": 0,
+                  "maxvalue": 100,
+                  "valuestep": 1,
+                  "selected": false,
+                  "childsarg": [],
+                  "childsopened": false
+                }
+              ],
+              "childsopened": true
+            }
+          ],
+          "childsopened": true
+        },
+        {
+          "kind": "collection",
+          "disposition": "dict",
+          "key": null,
+          "value": "",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "key",
+              "value": "pythoni",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "displayname",
+              "value": "Python interactive",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "command",
+              "value": "python",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "collection",
+              "disposition": "list",
+              "key": "command_args",
+              "value": "",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [
+                {
+                  "kind": "scalar",
+                  "disposition": "string",
+                  "key": null,
+                  "value": "-i",
+                  "minvalue": 0,
+                  "maxvalue": 100,
+                  "valuestep": 1,
+                  "selected": false,
+                  "childsarg": [],
+                  "childsopened": false
+                },
+                {
+                  "kind": "scalar",
+                  "disposition": "string",
+                  "key": null,
+                  "value": "-u",
+                  "minvalue": 0,
+                  "maxvalue": 100,
+                  "valuestep": 1,
+                  "selected": false,
+                  "childsarg": [],
+                  "childsopened": false
+                }
+              ],
+              "childsopened": true
+            }
+          ],
+          "childsopened": true
+        },
+        {
+          "kind": "collection",
+          "disposition": "dict",
+          "key": null,
+          "value": "",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "key",
+              "value": "cbuild",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "displayname",
+              "value": "Cbuild",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "command",
+              "value": "python",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "collection",
+              "disposition": "list",
+              "key": "command_args",
+              "value": "",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [
+                {
+                  "kind": "scalar",
+                  "disposition": "string",
+                  "key": null,
+                  "value": "-u",
+                  "minvalue": 0,
+                  "maxvalue": 100,
+                  "valuestep": 1,
+                  "selected": false,
+                  "childsarg": [],
+                  "childsopened": false
+                },
+                {
+                  "kind": "scalar",
+                  "disposition": "string",
+                  "key": null,
+                  "value": "cbuild.py",
+                  "minvalue": 0,
+                  "maxvalue": 100,
+                  "valuestep": 1,
+                  "selected": false,
+                  "childsarg": [],
+                  "childsopened": false
+                }
+              ],
+              "childsopened": true
+            },
+            {
+              "kind": "collection",
+              "disposition": "dict",
+              "key": "shortcuts",
+              "value": "",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [
+                {
+                  "kind": "scalar",
+                  "disposition": "string",
+                  "key": "Help",
+                  "value": "-h",
+                  "minvalue": 0,
+                  "maxvalue": 100,
+                  "valuestep": 1,
+                  "selected": false,
+                  "childsarg": [],
+                  "childsopened": false
+                }
+              ],
+              "childsopened": true
+            }
+          ],
+          "childsopened": true
+        },
+        {
+          "kind": "collection",
+          "disposition": "dict",
+          "key": null,
+          "value": "",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "key",
+              "value": "stockfishwin",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "displayname",
+              "value": "Stockfish win",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "command",
+              "value": "engines/stockfish9.exe",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "collection",
+              "disposition": "list",
+              "key": "command_args",
+              "value": "",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            }
+          ],
+          "childsopened": true
+        },
+        {
+          "kind": "collection",
+          "disposition": "dict",
+          "key": null,
+          "value": "",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "key",
+              "value": "stockfishlinux",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "displayname",
+              "value": "Stockfish linux",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "scalar",
+              "disposition": "string",
+              "key": "command",
+              "value": "/app/engines/stockfish9",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            },
+            {
+              "kind": "collection",
+              "disposition": "list",
+              "key": "command_args",
+              "value": "",
+              "minvalue": 0,
+              "maxvalue": 100,
+              "valuestep": 1,
+              "selected": false,
+              "childsarg": [],
+              "childsopened": false
+            }
+          ],
+          "childsopened": true
+        }
+      ],
+      "childsopened": false
+    },
+    {
+      "kind": "collection",
+      "disposition": "dict",
+      "key": "global",
+      "value": "",
+      "minvalue": 0,
+      "maxvalue": 100,
+      "valuestep": 1,
+      "selected": false,
+      "childsarg": [
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dodocs:dev",
+          "value": false,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dodocs:prod",
+          "value": true,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dobook:dev",
+          "value": false,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dobook:prod",
+          "value": true,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "string",
+          "key": "username",
+          "value": "lishadowapps",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "string",
+          "key": "usertoken",
+          "value": "lEbMJHEmjUXRy6OH",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "string",
+          "key": "enginepath:dev",
+          "value": "engines/stockfish9.exe",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "string",
+          "key": "enginepath:prod",
+          "value": "/app/engines/stockfish9",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "slider",
+          "key": "analysispvlength",
+          "value": 4,
+          "minvalue": 1,
+          "maxvalue": 20,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dostoredanalysis:dev",
+          "value": false,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dostoredanalysis:prod",
+          "value": true,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dodirbrowser:dev",
+          "value": false,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dodirbrowser:prod",
+          "value": true,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dogames:dev",
+          "value": false,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dogames:prod",
+          "value": true,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "doboard:dev",
+          "value": false,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "doboard:prod",
+          "value": true,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dodrive:dev",
+          "value": false,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dodrive:prod",
+          "value": true,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "doabout:dev",
+          "value": false,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "doabout:prod",
+          "value": true,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dogamepreview:dev",
+          "value": false,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "key": "dogamepreview:prod",
+          "value": true,
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "slider",
+          "key": "autoanalysisdelay",
+          "value": 10,
+          "minvalue": 3,
+          "maxvalue": 60,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        },
+        {
+          "kind": "scalar",
+          "disposition": "slider",
+          "value": 25,
+          "minvalue": 10,
+          "maxvalue": 1000,
+          "valuestep": 1,
+          "key": "maxgames"
+        },
+        {
+          "kind": "scalar",
+          "disposition": "string",
+          "value": "",
+          "key": "gamesfilter"
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "value": false,
+          "key": "doforumgame:dev"
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "value": true,
+          "key": "doforumgame:prod"
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "value": false,
+          "key": "dostoredauto:dev"
+        },
+        {
+          "kind": "scalar",
+          "disposition": "checkbox",
+          "value": true,
+          "key": "dostoredauto:prod"
+        }
+      ],
+      "childsopened": true
+    },
+    {
+      "kind": "collection",
+      "disposition": "dict",
+      "key": "layout",
+      "value": "",
+      "minvalue": 0,
+      "maxvalue": 100,
+      "valuestep": 1,
+      "selected": false,
+      "childsarg": [
+        {
+          "kind": "scalar",
+          "disposition": "string",
+          "key": "boardbackground",
+          "value": "wood.jpg",
+          "minvalue": 0,
+          "maxvalue": 100,
+          "valuestep": 1,
+          "selected": false,
+          "childsarg": [],
+          "childsopened": false
+        }
+      ],
+      "childsopened": true
+    }
+  ],
+  "childsopened": true
+}
