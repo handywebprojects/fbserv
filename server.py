@@ -220,25 +220,29 @@ def tourney():
     maxRatingPerf = request.args.get("maxRatingPerf", "auto")
     nbRatedGame = request.args.get("nbRatedGame", 0)
     nbRatedGamePerf = request.args.get("nbRatedGamePerf", "auto")
+    startDate = request.args.get("startDate", None)
+    fields = {
+        "name": name,
+        "clockTime": clockTime,
+        "clockIncrement": clockIncrement,
+        "minutes": minutes,
+        "waitMinutes": waitMinutes,
+        "variant": variant,
+        "rated": rated,
+        "conditions.minRating.rating": minRating,
+        "conditions.minRating.perf": minRatingPerf,
+        "conditions.maxRating.rating": maxRating,
+        "conditions.maxRating.perf": maxRatingPerf,
+        "conditions.nbRatedGame.nb": nbRatedGame,
+        "conditions.nbRatedGame.perf": nbRatedGamePerf            
+    }
+    if startDate:
+        fields["startDate"] = startDate
     resstr = posturl("https://lichess.org/api/tournament",
         headers = {
             "Authorization": "Bearer {}".format(token)
         },
-        fields = {
-            "name": name,
-            "clockTime": clockTime,
-            "clockIncrement": clockIncrement,
-            "minutes": minutes,
-            "waitMinutes": waitMinutes,
-            "variant": variant,
-            "rated": rated,
-            "conditions.minRating.rating": minRating,
-            "conditions.minRating.perf": minRatingPerf,
-            "conditions.maxRating.rating": maxRating,
-            "conditions.maxRating.perf": maxRatingPerf,
-            "conditions.nbRatedGame.nb": nbRatedGame,
-            "conditions.nbRatedGame.perf": nbRatedGamePerf
-        }
+        fields = fields
     )                         
     tid = None
     try:
