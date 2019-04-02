@@ -242,7 +242,7 @@ def tourney():
             format = "%Y-%m-%d %H:%M"
             dt = datetime.strptime(startDate, format)
             utctimestamp = calendar.timegm(dt.timetuple())
-            timestamp = utctimestamp
+            timestamp = int(utctimestamp) * 1000
         except:
             timestamp = startDate
         fields["startDate"] = timestamp
