@@ -1,2 +1,2 @@
-call p.bat
-call o.bat
+call s\p.bat
+call s\o.bat
