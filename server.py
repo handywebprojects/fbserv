@@ -9,6 +9,7 @@ import time
 from traceback import print_exc
 from datetime import datetime
 import hashlib
+import calendar
 #########################################################
 
 #########################################################
@@ -236,8 +237,15 @@ def tourney():
         "conditions.nbRatedGame.nb": nbRatedGame,
         "conditions.nbRatedGame.perf": nbRatedGamePerf            
     }
-    if startDate:
-        fields["startDate"] = startDate
+    if startDate:        
+        try:
+            format = "%Y-%m-%d %H:%M"
+            dt = datetime.strptime(startDate, format)
+            utctimestamp = calendar.timegm(dt.timetuple())
+            timestamp = utctimestamp
+        except:
+            timestamp = startDate
+        fields["startDate"] = timestamp
     resstr = posturl("https://lichess.org/api/tournament",
         headers = {
             "Authorization": "Bearer {}".format(token)
