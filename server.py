@@ -215,6 +215,11 @@ def tourney():
     variant = request.args.get("variant", "atomic")
     rated = request.args.get("rated", "true")    
     minRating = request.args.get("minRating", 0)
+    minRatingPerf = request.args.get("minRatingPerf", "auto")
+    maxRating = request.args.get("maxRating", 9999)
+    maxRatingPerf = request.args.get("maxRatingPerf", "auto")
+    nbRatedGame = request.args.get("nbRatedGame", 0)
+    nbRatedGamePerf = request.args.get("nbRatedGamePerf", "auto")
     resstr = posturl("https://lichess.org/api/tournament",
         headers = {
             "Authorization": "Bearer {}".format(token)
@@ -227,7 +232,12 @@ def tourney():
             "waitMinutes": waitMinutes,
             "variant": variant,
             "rated": rated,
-            "conditions.minRating.rating": minRating
+            "conditions.minRating.rating": minRating,
+            "conditions.minRating.perf": minRatingPerf,
+            "conditions.maxRating.rating": maxRating,
+            "conditions.maxRating.perf": maxRatingPerf,
+            "conditions.nbRatedGame.nb": nbRatedGame,
+            "conditions.nbRatedGame.perf": nbRatedGamePerf
         }
     )                         
     tid = None
