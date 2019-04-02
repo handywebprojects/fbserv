@@ -206,7 +206,7 @@ def tos():
 
 @app.route("/tourney")
 def tourney():    
-    token = request.args.get("token", os.environ.get("TOURNEYTOKEN", "3oRZYTHjVzSMTwtU"))
+    token = request.args.get("token")
     name = request.args.get("name", ATOMIC_TOURNEY_NAME)
     clockTime = request.args.get("clockTime", 3)
     clockIncrement = request.args.get("clockIncrement", 2)
@@ -214,6 +214,7 @@ def tourney():
     waitMinutes = request.args.get("waitMinutes", os.environ.get("WAITMINUTES", 10))
     variant = request.args.get("variant", "atomic")
     rated = request.args.get("rated", "true")    
+    minRating = request.args.get("minRating", 0)
     resstr = posturl("https://lichess.org/api/tournament",
         headers = {
             "Authorization": "Bearer {}".format(token)
@@ -225,7 +226,8 @@ def tourney():
             "minutes": minutes,
             "waitMinutes": waitMinutes,
             "variant": variant,
-            "rated": rated
+            "rated": rated,
+            "conditions.minRating.rating": minRating
         }
     )                         
     tid = None
@@ -233,21 +235,22 @@ def tourney():
         resjson = json.loads(resstr)
         resstr = json.dumps(resjson, indent = 2)                
         tid = resjson["id"]
-        msg = randomtourneymessage()
-        msg = "have a good tourney"            
-        reqpub({
-            "kind": "talktourneychat",
-            "tid": tid,
-            "username": "AtomicChessBot",
-            "password": os.environ["ATOMPASS"],
-            "msg": msg
-        })
-        reqpub({
-            "kind": "jointourney",
-            "tid": tid,
-            "username": "lishadowapps",
-            "password": os.environ["LICHPASS"]
-        })
+        if False:
+            msg = randomtourneymessage()
+            msg = "have a good tourney"            
+            reqpub({
+                "kind": "talktourneychat",
+                "tid": tid,
+                "username": "AtomicChessBot",
+                "password": os.environ["ATOMPASS"],
+                "msg": msg
+            })
+            reqpub({
+                "kind": "jointourney",
+                "tid": tid,
+                "username": "lishadowapps",
+                "password": os.environ["LICHPASS"]
+            })
     except:
         print("there was a problem with tourney response")    
     return render_template("tourneyresponse.html", tourneyresponse = {
