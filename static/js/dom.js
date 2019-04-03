@@ -348,7 +348,7 @@ class TextInput_ extends Input_{
     constructor(args){
         super("text")
         this.args = args || {}
-        this.storeid = args.storeid
+        this.storeid = this.args.storeid
         if(this.storeid){
             this.ae("keyup", this.change.bind(this))
             this.ae("change", this.change.bind(this))
