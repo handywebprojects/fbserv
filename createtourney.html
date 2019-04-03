@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Create Tourney</title>
+
+    <link rel="stylesheet" href="static/css/staticpage.css?ver=1549100598">
+        
+    <script src="static/js/dom.js?ver=1554274628"></script>
+    <script src="static/js/lichess.js?ver=1554267112"></script>
+
+</head>
+
+<body>       
+    <div id="root"></div>
+
+    <script>
+        let root = Div()
+        document.getElementById("root").appendChild(root.e)
+        
+        let inputdescs = [
+            {label: "Token", id: "token"},
+            {label: "Name", id: "name"},
+            {label: "Variant", id: "variant", kind: "select", options: NAMED_PERF_TYPES, selected: "blitz"},
+            {label: "Rated", id: "rated", kind: "check", checked: true},
+            {label: "Allow berserk", id: "berserkable", kind: "check", checked: true},
+            {label: "Clock initial ( minutes )", id: "clockTime", kind: "select", options: [
+                ["0", "0"],
+                ["0.25", "1/4"],
+                ["0.5", "1/2"],
+                ["0.75", "3/4"],
+                ["1", "1"],
+                ["2", "2"],
+                ["3", "3"],
+                ["4", "4"],
+                ["5", "5"],
+                ["6", "6"],
+                ["7", "7"],
+                ["10", "10"],
+                ["15", "15"],
+                ["20", "20"],
+                ["25", "25"],
+                ["30", "30"],
+                ["40", "40"],
+                ["50", "50"],
+                ["60", "60"]
+            ], selected: "3"},
+            {label: "Clock increment ( seconds )", id: "clockIncrement", kind: "select", options: [
+                ["0", "0"],                
+                ["1", "1"],
+                ["2", "2"],
+                ["3", "3"],
+                ["4", "4"],
+                ["5", "5"],
+                ["6", "6"],
+                ["7", "7"],
+                ["10", "10"],
+                ["15", "15"],
+                ["20", "20"],
+                ["25", "25"],
+                ["30", "30"],
+                ["40", "40"],
+                ["50", "50"],
+                ["60", "60"]
+            ], selected: "3"},
+            {label: "Duration ( minutes )", id: "minutes", kind: "select", options: [
+                ["20", "20"],
+                ["25", "25"],
+                ["30", "30"],
+                ["35", "35"],
+                ["40", "40"],
+                ["45", "45"],
+                ["50", "50"],
+                ["55", "55"],
+                ["60", "60"],
+                ["70", "70"],
+                ["80", "80"],
+                ["90", "90"],
+                ["100", "100"],
+                ["110", "110"],
+                ["120", "120"],
+                ["150", "150"],
+                ["180", "180"],
+                ["210", "210"],
+                ["240", "240"],
+                ["270", "270"],
+                ["300", "300"],
+                ["330", "330"],
+                ["360", "360"]
+            ], selected: "45"},
+            {label: "Wait ( minutes )", id: "waitMinutes", kind: "select", options: [
+                ["1", "1"],
+                ["2", "2"],
+                ["3", "3"],
+                ["5", "5"],
+                ["10", "10"],
+                ["15", "15"],
+                ["20", "20"],
+                ["30", "30"],
+                ["45", "45"],
+                ["60", "60"]
+            ], selected: "5"},
+            {label: "Player min games", id: "conditions.nbRatedGame", kind: "select", options: [
+                ["0", "0"],
+                ["5", "5"],
+                ["10", "10"],
+                ["15", "15"],
+                ["20", "20"],
+                ["30", "30"],
+                ["40", "40"],
+                ["50", "50"],
+                ["75", "75"],
+                ["100", "100"],
+                ["150", "150"],
+                ["200", "200"]
+            ], selected: "0"},
+            {label: "Player min rating", id: "conditions.minRating", kind: "select", options: [
+                ["0", "0"],
+                ["1600", "1600"],
+                ["1800", "1800"],
+                ["1900", "1900"],
+                ["2000", "2000"],
+                ["2100", "2100"],
+                ["2200", "2200"],
+                ["2300", "2300"],
+                ["2400", "2400"],
+                ["2500", "2500"],
+                ["2600", "2600"]
+            ], selected: "0"},
+            {label: "Player max weekly rating", id: "conditions.maxRating", kind: "select", options: [
+                ["9999", "9999"],
+                ["2200", "2200"],
+                ["2100", "2100"],
+                ["2000", "2000"],
+                ["1900", "1900"],
+                ["1800", "1800"],
+                ["1700", "1700"],
+                ["1600", "1600"],
+                ["1500", "1500"],
+                ["1400", "1400"],
+                ["1300", "1300"],
+                ["1200", "1200"],
+                ["1000", "1000"]
+            ], selected: "9999"},
+            {label: "Start UTC ( 'YYYY.MM.DD HH:MM' )", id: "date"}
+        ]
+
+        let responsetextarea = TextArea().w(800).h(200)
+
+        function createtourney(){
+            fields = {
+                name: localStorage.getItem("createtourney/name"),
+                clockTime: localStorage.getItem("createtourney/clockTime"),
+                clockIncrement: localStorage.getItem("createtourney/clockIncrement"),
+                minutes: localStorage.getItem("createtourney/minutes"),
+                waitMinutes: localStorage.getItem("createtourney/waitMinutes"),
+                variant: localStorage.getItem("createtourney/variant"),
+                rated: localStorage.getItem("createtourney/rated"),
+                berserkable: localStorage.getItem("createtourney/berserkable"),
+                "conditions.nbRatedGame.nb": localStorage.getItem("createtourney/conditions.nbRatedGame"),
+                "conditions.nbRatedGame.perf": "auto",
+                "conditions.minRating.rating": localStorage.getItem("createtourney/conditions.minRating"),
+                "conditions.minRating.perf": "auto",
+                "conditions.maxRating.rating": localStorage.getItem("createtourney/conditions.maxRating"),
+                "conditions.maxRating.perf": "auto"                
+            }
+
+            let date = localStorage.getItem("createtourney/date")
+            if(date){
+                let parts = date.split(" ")
+                let dateparts = parts[0].split(".")
+                let timeparts = parts[1].split(":")
+                let year = dateparts[0]
+                let month = parseInt(dateparts[1].replace(/^[0]{1}/, ""))
+                let day = parseInt(dateparts[2].replace(/^[0]{1}/, ""))
+                let hour = parseInt(timeparts[0].replace(/^[0]{1}/, ""))
+                let minute = parseInt(timeparts[1].replace(/^[0]{1}/, ""))
+                let dateobj = new Date(Date.UTC(year, month - 1, day, hour, minute, 0, 0))
+                let timestamp = dateobj.getTime()
+                fields.startDate = `${timestamp}`
+            }
+
+            const data = new URLSearchParams()
+            for(let id in fields){
+                data.append(id, fields[id])
+            }
+
+            let headers = {
+                "Authorization": `Bearer ${localStorage.getItem("createtourney/token")}`
+            }
+
+            responsetextarea.e.scrollIntoView({behavior: "smooth", block: "center", inline: "center"})
+
+            if(true) fetch("https://lichess.org/api/tournament",{
+                "method": "POST",
+                headers: headers,
+                body: data
+            }).then(
+                response => response.text().then(
+                    content => {
+                        responsetextarea.setText(`${content}`)
+                        try{
+                            let tourney = JSON.parse(content)
+                            let id = tourney.id
+                            window.open("https://lichess.org/tournament/" + id, "_blank")
+                        }catch(err){
+                            responsetextarea.setText(`error, could not parse tourney from: ${content}`)
+                        }
+                    },
+                    err => responsetextarea.setText(`response text error: ${err}`)    
+                ),
+                err => responsetextarea.setText(`fetch error: ${err}`)
+            )
+
+            responsetextarea.setText(JSON.stringify(fields, null, 2))
+        }
+
+        let inputfields = InputFields({id: "createtourney", inputdescs: inputdescs}).mt(5)
+        root.a(Button("Create Tourney", createtourney))
+        root.a(inputfields)        
+        root.a(responsetextarea)
+    </script>
+</body>
+
+</html>

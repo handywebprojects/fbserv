@@ -173,6 +173,23 @@ const PERF_TYPES = [
     "threeCheck"
 ]
 
+const NAMED_PERF_TYPES = [
+  [ "ultraBullet", "Ultra Bullet" ],
+  [ "bullet", "Bullet" ],
+  [ "blitz", "Blitz" ],
+  [ "rapid", "Rapid" ],
+  [ "classical", "Classical" ],
+  [ "correspondence", "Correspondence" ],
+  [ "chess960", "Chess960" ],
+  [ "crazyhouse", "Crazyhouse" ],
+  [ "antichess", "Antichess" ],
+  [ "atomic", "Atomic" ],
+  [ "horde", "Horde" ],
+  [ "kingOfTheHill", "King of the Hill" ],
+  [ "racingKings", "Racing Kings" ],
+  [ "threeCheck", "Three Check" ]
+]
+
 const TOURNEY_TYPES = [
     "created",
     "started",

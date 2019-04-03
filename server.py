@@ -533,6 +533,11 @@ def games():
     reqlog(request)
     return read_string_from_file("games.html", "games")
 
+@app.route("/createtourney.html")
+def createtourney():    
+    reqlog(request)
+    return read_string_from_file("createtourney.html", "createtourney")
+
 @app.route("/smileyeditor.html")
 def smileyeditor():    
     reqlog(request)

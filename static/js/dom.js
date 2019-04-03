@@ -341,8 +341,20 @@ class Input_ extends e{
 }
 
 class TextInput_ extends Input_{
-    constructor(){
+    change(){
+        localStorage.setItem(this.storeid, this.getText())
+    }
+
+    constructor(args){
         super("text")
+        this.args = args || {}
+        this.storeid = args.storeid
+        if(this.storeid){
+            this.ae("keyup", this.change.bind(this))
+            this.ae("change", this.change.bind(this))
+            let value = localStorage.getItem(this.storeid)
+            if(value) this.setText(value)
+        }
     }
 
     setText(text){
@@ -353,7 +365,7 @@ class TextInput_ extends Input_{
         return this.v()
     }
 }
-function TextInput(){return new TextInput_()}
+function TextInput(args){return new TextInput_(args)}
 
 class TextArea_ extends e{
     constructor(){
@@ -412,8 +424,20 @@ class TextArea_ extends e{
 function TextArea(){return new TextArea_()}
 
 class CheckBox_ extends Input_{
-    constructor(){
+    change(){
+        localStorage.setItem(this.storeid, this.checked)
+    }
+
+    constructor(args){
         super("checkbox")
+        this.args = args || {}
+        this.storeid = this.args.storeid
+        if(this.storeid){
+            this.ae("change", this.change.bind(this))
+            let value = `${localStorage.getItem(this.storeid) || this.args.checked || true}`
+            this.set(value == "true")
+            localStorage.setItem(this.storeid, value)
+        }
     }
 
     set(value){
@@ -429,7 +453,7 @@ class CheckBox_ extends Input_{
         return this.ae("change", handler)
     }
 }
-function Check(){return new CheckBox_()}
+function Check(args){return new CheckBox_(args)}
 
 class LabeledCheckBox_ extends Div_{
     constructor(label){
@@ -613,25 +637,37 @@ class Option_ extends e{
 function Option(){return new Option_()}
 
 class Select_ extends e{
-    constructor(){
+    change(){
+        localStorage.setItem(this.storeid, this.v())        
+    }
+
+    constructor(args){
         super("select")
+        this.args = args || {}
+        this.storeid = this.args.storeid        
+        if(this.storeid){
+            this.ae("change", this.change.bind(this))
+        }
     }
 
     setoptions(options, selected){
         this.x
+        let trueselected = selected
+        if(this.storeid) trueselected = localStorage.getItem(this.storeid) || selected
         for(let keyvalue of options){
             let key = keyvalue[0]
             let value = keyvalue[1]
             let o = Option().key(key).value(value)
-            if(selected == key){
+            if(trueselected == key){
                 o.sa("selected", true)
+                if(this.storeid) localStorage.setItem(this.storeid, trueselected)
             }
             this.a(o)
         }
         return this
     }
 }
-function Select(){return new Select_()}
+function Select(args){return new Select_(args)}
 
 class FeaturedTextInput_ extends e{
     constructor(label){
@@ -652,6 +688,45 @@ class FeaturedTextInput_ extends e{
     }
 }
 function FeaturedTextInput(label){return new FeaturedTextInput_(label)}
+
+class InputField_ extends e{
+    constructor(label, input){
+        super("div")
+        this.disp("flex").h(36).bc("#eee").mar(1).ai("center")
+        this.labeldiv = Div().w(250).bc("#ffe").html(label).pad(5).ml(5)
+        this.inputdiv = Div().w(600).bc("#eff").a(input).pad(5).ml(5).mr(5)
+        this.a(this.labeldiv, this.inputdiv)
+    }
+}
+function InputField(label, input){return new InputField_(label, input)}
+
+class InputFields_ extends e{
+    constructor(args){
+        super("div")
+        this.args = args || {}
+        this.id = args.id || "inputfields"
+        this.bc("#fef")
+        this.inputdescs = this.args.inputdescs || []
+        for(let inputdesc of this.inputdescs){
+            let label = inputdesc.label || "Input"
+            let kind = inputdesc.kind
+            let storeid = `${this.id}/${inputdesc.id}`
+            let input = TextInput({storeid: storeid}).w(500).pad(2)
+            if(kind == "select"){
+                this.options = inputdesc.options || []
+                this.selected = inputdesc.selected
+                input = Select({storeid: storeid}).setoptions(this.options, this.selected).pad(2)
+            }
+            if(kind == "check"){                
+                this.checked = inputdesc.checked
+                input = Check({storeid: storeid, checked: this.checked})
+            }
+            let inputfield = InputField(label, input)
+            this.a(inputfield)
+        }
+    }
+}
+function InputFields(args){return new InputFields_(args)}
 ////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////
