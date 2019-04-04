@@ -782,3 +782,32 @@ function fetchallndjson(url, callback, errcallback){
     )
 }
 ////////////////////////////////////////////////////////////////////
+// date and time
+const SECOND = 1000
+const MINUTE = 60 * SECOND
+const HOUR = 60 * MINUTE
+const DAY = 24 * HOUR
+
+function formatdate(dt){
+    let datestr =
+        dt.getUTCFullYear() + "." +
+        String(dt.getUTCMonth() + 1).padStart(2, "0")  + "." +
+        String(dt.getUTCDate()).padStart(2, "0")  + " " +
+        String(dt.getUTCHours()).padStart(2, "0")  + ":00"        
+    return datestr
+}
+
+function parsedate(datestr){
+    let parts = datestr.split(" ")
+    let dateparts = parts[0].split(".")
+    let timeparts = parts[1].split(":")
+    let year = dateparts[0]
+    let month = parseInt(dateparts[1].replace(/^[0]?/, ""))
+    let day = parseInt(dateparts[2].replace(/^[0]?/, ""))
+    let hour = parseInt(timeparts[0].replace(/^[0]?/, ""))
+    let minute = parseInt(timeparts[1].replace(/^[0]?/, ""))
+    let dt = new Date(Date.UTC(year, month - 1, day, hour, minute, 0, 0))
+    return dt
+}
+
+////////////////////////////////////////////////////////////////////

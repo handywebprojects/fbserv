@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="static/css/staticpage.css?ver=1549100598">
         
-    <script src="static/js/dom.js?ver=1554361868"></script>
+    <script src="static/js/dom.js?ver=1554383703"></script>
     <script src="static/js/lichess.js?ver=1554267112"></script>
 
 </head>
@@ -167,18 +167,10 @@
                 "conditions.maxRating.perf": "auto"                
             }
 
-            let date = localStorage.getItem("createtourney/date")
-            if(date){
-                let parts = date.split(" ")
-                let dateparts = parts[0].split(".")
-                let timeparts = parts[1].split(":")
-                let year = dateparts[0]
-                let month = parseInt(dateparts[1].replace(/^[0]{1}/, ""))
-                let day = parseInt(dateparts[2].replace(/^[0]{1}/, ""))
-                let hour = parseInt(timeparts[0].replace(/^[0]{1}/, ""))
-                let minute = parseInt(timeparts[1].replace(/^[0]{1}/, ""))
-                let dateobj = new Date(Date.UTC(year, month - 1, day, hour, minute, 0, 0))
-                let timestamp = dateobj.getTime()
+            let datestr = localStorage.getItem("createtourney/date")
+            if(datestr){                
+                let dt = parsedate(datestr)
+                let timestamp = dt.getTime()
                 fields.startDate = `${timestamp}`
             }
 
@@ -226,18 +218,29 @@
 
         function setcurrentdate(){
             let dt = new Date()            
-            inputfields.inputs["date"].setText(
-                dt.getUTCFullYear() + "." +
-                String(dt.getUTCMonth() + 1).padStart(2, "0")  + "." +
-                String(dt.getUTCDay()).padStart(2, "0")  + " " +
-                String(dt.getUTCHours() + 1).padStart(2, "0")  + ":00"
-            )
+            inputfields.inputs["date"].setText(formatdate(dt))
+        }
+
+        function moddate(diff){            
+            let datestr = localStorage.getItem("createtourney/date")
+            if(!datestr) setcurrentdate()
+            datestr = localStorage.getItem("createtourney/date")            
+            dt = parsedate(datestr)            
+            timestamp = dt.getTime()
+            newtimestamp = timestamp + diff
+            newdt = new Date(newtimestamp)
+            newdatestr = formatdate(newdt)            
+            inputfields.inputs["date"].setText(newdatestr)
         }
 
         root.a(Button("Create Tourney", createtourney))
         root.a(inputfields)      
         let bottomcontrols = Div().mt(2)
         bottomcontrols.a(Button("Set current date", setcurrentdate))
+        bottomcontrols.a(Button("< Hour", moddate.bind(null, -HOUR)).ml(4))
+        bottomcontrols.a(Button("Hour >", moddate.bind(null, HOUR)).ml(4))
+        bottomcontrols.a(Button("< Day", moddate.bind(null, -DAY)).ml(4))
+        bottomcontrols.a(Button("Day >", moddate.bind(null, DAY)).ml(4))
         root.a(bottomcontrols)
         root.a(responsetextarea)
     </script>
