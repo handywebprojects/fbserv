@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="static/css/staticpage.css?ver=1549100598">
         
-    <script src="static/js/dom.js?ver=1554361335"></script>
+    <script src="static/js/dom.js?ver=1554361868"></script>
     <script src="static/js/lichess.js?ver=1554267112"></script>
 
 </head>
@@ -147,7 +147,7 @@
             {label: "Start UTC ( 'YYYY.MM.DD HH:MM' )", id: "date"}
         ]
 
-        let responsetextarea = TextArea().w(893).h(200).mt(3)
+        let responsetextarea = TextArea().w(893).h(650).mt(3)
 
         function createtourney(){
             fields = {
@@ -191,7 +191,7 @@
                 "Authorization": `Bearer ${localStorage.getItem("createtourney/token")}`
             }
 
-            responsetextarea.e.scrollIntoView({behavior: "smooth", block: "center", inline: "center"})
+            responsetextarea.e.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
 
             if(true) fetch("https://lichess.org/api/tournament",{
                 "method": "POST",
@@ -199,10 +199,10 @@
                 body: data
             }).then(
                 response => response.text().then(
-                    content => {
-                        responsetextarea.setText(`${content}`)
+                    content => {                        
                         try{
-                            let tourney = JSON.parse(content)
+                            let tourney = JSON.parse(content)                            
+                            responsetextarea.setText(JSON.stringify(tourney, null, 2))
                             let id = tourney.id
                             window.open("https://lichess.org/tournament/" + id, "_blank")
                         }catch(err){
@@ -224,7 +224,7 @@
             inputfields.inputs["date"].setText(
                 dt.getUTCFullYear() + "." +
                 String(dt.getUTCMonth() + 1).padStart(2, "0")  + "." +
-                String(dt.getUTCDay()).padStart(2, "0")  + ". " +
+                String(dt.getUTCDay()).padStart(2, "0")  + " " +
                 String(dt.getUTCHours() + 1).padStart(2, "0")  + ":00"
             )
         }

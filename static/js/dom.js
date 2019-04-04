@@ -358,6 +358,9 @@ class TextInput_ extends Input_{
     }
 
     setText(text){
+        if(this.storeid){
+            localStorage.setItem(this.storeid, text)
+        }
         return this.sv(text)
     }
 
