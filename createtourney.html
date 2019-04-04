@@ -204,9 +204,11 @@
                             let tourney = JSON.parse(content)                            
                             responsetextarea.setText(JSON.stringify(tourney, null, 2))
                             let id = tourney.id
-                            window.open("https://lichess.org/tournament/" + id, "_blank")
                             setTimeout(function(){
-                                root.e.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
+                                window.open("https://lichess.org/tournament/" + id, "_blank")
+                            }, 5000)                            
+                            setTimeout(function(){
+                                document.documentElement.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
                             }, 10000)
                         }catch(err){
                             responsetextarea.setText(`error, could not parse tourney from: ${content}`)
