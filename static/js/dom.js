@@ -693,7 +693,7 @@ class InputField_ extends e{
     constructor(label, input){
         super("div")
         this.disp("flex").h(36).bc("#eee").mar(1).ai("center")
-        this.labeldiv = Div().w(250).bc("#ffe").html(label).pad(5).ml(5)
+        this.labeldiv = Div().w(260).bc("#ffe").html(label).pad(5).ml(5)
         this.inputdiv = Div().w(600).bc("#eff").a(input).pad(5).ml(5).mr(5)
         this.a(this.labeldiv, this.inputdiv)
     }
@@ -703,10 +703,12 @@ function InputField(label, input){return new InputField_(label, input)}
 class InputFields_ extends e{
     constructor(args){
         super("div")
+        this.w(900)
         this.args = args || {}
         this.id = args.id || "inputfields"
         this.bc("#fef")
         this.inputdescs = this.args.inputdescs || []
+        this.inputs = {}
         for(let inputdesc of this.inputdescs){
             let label = inputdesc.label || "Input"
             let kind = inputdesc.kind
@@ -723,6 +725,7 @@ class InputFields_ extends e{
             }
             let inputfield = InputField(label, input)
             this.a(inputfield)
+            this.inputs[inputdesc.id] = input
         }
     }
 }

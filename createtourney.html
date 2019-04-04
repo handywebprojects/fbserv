@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="static/css/staticpage.css?ver=1549100598">
         
-    <script src="static/js/dom.js?ver=1554275108"></script>
+    <script src="static/js/dom.js?ver=1554361335"></script>
     <script src="static/js/lichess.js?ver=1554267112"></script>
 
 </head>
@@ -147,7 +147,7 @@
             {label: "Start UTC ( 'YYYY.MM.DD HH:MM' )", id: "date"}
         ]
 
-        let responsetextarea = TextArea().w(800).h(200)
+        let responsetextarea = TextArea().w(893).h(200).mt(3)
 
         function createtourney(){
             fields = {
@@ -215,11 +215,25 @@
             )
 
             responsetextarea.setText(JSON.stringify(fields, null, 2))
-        }
+        }        
 
         let inputfields = InputFields({id: "createtourney", inputdescs: inputdescs}).mt(5)
+
+        function setcurrentdate(){
+            let dt = new Date()            
+            inputfields.inputs["date"].setText(
+                dt.getUTCFullYear() + "." +
+                String(dt.getUTCMonth() + 1).padStart(2, "0")  + "." +
+                String(dt.getUTCDay()).padStart(2, "0")  + ". " +
+                String(dt.getUTCHours() + 1).padStart(2, "0")  + ":00"
+            )
+        }
+
         root.a(Button("Create Tourney", createtourney))
-        root.a(inputfields)        
+        root.a(inputfields)      
+        let bottomcontrols = Div().mt(2)
+        bottomcontrols.a(Button("Set current date", setcurrentdate))
+        root.a(bottomcontrols)
         root.a(responsetextarea)
     </script>
 </body>
