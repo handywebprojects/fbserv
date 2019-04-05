@@ -42,6 +42,7 @@ VERSION_DELIMS = [
     },
     {
         "find": '<script src="',
+        "find": '<script type="module" src="',        
         "left": 'src="',
         "right": '"'
     }
