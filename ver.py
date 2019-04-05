@@ -43,8 +43,7 @@ VERSION_DELIMS = [
         "right": '"'
     },
     {
-        "find": '<script src="',
-        "find": '<script type="module" src="',        
+        "find": '<script src="',        
         "left": 'src="',
         "right": '"'
     }
@@ -73,7 +72,9 @@ for file in allhtmls:
             if delim["find"] in line:                
                 fullname = firstbetween(line, delim["left"], delim["right"])
                 propername = firstbetween(fullname, '', '?')
+                print("examining", propername)
                 if propername in VERSIONED_FILES:
+                    print("*", propername, "is versioned")
                     mtime = "{:.0f}".format(stat(propername).st_mtime)
                     newfullname = propername + "?ver=" + mtime                    
                     newline = line.replace(fullname, newfullname)                
