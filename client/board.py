@@ -457,10 +457,16 @@ class Board(e):
             item = self.history.pop()
             self.setfromfen(item["fen"], item["positioninfo"], False)
 
-    def delallcallback(self):
+    def clearcallback(self):
+        item = None
         while len(self.history) > 0:
             item = self.history.pop()
-        self.setfromfen(item["fen"], item["positioninfo"], False)
+        return item
+    
+    def delallcallback(self):
+        item = self.clearcallback()
+        if item:
+            self.setfromfen(item["fen"], item["positioninfo"], False)
 
     def totalheight(self):
         return self.basicboard.totalheight() + self.controlpanelheight
@@ -816,6 +822,7 @@ class Board(e):
         self.controlpanel.a(self.variantcombo).w(self.basicboard.outerwidth).mw(self.basicboard.outerwidth)
         self.controlpanel.a(Button("Del", self.delcallback))
         self.controlpanel.a(Button("Delall", self.delallcallback))
+        self.controlpanel.a(Button("Clear", self.clearcallback))
         self.controlpanel.a(Button("Reset", self.setvariantcallback))
         self.sectioncontainer = Div().ac("bigboardsectioncontainer").w(self.basicboard.outerwidth)
         self.sectioncontainer.bci(self.background)
