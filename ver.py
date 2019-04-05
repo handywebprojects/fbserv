@@ -16,7 +16,20 @@ VERSIONED_FILES = [
     "static/css/system.css",
     "static/css/app.css",
     "static/css/board.css",
-    "static/js/app.js",
+
+    "static/clientjs/app.js",
+    "static/clientjs/basicboard.js",
+    "static/clientjs/board.js",
+    "static/clientjs/client.js",
+    "static/clientjs/connection.js",
+    "static/clientjs/dom.js",
+    "static/clientjs/forumgame.js",
+    "static/clientjs/org.transcrypt.__runtime__.js",
+    "static/clientjs/schema.js",
+    "static/clientjs/system.js",
+    "static/clientjs/utils.js",
+    "static/clientjs/widgets.js",
+
     "static/js/dom.js",
     "static/js/lichess.js"
 ]

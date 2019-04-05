@@ -8,6 +8,7 @@
 /outbox/*
 
 /client/__javascript__/*
+/client/__target__/*
 /client/app.js
 
 /firebase/fbsacckeyorig.json

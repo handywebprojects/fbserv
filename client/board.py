@@ -230,7 +230,7 @@ class Board(e):
             self.updatesdiv.a(Div().disp("inline-block").pad(3).mb(1).mt(1).ml(5).bc("#ffe").html("buildinfo {}".format(self.posdict["buildinfo"])))
             self.updatesdiv.a(Div().disp("inline-block").pad(3).mb(1).mt(1).ml(5).bc("#fee").html("lastsync {}".format(self.posdict["lastsync"])))
             self.updatesdiv.a(Div().disp("inline-block").pad(3).mb(1).mt(1).ml(5).bc("#fee").html("lastupload {}".format(self.posdict["lastupload"])))
-            self.updatesdiv.a(Div().disp("inline-block").pad(3).mb(1).mt(1)).ml(5).bc("#fee").html("lastminimax {}".format(self.posdict["lastminimax"])))
+            self.updatesdiv.a(Div().disp("inline-block").pad(3).mb(1).mt(1).ml(5).bc("#fee").html("lastminimax {}".format(self.posdict["lastminimax"])))
             self.updatesdiv.a(Div().disp("inline-block").pad(3).mb(1).mt(1).ml(5).bc("#fee").html("lastadd {}".format(self.posdict["lastadd"])))
         self.autbookbuttonsdiv = Div().mt(3)
         self.autbookbuttonsdiv.a(Button("Change book name", self.changebookname))

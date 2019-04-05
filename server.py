@@ -26,6 +26,9 @@ from scheduler import shouldwake
 
 #########################################################
 # flask imports
+import mimetypes
+mimetypes.add_type('text/javascript', '.js')
+
 from flask import Flask, render_template, request, Response, send_from_directory, redirect
 #########################################################
 

@@ -1,4 +1,4 @@
-from utils import SUBMIT_URL, ge, cpick, getelse, getrec, getrecm, escapeHTML, allchilds, getext, IS_DEV, queryparams
+from utils import ge, cpick, getelse, getrec, getrecm, escapeHTML, allchilds, getext, IS_DEV, queryparams
 from dom import Div, Span, TextInput, PasswordInput, Button, Label, Hlink
 from widgets import TabPane, Tab, FileUploader, SplitPane
 from schema import Schema

@@ -122,7 +122,7 @@ def check_client():
     for item in listing:        
         if ( item["ext"] == "py" ) and ( not ( item["name"] == "app.py" ) ):
             lastmodpy = item["st_mtime"]
-            jspath = os.path.join("client", "__javascript__", item["basename"] + ".mod.js")
+            jspath = os.path.join("client", "__target__", item["basename"] + ".js")
             lastmodjs = getlastmod(jspath)                        
             if lastmodpy > lastmodjs:                
                 anychanged = True
