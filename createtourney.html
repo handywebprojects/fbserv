@@ -147,6 +147,7 @@
             {label: "Start UTC ( 'YYYY.MM.DD HH:MM' )", id: "date"}
         ]
 
+        let linkdiv = Div().h(30).disp("flex").ai("center").bc("#eee").mt(2).w(900)
         let responsetextarea = TextArea().w(893).h(650).mt(3)
 
         function createtourney(){
@@ -183,7 +184,7 @@
                 "Authorization": `Bearer ${localStorage.getItem("createtourney/token")}`
             }
 
-            responsetextarea.e.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
+            linkdiv.e.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
 
             if(true) fetch("https://lichess.org/api/tournament",{
                 "method": "POST",
@@ -197,11 +198,14 @@
                             responsetextarea.setText(JSON.stringify(tourney, null, 2))
                             let id = tourney.id
                             setTimeout(function(){
-                                window.open("https://lichess.org/tournament/" + id, "_blank")
-                            }, 5000)                            
-                            setTimeout(function(){
-                                document.documentElement.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
-                            }, 10000)
+                                let url = "https://lichess.org/tournament/" + id                                
+                                linkdiv.x.a(
+                                    Button("To top", function(){
+                                        document.documentElement.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
+                                    }).ml(5),
+                                    Hlink(url, url, true).ml(10)
+                                )
+                            }, 1000)                                                        
                         }catch(err){
                             responsetextarea.setText(`error, could not parse tourney from: ${content}`)
                         }
@@ -241,7 +245,8 @@
         bottomcontrols.a(Button("Hour >", moddate.bind(null, HOUR)).ml(4))
         bottomcontrols.a(Button("< Day", moddate.bind(null, -DAY)).ml(4))
         bottomcontrols.a(Button("Day >", moddate.bind(null, DAY)).ml(4))
-        root.a(bottomcontrols)
+        root.a(bottomcontrols)        
+        root.a(linkdiv)
         root.a(responsetextarea)
     </script>
 </body>
