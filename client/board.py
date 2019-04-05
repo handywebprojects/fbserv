@@ -530,6 +530,7 @@ class Board(e):
     def analysismoveclicked(self, moveuci, dostore = False):
         if not ( self.moveclickedcallback is None ):
             if dostore:
+                #print("storing analysis")
                 self.storeanalysiscallback()
             self.moveclickedcallback(self.basicboard.variantkey, self.basicboard.fen, moveuci)
 
