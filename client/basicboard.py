@@ -653,10 +653,10 @@ class BasicBoard(e):
         self.build()
 
 class MultipvInfo(e):
-    def bestmovesanclickedfactory(self, moveuci):
+    def bestmovesanclickedfactory(self, moveuci, dostore = False):
         def bestmovesanclicked():
             if not ( self.bestmovesanclickedcallback is None ):
-                self.bestmovesanclickedcallback(moveuci)
+                self.bestmovesanclickedcallback(moveuci, dostore)
         return bestmovesanclicked
 
     def scorebonus(self):
@@ -689,7 +689,8 @@ class MultipvInfo(e):
         self.idiv = Div().ac("multipvinfoi").html("{}.".format(self.i))
         self.bestmovesandiv = Div().ac("multipvinfobestmovesan").html(self.bestmovesan)
         self.bestmovesandiv.ae("mousedown", self.bestmovesanclickedfactory(self.bestmoveuci))        
-        self.scorenumericaldiv = Div().ac("multipvinfoscorenumerical").html("{}".format(scoreverbal(self.effscore())))
+        self.scorenumericaldiv = Div().ac("multipvinfoscorenumerical").html("{}".format(scoreverbal(self.effscore()))).cp()
+        self.scorenumericaldiv.ae("mousedown", self.bestmovesanclickedfactory(self.bestmoveuci, True))        
         self.bonussliderdiv = Div().ac("multipvinfobonussliderdiv")
         self.bonusslider = Slider().setmin(-500).setmax(500).ac("multipvinfobonusslider").sv(self.scorebonus())        
         self.bonusslider.ae("change", self.bonussliderchanged)

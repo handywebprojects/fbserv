@@ -17,6 +17,8 @@ VERSIONED_FILES = [
     "static/css/app.css",
     "static/css/board.css",
 
+    "static/js/app.js",
+
     "static/clientjs/app.js",
     "static/clientjs/basicboard.js",
     "static/clientjs/board.js",

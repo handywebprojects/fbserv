@@ -527,8 +527,10 @@ class Board(e):
                 "owner": self.id
             })
 
-    def analysismoveclicked(self, moveuci):
+    def analysismoveclicked(self, moveuci, dostore = False):
         if not ( self.moveclickedcallback is None ):
+            if dostore:
+                self.storeanalysiscallback()
             self.moveclickedcallback(self.basicboard.variantkey, self.basicboard.fen, moveuci)
 
     def setenginebar(self, score = None):
