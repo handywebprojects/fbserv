@@ -6,3 +6,4 @@ cd __target__
 for /r %%i in (*) do copy /b %%i +,, > nul
 cd ..
 cd ..
+call s\bundle
