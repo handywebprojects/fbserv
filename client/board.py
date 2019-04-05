@@ -822,7 +822,7 @@ class Board(e):
         self.controlpanel.a(self.variantcombo).w(self.basicboard.outerwidth).mw(self.basicboard.outerwidth)
         self.controlpanel.a(Button("Del", self.delcallback))
         self.controlpanel.a(Button("Delall", self.delallcallback))
-        self.controlpanel.a(Button("Clear", self.clearcallback))
+        self.controlpanel.a(Button("Clearall", self.clearcallback))
         self.controlpanel.a(Button("Reset", self.setvariantcallback))
         self.sectioncontainer = Div().ac("bigboardsectioncontainer").w(self.basicboard.outerwidth)
         self.sectioncontainer.bci(self.background)
