@@ -677,7 +677,7 @@ class MultipvInfo(e):
         if not ( self.bonussliderchangedcallback is None ):            
             self.bonussliderchangedcallback()
 
-    def build(self):            
+    def build(self, gamesan = None):            
         self.bestmoveuci = self.infoi["bestmoveuci"]
         self.bestmovesan = self.infoi["bestmovesan"]
         self.scorenumerical = self.infoi["scorenumerical"]
@@ -688,6 +688,8 @@ class MultipvInfo(e):
         self.container = Div().ac("multipvinfocontainer")
         self.idiv = Div().ac("multipvinfoi").html("{}.".format(self.i))
         self.bestmovesandiv = Div().ac("multipvinfobestmovesan").html(self.bestmovesan)
+        if gamesan == self.bestmovesan:
+            self.bestmovesandiv.bc("#fbf")
         self.bestmovesandiv.ae("mousedown", self.bestmovesanclickedfactory(self.bestmoveuci))        
         self.scorenumericaldiv = Div().ac("multipvinfoscorenumerical").html("{}".format(scoreverbal(self.effscore()))).cp()
         self.scorenumericaldiv.ae("mousedown", self.bestmovesanclickedfactory(self.bestmoveuci, True))        

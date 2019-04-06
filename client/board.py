@@ -561,6 +561,15 @@ class Board(e):
                 col = "#f00"
             self.enginebardiv.a(Div().pa().t(top).l(0).w(self.enginebardivwidth).h(3).bc(col))
 
+    def getgamesan(self):
+        try:            
+            pinfo = self.positioninfos[self.gamei + 1]["positioninfo"]            
+            san = pinfo["genmove"]["san"]
+            return san
+        except:
+            #print("could not get game san")
+            pass
+
     def buildanalysisinfodiv(self):
         self.analysisinfodiv.x()
         self.basicboard.clearcanvases()        
@@ -576,10 +585,11 @@ class Board(e):
                 minfos.append(minfo)                
             except:                
                 pass        
+        gamesan = self.getgamesan()
         i = 1
         for minfo in sorted(minfos, key = lambda item: item.effscore(), reverse = True):
             minfo.i = i
-            minfo.build()
+            minfo.build(gamesan)
             if i == 1:
                 self.bestmoveuci = minfo.bestmoveuci
                 self.setenginebar(minfo.effscore())
