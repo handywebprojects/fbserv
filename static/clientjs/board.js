@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2019-04-06 10:46:39
+// Transcrypt'ed from Python, 2019-04-06 11:24:51
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {LICH_API_GAMES_EXPORT, getconn, lichapiget} from './connection.js';
 import {Log, LogItem} from './widgets.js';
@@ -77,6 +77,9 @@ export var Board =  __class__ ('Board', [e], {
 			self.setfromfen (pinfo ['fen'], pinfo ['positioninfo']);
 			for (var j = 0; j < len (self.positioninfos); j++) {
 				self.posdivs [j].arc (j == self.gamei, 'boardposdivselected');
+				if (j == self.gamei) {
+					self.posdivs [j].e.scrollIntoView (dict ({'block': 'center', 'inline': 'center'}));
+				}
 			}
 			self.history = [];
 		};
@@ -828,6 +831,14 @@ export var Board =  __class__ ('Board', [e], {
 	get fentextchangedcallback () {return __get__ (this, function (self, fen) {
 		self.variantchanged (self.basicboard.variantkey, fen);
 	});},
+	get gametabselected () {return __get__ (this, function (self) {
+		try {
+			self.posclickedfactory (self.gamei) ();
+		}
+		catch (__except0__) {
+			// pass;
+		}
+	});},
 	get __init__ () {return __get__ (this, function (self, args) {
 		__super__ (Board, '__init__') (self, 'div');
 		self.addmovemode = false;
@@ -942,7 +953,7 @@ export var Board =  __class__ ('Board', [e], {
 		self.bookdiv = Div ().ms ().fs (20);
 		self.bookpane.setcontentelement (self.bookdiv);
 		self.chartdiv = Div ();
-		self.tabpane = TabPane (dict ({'kind': 'normal', 'id': 'board', 'tabs': [Tab ('analysis', 'Analysis', self.analysisdiv), Tab ('auto', 'Auto', self.autodiv), Tab ('book', 'Book', self.bookpane), Tab ('game', 'Game', self.gamediv), Tab ('pgn', 'Pgn', self.pgntext), Tab ('games', 'Games', self.gamescontainerdiv), Tab ('chart', 'Chart', self.chartdiv), Tab ('engineout', 'Engine out', self.engineoutpane)], 'selected': 'analysis'}));
+		self.tabpane = TabPane (dict ({'kind': 'normal', 'id': 'board', 'tabs': [Tab ('analysis', 'Analysis', self.analysisdiv), Tab ('auto', 'Auto', self.autodiv), Tab ('book', 'Book', self.bookpane), Tab ('game', 'Game', self.gamediv, self.gametabselected), Tab ('pgn', 'Pgn', self.pgntext), Tab ('games', 'Games', self.gamescontainerdiv), Tab ('chart', 'Chart', self.chartdiv), Tab ('engineout', 'Engine out', self.engineoutpane)], 'selected': 'analysis'}));
 		self.verticalcontainer.a ([self.sectioncontainer, self.enginebardiv, self.movelistdiv, self.tabpane]);
 		self.a (self.verticalcontainer);
 		self.basicresize ();
