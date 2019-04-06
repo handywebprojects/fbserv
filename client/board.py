@@ -80,6 +80,8 @@ class Board(e):
             self.setfromfen(pinfo["fen"], pinfo["positioninfo"])
             for j in range(len(self.positioninfos)):
                 self.posdivs[j].arc(j == self.gamei, "boardposdivselected")
+                if j == self.gamei:
+                    self.posdivs[j].e.scrollIntoView({"block": "center", "inline": "center"})
             self.history = []
         return poslicked
 
@@ -784,6 +786,13 @@ class Board(e):
     def fentextchangedcallback(self, fen):
         self.variantchanged(self.basicboard.variantkey, fen)
 
+    def gametabselected(self):
+        try:
+            self.posclickedfactory(self.gamei)()
+        except:
+            #print("could not show game position")
+            pass
+
     def __init__(self, args):
         super().__init__("div")
         self.addmovemode = False
@@ -921,7 +930,7 @@ class Board(e):
                 Tab("analysis", "Analysis", self.analysisdiv),
                 Tab("auto", "Auto", self.autodiv),
                 Tab("book", "Book", self.bookpane),
-                Tab("game", "Game", self.gamediv),
+                Tab("game", "Game", self.gamediv, self.gametabselected),
                 Tab("pgn", "Pgn", self.pgntext),
                 Tab("games", "Games", self.gamescontainerdiv),
                 Tab("chart", "Chart", self.chartdiv),

@@ -54,11 +54,12 @@ class SplitPane(e):
         self.a(self.container)
 
 class Tab(e):
-    def __init__(self, key, displayname, element):
+    def __init__(self, key, displayname, element, clickedcallback):
         super().__init__("div")
         self.key = key
         self.displayname = displayname
         self.element = element
+        self.clickedcallback = clickedcallback
         self.container = Div(["tab", "container", "noselect"]).html(displayname)
         self.a(self.container)
 
@@ -109,6 +110,8 @@ class TabPane(SplitPane):
     def tabclickedfactory(self, tab):
         def tabclicked():            
             self.selectbykey(tab.key)
+            if tab.clickedcallback:
+                tab.clickedcallback()
         return tabclicked
 
     def settabs(self, tabs):
