@@ -562,13 +562,19 @@ class Board(e):
             self.enginebardiv.a(Div().pa().t(top).l(0).w(self.enginebardivwidth).h(3).bc(col))
 
     def getgamesan(self):
-        try:            
-            pinfo = self.positioninfos[self.gamei + 1]["positioninfo"]            
+        try:
+            pinfoitem = self.positioninfos[self.gamei]            
+            pinfoitemnext = self.positioninfos[self.gamei + 1]
+            fen = pinfoitem["fen"]
+            pinfo = pinfoitemnext["positioninfo"]            
+            #print(fen, pinfo)            
+            if not ( fen == self.basicboard.fen ):
+                return None            
             san = pinfo["genmove"]["san"]
             return san
         except:
             #print("could not get game san")
-            pass
+            return None
 
     def buildanalysisinfodiv(self):
         self.analysisinfodiv.x()
@@ -832,11 +838,11 @@ class Board(e):
         self.controlpanel.a(Button("Flip", self.flipcallback))        
         self.variantcombo = ComboBox()
         self.setvariantcombo()
-        self.controlpanel.a(self.variantcombo).w(self.basicboard.outerwidth).mw(self.basicboard.outerwidth)
-        self.controlpanel.a(Button("Del", self.delcallback))
-        self.controlpanel.a(Button("Delall", self.delallcallback))
-        self.controlpanel.a(Button("Clearall", self.clearcallback))
+        self.controlpanel.a(self.variantcombo).w(self.basicboard.outerwidth).mw(self.basicboard.outerwidth)        
         self.controlpanel.a(Button("Reset", self.setvariantcallback))
+        self.controlpanel.a(Button("Clearall", self.clearcallback))
+        self.controlpanel.a(Button("Delall", self.delallcallback))
+        self.controlpanel.a(Button("Del", self.delcallback))        
         self.sectioncontainer = Div().ac("bigboardsectioncontainer").w(self.basicboard.outerwidth)
         self.sectioncontainer.bci(self.background)
         self.sectioncontainer.a([self.controlpanel, self.basicboard])
