@@ -733,6 +733,19 @@ class InputFields_ extends e{
     }
 }
 function InputFields(args){return new InputFields_(args)}
+
+class Labeled_ extends e{
+    constructor(label, widget){
+        super("div")
+        this.label = label
+        this.widget = widget
+        this.disp("flex").ai("center").bc("#eee").mar(1)
+        this.labeldiv = Div().pad(2).bc("#ffe").html(label).ff("monospace").mar(1)
+        this.widgetdiv = Div().pad(2).bc("#eff").a(this.widget).mar(1)        
+        this.a(this.labeldiv, this.widgetdiv)
+    }
+}
+function Labeled(label, widget){return new Labeled_(label, widget)}
 ////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////
@@ -789,6 +802,7 @@ const HOUR = 60 * MINUTE
 const DAY = 24 * HOUR
 
 function formatdate(dt){
+    if(dt == null) return ""
     let datestr =
         dt.getUTCFullYear() + "." +
         String(dt.getUTCMonth() + 1).padStart(2, "0")  + "." +

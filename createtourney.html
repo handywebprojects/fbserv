@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="static/css/staticpage.css?ver=1549100598">
         
-    <script src="static/js/dom.js?ver=1554449832"></script>
+    <script src="static/js/dom.js?ver=1554627979"></script>
     <script src="static/js/lichess.js?ver=1554267112"></script>
 
 </head>
@@ -19,6 +19,9 @@
     <script>
         let root = Div()
         document.getElementById("root").appendChild(root.e)
+
+        let scheduled = {}
+        let scheduledloaded = false
         
         let inputdescs = [
             {label: "Token", id: "token"},
@@ -149,6 +152,13 @@
 
         let linkdiv = Div().h(30).disp("flex").ai("center").bc("#eee").mt(2).w(900)
         let responsetextarea = TextArea().w(893).h(650).mt(3)
+        let usernameinput = TextInput({storeid: "createtourney/username"})
+        let scheduleinput = TextInput({storeid: "createtourney/schedule"}) 
+        let scheduledlistdiv = Div().mt(1).mb(1)
+        let bottomcontrols = Div().disp("flex").ai("center").mt(2)        
+        let showdate = Div().w(125)
+        let bottomcontrols2 = Div().disp("flex").mt(2)
+        let createscheduledhook = Div()
 
         function createtourney(){
             fields = {
@@ -184,7 +194,7 @@
                 "Authorization": `Bearer ${localStorage.getItem("createtourney/token")}`
             }
 
-            linkdiv.e.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
+            bottomcontrols.e.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
 
             if(true) fetch("https://lichess.org/api/tournament",{
                 "method": "POST",
@@ -197,6 +207,7 @@
                             let tourney = JSON.parse(content)                            
                             responsetextarea.setText(JSON.stringify(tourney, null, 2))
                             let id = tourney.id
+                            loadschedule()
                             setTimeout(function(){
                                 let url = "https://lichess.org/tournament/" + id                                
                                 linkdiv.x.a(
@@ -220,9 +231,15 @@
 
         let inputfields = InputFields({id: "createtourney", inputdescs: inputdescs}).mt(5)
 
+        function setdate(dt){
+            let datestr = formatdate(dt)
+            inputfields.inputs["date"].setText(datestr)
+            showdate.html(datestr)
+        }
+
         function setcurrentdate(){
-            let dt = new Date()            
-            inputfields.inputs["date"].setText(formatdate(dt))
+            let dt = new Date()                        
+            setdate(dt)
         }
 
         function moddate(diff){            
@@ -232,22 +249,111 @@
             dt = parsedate(datestr)            
             timestamp = dt.getTime()
             newtimestamp = timestamp + diff
-            newdt = new Date(newtimestamp)
-            newdatestr = formatdate(newdt)            
-            inputfields.inputs["date"].setText(newdatestr)
+            newdt = new Date(newtimestamp)            
+            setdate(newdt)
+        }
+
+        function modschedule(diff){
+            let datestr = localStorage.getItem("createtourney/date")            
+            if(datestr == "") setcurrentdate()
+            datestr = localStorage.getItem("createtourney/date")            
+            let schedulestr = localStorage.getItem("createtourney/schedule")
+            if(schedulestr == "") schedulestr = "9,11,13,15,17,19,21"
+            let parts = schedulestr.split(",")
+            let index = parts.findIndex(function(value){return value.match(/^\*/)})
+            parts = parts.map(part => part.replace(/^\*/, ""))
+            if(index<0) index = 0            
+            index+=diff            
+            if(index >= parts.length) index = 0
+            if(index < 0) index = parts.length - 1
+            let hour = parseInt(parts[index])
+            parts[index] = "*" + parts[index]
+            schedulestr = parts.join(",")
+            scheduleinput.setText(schedulestr)
+            datestr = localStorage.getItem("createtourney/date")            
+            let dt = parsedate(datestr)
+            let newdt = new Date(Date.UTC(
+                dt.getUTCFullYear(dt),
+                dt.getUTCMonth(dt),
+                dt.getUTCDate(dt),
+                hour,
+                0,
+                0,
+                0
+            ))
+            setdate(newdt)
+            createscheduledhook.x
+            if(!scheduledloaded) return
+            if(newdt.getTime() < new Date().getTime()) return
+            createscheduledhook.a(Button("Create scheduled", createtourney).bc("#efe").ml(5).h(26))
+            for(tid in scheduled){
+                let tourney = scheduled[tid]
+                if(tourney.startsAt == newdt.getTime()){
+                    createscheduledhook.x
+                    break
+                }
+            }
+        }
+
+        function loadschedule(){
+            fetchjson("https://lichess.org/api/tournament",
+                function(obj){
+                    bottomcontrols.e.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
+                    created = obj["created"]
+                    let table = Table().sa("cellpadding", "5")
+                    scheduled = {}
+                    for(tourney of created){
+                        let id = tourney["id"]
+                        let url = `https://lichess.org/tournament/${id}`
+                        let nbplayers = tourney["nbPlayers"]
+                        let startsat = tourney["startsAt"]
+                        let createdbylower = tourney["createdBy"].toLowerCase()
+                        let fullname = tourney["fullName"]
+                        let usernamelower = usernameinput.getText().toLowerCase()                        
+                        let formfullname = inputfields.inputs["name"].getText() + " Arena"
+                        if((createdbylower == usernamelower)&&(fullname == formfullname)){
+                            console.log(tourney)
+                            scheduled[id] = tourney
+                            table.a(Tr().a(
+                                Td().a(Hlink(url, fullname, true)),
+                                Td().html(`${nbplayers}`),
+                                Td().html(tourney.createdBy),
+                                Td().html(new Date(startsat).toUTCString()),
+                            ))
+                        }                        
+                    }
+                    scheduledlistdiv.x.a(table)
+                    scheduledloaded = true
+                    modschedule(0)
+                },
+                function(status, url, content, err){                    
+                    responsetextarea.setText(`${status} ${url} ${err}\n${content}`)
+                }
+            )
         }
 
         root.a(Button("Create Tourney", createtourney))
-        root.a(inputfields)      
-        let bottomcontrols = Div().mt(2)
+        root.a(inputfields)              
+        bottomcontrols.a(showdate)
+        bottomcontrols.a(Button("Clear date", setdate.bind(null, null)))
         bottomcontrols.a(Button("Set current date", setcurrentdate))
         bottomcontrols.a(Button("< Hour", moddate.bind(null, -HOUR)).ml(4))
         bottomcontrols.a(Button("Hour >", moddate.bind(null, HOUR)).ml(4))
         bottomcontrols.a(Button("< Day", moddate.bind(null, -DAY)).ml(4))
-        bottomcontrols.a(Button("Day >", moddate.bind(null, DAY)).ml(4))
-        root.a(bottomcontrols)        
+        bottomcontrols.a(Button("Day >", moddate.bind(null, DAY)).ml(4))        
+        root.a(bottomcontrols)                
+        bottomcontrols2.a(Labeled("Username", usernameinput))
+        bottomcontrols2.a(Labeled("Schedule", scheduleinput))
+        bottomcontrols2.a(Button("*", modschedule.bind(null, 0)))
+        bottomcontrols2.a(Button("<", modschedule.bind(null, -1)))
+        bottomcontrols2.a(Button(">", modschedule.bind(null, 1)))
+        bottomcontrols2.a(Button("Load schedule", loadschedule))
+        bottomcontrols2.a(createscheduledhook)
+        root.a(bottomcontrols2)        
+        root.a(scheduledlistdiv.html("No scheduled events listed yet."))    
         root.a(linkdiv)
         root.a(responsetextarea)
+        showdate.html(localStorage.getItem("createtourney/date"))
     </script>
 </body>
 
