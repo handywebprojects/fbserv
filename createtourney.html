@@ -258,7 +258,7 @@
             if(datestr == "") setcurrentdate()
             datestr = localStorage.getItem("createtourney/date")            
             let schedulestr = localStorage.getItem("createtourney/schedule")
-            if(schedulestr == "") schedulestr = "9,11,13,15,17,19,21"
+            if(!schedulestr) schedulestr = "9,11,13,15,17,19,21"
             let parts = schedulestr.split(",")
             let index = parts.findIndex(function(value){return value.match(/^\*/)})
             parts = parts.map(part => part.replace(/^\*/, ""))
