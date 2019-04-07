@@ -20,7 +20,7 @@
         let root = Div()
         document.getElementById("root").appendChild(root.e)
 
-        let scheduled = {}
+        let scheduled = {}        
         let scheduledloaded = false
         
         let inputdescs = [
@@ -299,12 +299,13 @@
             fetchjson("https://lichess.org/api/tournament",
                 function(obj){
                     bottomcontrols.e.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
-                    created = obj["created"]
+                    created = obj["created"].concat(obj["started"])
                     let table = Table().sa("cellpadding", "5")
                     scheduled = {}
+                    ongoing = {}
                     for(tourney of created){
                         let id = tourney["id"]
-                        let url = `https://lichess.org/tournament/${id}`
+                        let url = tourneyactionurl(id)
                         let nbplayers = tourney["nbPlayers"]
                         let startsat = tourney["startsAt"]
                         let createdbylower = tourney["createdBy"].toLowerCase()
@@ -312,14 +313,17 @@
                         let usernamelower = usernameinput.getText().toLowerCase()                        
                         let formfullname = inputfields.inputs["name"].getText() + " Arena"
                         if((createdbylower == usernamelower)&&(fullname == formfullname)){
-                            console.log(tourney)
-                            scheduled[id] = tourney
+                            //console.log(tourney)
+                            created = ( tourney.status == 10 )
+                            if(created) scheduled[id] = tourney
                             table.a(Tr().a(
-                                Td().a(Hlink(url, fullname, true)),
+                                Td().html(id),
+                                Td().a(Hlink(url, fullname, true)),                                
                                 Td().html(`${nbplayers}`),
                                 Td().html(tourney.createdBy),
                                 Td().html(new Date(startsat).toUTCString()),
-                            ))
+                                Td().a(Button("Connect", connect.bind(null, id)))                                
+                            ).bc(created ? "inherit" : "#afa"))
                         }                        
                     }
                     scheduledlistdiv.x.a(table)
@@ -330,6 +334,32 @@
                     responsetextarea.setText(`${status} ${url} ${err}\n${content}`)
                 }
             )
+        }
+
+        function log(msg){
+            responsetextarea.setText(msg + "\n" + responsetextarea.getText())
+        }
+
+        function connect(id){
+            let randsri = Math.random().toString(36).slice(2,12)
+            let surl = `wss://socket.lichess.org/tournament/${id}/socket/v4?sri=${randsri}`
+            let ws = new WebSocket(surl)
+            ws.onopen = function(){
+                log("socket opened : " + surl)
+            }
+            ws.onmessage = function(msg){                
+                datastr = JSON.stringify(msg.data)
+                log(id + " : " + datastr)
+            }
+            ws.onclose = function(){
+                log("socket closed : " + surl)
+            }
+        }
+
+        function tourneyactionurl(id, action){
+            let baseurl = `https://lichess.org/tournament/${id}`
+            if(!action) return baseurl
+            return baseurl + "/" + action
         }
 
         root.a(Button("Create Tourney", createtourney))
