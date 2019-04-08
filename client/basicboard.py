@@ -1,4 +1,4 @@
-from dom import e, Div, TextInput, Canvas, TextArea, Slider, Table, Tr, Td
+from dom import e, Div, TextInput, Canvas, TextArea, Slider, Table, Tr, Td, ComboBox
 from utils import Vect, cpick, xor, scorecolor, scoreverbal
 from connection import getconn
 
@@ -38,6 +38,20 @@ PIECE_NAMES = {
 
 PROMPIECEKINDS_STANDARD = ["n", "b", "r", "q"]
 PROMPIECEKINDS_ANTICHESS = ["n", "b", "r", "q", "k"]
+
+TRAIN_OPTIONS = [
+    ["0", "0"],
+    ["1", "1"],
+    ["2", "2"],
+    ["2", "2"],
+    ["3", "3"],
+    ["4", "4"],
+    ["5", "5"],
+    ["6", "6"],
+    ["7", "7"],
+    ["8", "8"],
+    ["9", "9"]
+]
 
 def prompiecekindsforvariantkey(variantkey):
     if variantkey == "antichess":
@@ -677,6 +691,10 @@ class MultipvInfo(e):
         if not ( self.bonussliderchangedcallback is None ):            
             self.bonussliderchangedcallback()
 
+    def traincombochanged(self):
+        self.infoi["metrainweight"] = self.metraincombo.v()
+        self.infoi["opptrainweight"] = self.opptraincombo.v()
+
     def build(self, gamesan = None):            
         self.bestmoveuci = self.infoi["bestmoveuci"]
         self.bestmovesan = self.infoi["bestmovesan"]
@@ -699,8 +717,18 @@ class MultipvInfo(e):
         self.bonussliderdiv.a(self.bonusslider)
         self.depthdiv = Div().ac("multipvinfodepth").html("{}".format(self.depth))
         self.miscdiv = Div().ac("multipvinfomisc").html("nps {}".format(self.nps))
+        self.traindiv = Div().ac("multipvinfomisc").w(100)        
+        metrainweight = self.infoi["metrainweight"]
+        if not metrainweight:
+            metrainweight = "0"
+        opptrainweight = self.infoi["opptrainweight"]
+        if not opptrainweight:
+            opptrainweight = "0"        
+        self.metraincombo = ComboBox().setoptions(TRAIN_OPTIONS, metrainweight, self.traincombochanged)
+        self.opptraincombo = ComboBox().setoptions(TRAIN_OPTIONS, opptrainweight, self.traincombochanged)        
+        self.traindiv.a([self.metraincombo, self.opptraincombo])
         self.pvdiv = Div().ac("multipvinfopv").html(self.pvpgn)
-        self.container.a([self.idiv, self.bestmovesandiv, self.scorenumericaldiv, self.bonussliderdiv, self.depthdiv, self.miscdiv, self.pvdiv])        
+        self.container.a([self.idiv, self.bestmovesandiv, self.scorenumericaldiv, self.bonussliderdiv, self.traindiv, self.depthdiv, self.pvdiv])        
         self.bestmovesandiv.c(scorecolor(self.effscore()))
         self.scorenumericaldiv.c(scorecolor(self.effscore()))        
         self.x().a(self.container)        
