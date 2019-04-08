@@ -1,9 +1,9 @@
-// Transcrypt'ed from Python, 2019-04-06 11:24:51
+// Transcrypt'ed from Python, 2019-04-08 12:41:02
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {LICH_API_GAMES_EXPORT, getconn, lichapiget} from './connection.js';
 import {Log, LogItem} from './widgets.js';
 import {SplitPane, Tab, TabPane} from './widgets.js';
-import {BasicBoard, MultipvInfo, PgnInfo, PgnList, PgnText, VARIANT_OPTIONS} from './basicboard.js';
+import {BLACK, BasicBoard, MultipvInfo, PgnInfo, PgnList, PgnText, VARIANT_OPTIONS, WHITE} from './basicboard.js';
 import {IS_PROD, View, cpick, getglobalcssvarpxint, scorecolor, scoreverbal, uci_variant_to_variantkey} from './utils.js';
 import {Button, ComboBox, Div, Span, TextArea, e} from './dom.js';
 var __name__ = 'board';
@@ -28,6 +28,7 @@ export var Board =  __class__ ('Board', [e], {
 		if (typeof edithistory == 'undefined' || (edithistory != null && edithistory.hasOwnProperty ("__kwargtrans__"))) {;
 			var edithistory = true;
 		};
+		self.trainfen = null;
 		var restartanalysis = false;
 		if (self.analyzing.py_get ()) {
 			self.stopanalyzecallback ();
@@ -646,7 +647,9 @@ export var Board =  __class__ ('Board', [e], {
 				self.setenginebar (minfo.effscore ());
 			}
 			var iw = 1 / (5 * i);
-			self.basicboard.drawuciarrow (minfo.bestmoveuci, dict ({'strokecolor': scorecolor (minfo.effscore ()), 'linewidth': iw, 'headheight': iw}));
+			if (self.trainmode == 'off') {
+				self.basicboard.drawuciarrow (minfo.bestmoveuci, dict ({'strokecolor': scorecolor (minfo.effscore ()), 'linewidth': iw, 'headheight': iw}));
+			}
 			self.analysisinfodiv.a (minfo);
 			i++;
 		}
@@ -779,7 +782,17 @@ export var Board =  __class__ ('Board', [e], {
 		self.storeanalysiscallback ();
 		self.makeanalyzedmovecallback ();
 	});},
-	get defaultmoveclickedcallback () {return __get__ (this, function (self, variantkey, fen, moveuci) {
+	get defaultmoveclickedcallback () {return __get__ (this, function (self, variantkey, fen, moveuci, handletrain) {
+		if (typeof handletrain == 'undefined' || (handletrain != null && handletrain.hasOwnProperty ("__kwargtrans__"))) {;
+			var handletrain = true;
+		};
+		if (handletrain) {
+			if (self.trainmode == 'white' && self.basicboard.turn () == BLACK || self.trainmode == 'black' && self.basicboard.turn () == WHITE) {
+				self.examinealgeb = moveuci;
+				self.trainhandler ();
+				return ;
+			}
+		}
 		getconn ().sioreq (dict ({'kind': 'mainboardmove', 'variantkey': variantkey, 'fen': fen, 'moveuci': moveuci, 'owner': self.id}));
 	});},
 	get setvariantandfen () {return __get__ (this, function (self, variantkey, fen) {
@@ -834,6 +847,98 @@ export var Board =  __class__ ('Board', [e], {
 	get gametabselected () {return __get__ (this, function (self) {
 		try {
 			self.posclickedfactory (self.gamei) ();
+		}
+		catch (__except0__) {
+			// pass;
+		}
+	});},
+	get trainhandler () {return __get__ (this, function (self) {
+		try {
+			self.traintimediv.html (new Date ().toLocaleString ());
+			self.trainmode = self.traincombo.v ();
+			if (self.trainmode == 'off') {
+				self.trainfen = null;
+			}
+			else {
+				var trainside = WHITE;
+				if (self.trainmode == 'black') {
+					var trainside = BLACK;
+				}
+				var turn = self.basicboard.turn ();
+				if (turn == trainside) {
+					if (self.trainfen == self.basicboard.fen) {
+						// pass;
+					}
+					else if (self.analysisinfo && self.positioninfo) {
+						if (self.analysisinfo ['zobristkeyhex'] == self.positioninfo ['zobristkeyhex']) {
+							var foundmoves = [];
+							for (var item of self.analysisinfo ['pvitems']) {
+								try {
+									var opptrainweight = int (item ['opptrainweight']);
+								}
+								catch (__except0__) {
+									var opptrainweight = 0;
+								}
+								if (opptrainweight > 0) {
+									foundmoves.append ([item ['bestmoveuci'], opptrainweight]);
+								}
+							}
+							if (len (foundmoves) > 0) {
+								var algebs = [];
+								for (var moveitem of foundmoves) {
+									for (var i = 0; i < moveitem [1]; i++) {
+										algebs.append (moveitem [0]);
+									}
+								}
+								var index = int (Math.random () * len (algebs));
+								if (index >= len (algebs)) {
+									var index = len (algebs) - 1;
+								}
+								var selectedalgeb = algebs [index];
+								self.trainfen = self.basicboard.fen;
+								self.moveclickedcallback (self.basicboard.variantkey, self.basicboard.fen, selectedalgeb, false);
+							}
+						}
+					}
+				}
+				else if (self.examinealgeb) {
+					var examinealgeb = self.examinealgeb;
+					self.examinealgeb = null;
+					if (self.analysisinfo) {
+						var moveok = false;
+						var trainweight = 0;
+						for (var item of self.analysisinfo ['pvitems']) {
+							if (item ['bestmoveuci'] == examinealgeb) {
+								try {
+									var trainweight = int (item ['metrainweight']);
+								}
+								catch (__except0__) {
+									var trainweight = 0;
+								}
+								if (trainweight > 0) {
+									var moveok = true;
+									break;
+								}
+							}
+						}
+						if (moveok) {
+							self.moveclickedcallback (self.basicboard.variantkey, self.basicboard.fen, examinealgeb, false);
+						}
+						else {
+							setTimeout ((function __lambda__ () {
+								return window.alert ('Wrong move.');
+							}), 200);
+							self.basicboard.setfromfen (self.basicboard.fen);
+						}
+					}
+					else {
+						setTimeout ((function __lambda__ () {
+							return window.alert ('No analysis info available.');
+						}), 200);
+						self.basicboard.setfromfen (self.basicboard.fen);
+					}
+				}
+			}
 		}
 		catch (__except0__) {
 			// pass;
@@ -953,7 +1058,14 @@ export var Board =  __class__ ('Board', [e], {
 		self.bookdiv = Div ().ms ().fs (20);
 		self.bookpane.setcontentelement (self.bookdiv);
 		self.chartdiv = Div ();
-		self.tabpane = TabPane (dict ({'kind': 'normal', 'id': 'board', 'tabs': [Tab ('analysis', 'Analysis', self.analysisdiv), Tab ('auto', 'Auto', self.autodiv), Tab ('book', 'Book', self.bookpane), Tab ('game', 'Game', self.gamediv, self.gametabselected), Tab ('pgn', 'Pgn', self.pgntext), Tab ('games', 'Games', self.gamescontainerdiv), Tab ('chart', 'Chart', self.chartdiv), Tab ('engineout', 'Engine out', self.engineoutpane)], 'selected': 'analysis'}));
+		self.traindiv = Div ().mar (3);
+		self.traincombo = ComboBox ().setoptions ([['off', 'Training off'], ['black', 'Train White'], ['white', 'Train Black']], 'off');
+		self.traincontrols = Div ().disp ('flex').jc ('space-around').ai ('center').h (40).w (400).bc ('#eee');
+		self.traintimediv = Div ().w (200).bc ('#eff').html ('time').ff ('monospace').ta ('center');
+		self.traincontrols.a ([self.traincombo, self.traintimediv]);
+		self.traindiv.a (self.traincontrols);
+		window.setInterval (self.trainhandler, 500);
+		self.tabpane = TabPane (dict ({'kind': 'normal', 'id': 'board', 'tabs': [Tab ('analysis', 'Analysis', self.analysisdiv), Tab ('train', 'Train', self.traindiv), Tab ('auto', 'Auto', self.autodiv), Tab ('book', 'Book', self.bookpane), Tab ('game', 'Game', self.gamediv, self.gametabselected), Tab ('pgn', 'Pgn', self.pgntext), Tab ('games', 'Games', self.gamescontainerdiv), Tab ('chart', 'Chart', self.chartdiv), Tab ('engineout', 'Engine out', self.engineoutpane)], 'selected': 'analysis'}));
 		self.verticalcontainer.a ([self.sectioncontainer, self.enginebardiv, self.movelistdiv, self.tabpane]);
 		self.a (self.verticalcontainer);
 		self.basicresize ();
