@@ -1,6 +1,6 @@
 from dom import e, Div, Button, ComboBox, TextArea, Span
 from utils import cpick, View, getglobalcssvarpxint, uci_variant_to_variantkey, scorecolor, IS_PROD, scoreverbal
-from basicboard import BasicBoard, VARIANT_OPTIONS, PgnText, PgnList, PgnInfo, MultipvInfo
+from basicboard import BasicBoard, VARIANT_OPTIONS, PgnText, PgnList, PgnInfo, MultipvInfo, WHITE, BLACK
 from widgets import TabPane, Tab, SplitPane
 from widgets import Log, LogItem
 from connection import getconn, lichapiget, LICH_API_GAMES_EXPORT
@@ -24,6 +24,7 @@ class Board(e):
             })
 
     def setfromfen(self, fen, positioninfo = {}, edithistory = True):
+        self.trainfen = None
         restartanalysis = False
         if self.analyzing.get():
             self.stopanalyzecallback()
@@ -602,11 +603,12 @@ class Board(e):
                 self.bestmoveuci = minfo.bestmoveuci
                 self.setenginebar(minfo.effscore())
             iw = 1 / ( 5 * i )
-            self.basicboard.drawuciarrow(minfo.bestmoveuci, {
-                "strokecolor": scorecolor(minfo.effscore()),
-                "linewidth": iw,
-                "headheight": iw
-            })
+            if self.trainmode == "off":
+                self.basicboard.drawuciarrow(minfo.bestmoveuci, {
+                    "strokecolor": scorecolor(minfo.effscore()),
+                    "linewidth": iw,
+                    "headheight": iw
+                })
             self.analysisinfodiv.a(minfo)
             i += 1
 
@@ -720,7 +722,13 @@ class Board(e):
         self.storeanalysiscallback()
         self.makeanalyzedmovecallback()
 
-    def defaultmoveclickedcallback(self, variantkey, fen, moveuci):
+    def defaultmoveclickedcallback(self, variantkey, fen, moveuci, handletrain = True):        
+        if handletrain:
+            if ( ( self.trainmode == "white" ) and ( self.basicboard.turn() == BLACK ) ) or ( ( self.trainmode == "black" ) and ( self.basicboard.turn() == WHITE ) ):
+                self.examinealgeb = moveuci            
+                self.trainhandler()            
+                return
+        
         getconn().sioreq({
             "kind": "mainboardmove",
             "variantkey": variantkey,
@@ -791,6 +799,69 @@ class Board(e):
             self.posclickedfactory(self.gamei)()
         except:
             #print("could not show game position")
+            pass
+
+    def trainhandler(self):
+        try:
+            self.traintimediv.html(__new__(Date()).toLocaleString())
+            self.trainmode = self.traincombo.v()
+            if self.trainmode == "off":
+                self.trainfen = None
+            else:
+                trainside = WHITE
+                if self.trainmode == "black":
+                    trainside = BLACK
+                turn = self.basicboard.turn()
+                if turn == trainside:
+                    if self.trainfen == self.basicboard.fen:
+                        pass
+                    else:
+                        if self.analysisinfo and self.positioninfo:
+                            if self.analysisinfo["zobristkeyhex"] == self.positioninfo["zobristkeyhex"]:
+                                foundmoves = []
+                                for item in self.analysisinfo["pvitems"]:
+                                    try:
+                                        opptrainweight = int(item["opptrainweight"])
+                                    except:
+                                        opptrainweight = 0
+                                    if opptrainweight > 0:
+                                        foundmoves.append([item["bestmoveuci"], opptrainweight])
+                                if len(foundmoves) > 0:                                
+                                    algebs = []
+                                    for moveitem in foundmoves:
+                                        for i in range(moveitem[1]):
+                                            algebs.append(moveitem[0])                                
+                                    index = int(Math.random() * len(algebs))
+                                    if index >= len(algebs):
+                                        index = len(algebs) - 1
+                                    selectedalgeb = algebs[index]                                
+                                    self.trainfen = self.basicboard.fen                                                                    
+                                    self.moveclickedcallback(self.basicboard.variantkey, self.basicboard.fen, selectedalgeb, False)
+                else:                
+                    if self.examinealgeb:                    
+                        examinealgeb = self.examinealgeb
+                        self.examinealgeb = None                    
+                        if self.analysisinfo:                        
+                            moveok = False         
+                            trainweight = 0               
+                            for item in self.analysisinfo["pvitems"]:
+                                if item["bestmoveuci"] == examinealgeb:
+                                    try:
+                                        trainweight = int(item["metrainweight"])
+                                    except:
+                                        trainweight = 0
+                                    if trainweight > 0:
+                                        moveok = True
+                                        break                        
+                            if moveok:
+                                self.moveclickedcallback(self.basicboard.variantkey, self.basicboard.fen, examinealgeb, False)
+                            else:
+                                setTimeout(lambda: window.alert("Wrong move."), 200)                        
+                                self.basicboard.setfromfen(self.basicboard.fen)
+                        else:
+                            setTimeout(lambda: window.alert("No analysis info available."), 200)                        
+                            self.basicboard.setfromfen(self.basicboard.fen)
+        except:
             pass
 
     def __init__(self, args):
@@ -923,11 +994,23 @@ class Board(e):
         self.bookdiv = Div().ms().fs(20)
         self.bookpane.setcontentelement(self.bookdiv)
         self.chartdiv = Div()
+        self.traindiv = Div().mar(3)
+        self.traincombo = ComboBox().setoptions([
+            ["off", "Training off"],            
+            ["black", "Train White"],
+            ["white", "Train Black"]
+        ], "off")
+        self.traincontrols = Div().disp("flex").jc("space-around").ai("center").h(40).w(400).bc("#eee")
+        self.traintimediv = Div().w(200).bc("#eff").html("time").ff("monospace").ta("center")
+        self.traincontrols.a([self.traincombo, self.traintimediv])
+        self.traindiv.a(self.traincontrols)
+        window.setInterval(self.trainhandler, 500)
         self.tabpane = TabPane({
             "kind":"normal", 
             "id":"board",
             "tabs": [
                 Tab("analysis", "Analysis", self.analysisdiv),
+                Tab("train", "Train", self.traindiv),
                 Tab("auto", "Auto", self.autodiv),
                 Tab("book", "Book", self.bookpane),
                 Tab("game", "Game", self.gamediv, self.gametabselected),
