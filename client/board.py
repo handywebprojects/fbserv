@@ -74,16 +74,23 @@ class Board(e):
     def setvariantcombo(self):        
         self.variantcombo.setoptions(VARIANT_OPTIONS, self.basicboard.variantkey, self.variantchanged)
 
+    def showcurrentgamepos(self):
+        try:
+            for j in range(len(self.positioninfos)):
+                self.posdivs[j].arc(j == self.gamei, "boardposdivselected")
+                if j == self.gamei:
+                    self.posdivs[j].e.scrollIntoView({"block": "center", "inline": "center"})
+        except:
+            pass
+
     def posclickedfactory(self, i):
         def poslicked():
             self.gamei = i
             pinfo = self.positioninfos[i]
             self.setfromfen(pinfo["fen"], pinfo["positioninfo"])
-            for j in range(len(self.positioninfos)):
-                self.posdivs[j].arc(j == self.gamei, "boardposdivselected")
-                if j == self.gamei:
-                    self.posdivs[j].e.scrollIntoView({"block": "center", "inline": "center"})
-            self.history = []
+            self.showcurrentgamepos()
+            self.history = []            
+            self.tabpane.selectbykey("analysis")
         return poslicked
 
     def selectgamei(self, i):
@@ -794,12 +801,8 @@ class Board(e):
     def fentextchangedcallback(self, fen):
         self.variantchanged(self.basicboard.variantkey, fen)
 
-    def gametabselected(self):
-        try:
-            self.posclickedfactory(self.gamei)()
-        except:
-            #print("could not show game position")
-            pass
+    def gametabselected(self):        
+        self.showcurrentgamepos()
 
     def trainhandler(self):
         try:
