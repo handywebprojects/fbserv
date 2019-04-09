@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2019-04-08 10:16:35
+// Transcrypt'ed from Python, 2019-04-09 07:39:39
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {getconn} from './connection.js';
 import {Vect, cpick, scorecolor, scoreverbal, xor} from './utils.js';
@@ -17,7 +17,7 @@ export var VARIANT_OPTIONS = [['standard', 'Standard'], ['fromPosition', 'From P
 export var PIECE_NAMES = dict ({'p': 'Pawn', 'n': 'Knight', 'b': 'Bishop', 'r': 'Rook', 'q': 'Queen', 'k': 'King'});
 export var PROMPIECEKINDS_STANDARD = ['n', 'b', 'r', 'q'];
 export var PROMPIECEKINDS_ANTICHESS = ['n', 'b', 'r', 'q', 'k'];
-export var TRAIN_OPTIONS = [['0', '0'], ['1', '1'], ['2', '2'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5'], ['6', '6'], ['7', '7'], ['8', '8'], ['9', '9']];
+export var TRAIN_OPTIONS = [['0', '0'], ['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5'], ['6', '6'], ['7', '7'], ['8', '8'], ['9', '9']];
 export var prompiecekindsforvariantkey = function (variantkey) {
 	if (variantkey == 'antichess') {
 		return PROMPIECEKINDS_ANTICHESS;
@@ -798,6 +798,7 @@ export var MultipvInfo =  __class__ ('MultipvInfo', [e], {
 	get traincombochanged () {return __get__ (this, function (self) {
 		self.infoi ['metrainweight'] = self.metraincombo.v ();
 		self.infoi ['opptrainweight'] = self.opptraincombo.v ();
+		self.build ();
 	});},
 	get build () {return __get__ (this, function (self, gamesan) {
 		if (typeof gamesan == 'undefined' || (gamesan != null && gamesan.hasOwnProperty ("__kwargtrans__"))) {;
@@ -827,18 +828,44 @@ export var MultipvInfo =  __class__ ('MultipvInfo', [e], {
 		self.miscdiv = Div ().ac ('multipvinfomisc').html ('nps {}'.format (self.nps));
 		self.traindiv = Div ().ac ('multipvinfomisc').w (100);
 		var metrainweight = self.infoi ['metrainweight'];
+		var hasmetrain = false;
 		if (!(metrainweight)) {
 			var metrainweight = '0';
 		}
 		var opptrainweight = self.infoi ['opptrainweight'];
+		var hasopptrain = false;
 		if (!(opptrainweight)) {
 			var opptrainweight = '0';
+		}
+		try {
+			if (int (metrainweight) > 0) {
+				var hasmetrain = true;
+			}
+			if (int (opptrainweight) > 0) {
+				var hasopptrain = true;
+			}
+		}
+		catch (__except0__) {
+			// pass;
+		}
+		if (hasmetrain && hasopptrain) {
+			var oppbc = '#00f';
+		}
+		else if (hasmetrain) {
+			var oppbc = '#0f0';
+		}
+		else if (hasopptrain) {
+			var oppbc = '#f00';
+		}
+		else {
+			var oppbc = 'inherit';
 		}
 		self.metraincombo = ComboBox ().setoptions (TRAIN_OPTIONS, metrainweight, self.traincombochanged);
 		self.opptraincombo = ComboBox ().setoptions (TRAIN_OPTIONS, opptrainweight, self.traincombochanged);
 		self.traindiv.a ([self.metraincombo, self.opptraincombo]);
 		self.pvdiv = Div ().ac ('multipvinfopv').html (self.pvpgn);
 		self.container.a ([self.idiv, self.bestmovesandiv, self.scorenumericaldiv, self.bonussliderdiv, self.traindiv, self.depthdiv, self.pvdiv]);
+		self.container.bc (oppbc);
 		self.bestmovesandiv.c (scorecolor (self.effscore ()));
 		self.scorenumericaldiv.c (scorecolor (self.effscore ()));
 		self.x ().a (self.container);
