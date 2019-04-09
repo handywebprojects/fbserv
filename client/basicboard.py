@@ -799,6 +799,7 @@ class PgnInfo(e):
     def idclicked(self):
         self.parent.pgntext.setpgn(self.content)
         self.bds("dotted").bdw("6").bdc("#00f")
+        localStorage.setItem("pgninfo/idclicked", self.id)
         getconn().sioreq({
             "kind": "parsepgn",
             "owner": self.parent.id,
@@ -864,6 +865,8 @@ class PgnInfo(e):
         else:
             self.ac("pgninfodraw")
         self.a([self.tcdiv, self.whitediv, self.whiteelodiv, self.blackdiv, self.blackelodiv, self.resultdiv, self.iddiv])
+        if self.id == localStorage.getItem("pgninfo/idclicked"):
+            self.bds("dashed").bdw("6").bdc("#00f")
         return self
 
     def setcontent(self, content):
