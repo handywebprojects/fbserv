@@ -866,6 +866,13 @@ class Board(e):
 
     def traincombochanged(self):
         self.basicboard.setfromfen(self.basicboard.fen)
+        self.trainmode = self.traincombo.v()
+        if self.trainmode == "white":
+            if not self.basicboard.flip:
+                self.flipcallback()
+        if self.trainmode == "black":
+            if self.basicboard.flip:
+                self.flipcallback()
 
     def __init__(self, args):
         super().__init__("div")
