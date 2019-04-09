@@ -798,6 +798,7 @@ class PgnInfo(e):
 
     def idclicked(self):
         self.parent.pgntext.setpgn(self.content)
+        self.bds("dotted").bdw("6").bdc("#00f")
         getconn().sioreq({
             "kind": "parsepgn",
             "owner": self.parent.id,
