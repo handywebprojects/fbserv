@@ -43,7 +43,6 @@ TRAIN_OPTIONS = [
     ["0", "0"],
     ["1", "1"],
     ["2", "2"],
-    ["2", "2"],
     ["3", "3"],
     ["4", "4"],
     ["5", "5"],
@@ -694,6 +693,7 @@ class MultipvInfo(e):
     def traincombochanged(self):
         self.infoi["metrainweight"] = self.metraincombo.v()
         self.infoi["opptrainweight"] = self.opptraincombo.v()
+        self.build()
 
     def build(self, gamesan = None):            
         self.bestmoveuci = self.infoi["bestmoveuci"]
@@ -718,17 +718,35 @@ class MultipvInfo(e):
         self.depthdiv = Div().ac("multipvinfodepth").html("{}".format(self.depth))
         self.miscdiv = Div().ac("multipvinfomisc").html("nps {}".format(self.nps))
         self.traindiv = Div().ac("multipvinfomisc").w(100)        
-        metrainweight = self.infoi["metrainweight"]
+        metrainweight = self.infoi["metrainweight"]        
+        hasmetrain = False
         if not metrainweight:
-            metrainweight = "0"
+            metrainweight = "0"            
         opptrainweight = self.infoi["opptrainweight"]
+        hasopptrain = False
         if not opptrainweight:
-            opptrainweight = "0"        
+            opptrainweight = "0"                
+        try:
+            if int(metrainweight) > 0:
+                hasmetrain = True
+            if int(opptrainweight) > 0:
+                hasopptrain = True
+        except:
+            pass
+        if hasmetrain and hasopptrain:
+            oppbc = "#00f"
+        elif hasmetrain:
+            oppbc = "#0f0"
+        elif hasopptrain:
+            oppbc = "#f00"
+        else:
+            oppbc = "inherit"        
         self.metraincombo = ComboBox().setoptions(TRAIN_OPTIONS, metrainweight, self.traincombochanged)
         self.opptraincombo = ComboBox().setoptions(TRAIN_OPTIONS, opptrainweight, self.traincombochanged)        
         self.traindiv.a([self.metraincombo, self.opptraincombo])
         self.pvdiv = Div().ac("multipvinfopv").html(self.pvpgn)
         self.container.a([self.idiv, self.bestmovesandiv, self.scorenumericaldiv, self.bonussliderdiv, self.traindiv, self.depthdiv, self.pvdiv])        
+        self.container.bc(oppbc)
         self.bestmovesandiv.c(scorecolor(self.effscore()))
         self.scorenumericaldiv.c(scorecolor(self.effscore()))        
         self.x().a(self.container)        

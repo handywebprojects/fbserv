@@ -864,6 +864,9 @@ class Board(e):
         except:
             pass
 
+    def traincombochanged(self):
+        self.basicboard.setfromfen(self.basicboard.fen)
+
     def __init__(self, args):
         super().__init__("div")
         self.addmovemode = False
@@ -999,7 +1002,7 @@ class Board(e):
             ["off", "Training off"],            
             ["black", "Train White"],
             ["white", "Train Black"]
-        ], "off")
+        ], "off", self.traincombochanged)
         self.traincontrols = Div().disp("flex").jc("space-around").ai("center").h(40).w(400).bc("#eee")
         self.traintimediv = Div().w(200).bc("#eff").html("time").ff("monospace").ta("center")
         self.traincontrols.a([self.traincombo, self.traintimediv])
