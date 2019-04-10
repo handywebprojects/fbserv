@@ -624,7 +624,41 @@ class Board(e):
             return                
         self.anyinfo = True
         elapsed = __new__(Date()).getTime() - self.analysisstartedat
-        self.analysisinfo = obj        
+        self.analysisinfo = obj       
+        self.analysiszobristkeyhex = self.analysisinfo["zobristkeyhex"]            
+        if not self.trainweightshash:
+            self.trainweightshash = {}
+        try:
+            for pvitem in self.analysisinfo["pvitems"]:
+                algeb = pvitem["bestmoveuci"]
+                metrainweight = pvitem["metrainweight"]
+                opptrainweight = pvitem["opptrainweight"]
+                if self.trainweightshash[self.analysiszobristkeyhex]:
+                    hashedweights = self.trainweightshash[self.analysiszobristkeyhex]
+                    if hashedweights[algeb]:
+                        trainweights = hashedweights[algeb]
+                        if not metrainweight:
+                            pvitem["metrainweight"] = trainweights["metrainweight"]
+                        if not opptrainweight:
+                            pvitem["opptrainweight"] = trainweights["opptrainweight"]
+        except:
+            print("there was a problem with getting hashed train weights")
+        try:
+            if self.trainweightshash[self.analysiszobristkeyhex]:
+                hashedweights = self.trainweightshash[self.analysiszobristkeyhex]
+            else:
+                hashedweights = {}
+                self.trainweightshash[self.analysiszobristkeyhex] = hashedweights
+            for pvitem in self.analysisinfo["pvitems"]:
+                algeb = pvitem["bestmoveuci"]
+                metrainweight = pvitem["metrainweight"]
+                opptrainweight = pvitem["opptrainweight"]
+                hashedweights[algeb] = {
+                    "metrainweight": metrainweight,
+                    "opptrainweight": opptrainweight
+                }            
+        except:
+            print("there was a problem with hashing train weights")
         self.buildanalysisinfodiv()        
         if ( self.analyzing.get() ) and ( not ( self.depthlimit is None ) ) or ( not ( self.timelimit is None ) ):
             depthok = ( self.depthlimit is None ) or ( self.maxdepth >= self.depthlimit )
