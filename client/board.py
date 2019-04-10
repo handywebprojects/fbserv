@@ -728,10 +728,14 @@ class Board(e):
         except:
             return default
 
+    def tobookmark(self):
+        self.pgnlist.tobookmark()
+
     def gamesloadedok(self, content):
         self.pgnlist = PgnList(self).setcontent(content)
         self.gamesdiv.x()
         self.gamesdiv.a(Button("Reload", self.loadgames))        
+        self.gamesdiv.a(Button("To bookmark", self.tobookmark).ml(5))        
         self.gamesdiv.a(self.gamesloadingdiv.x())
         self.gamesdiv.a(self.pgnlist)
     

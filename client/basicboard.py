@@ -760,10 +760,11 @@ class MultipvInfo(e):
         self.build()
 
 class PgnInfo(e):
-    def __init__(self, parent):
+    def __init__(self, parent, pgnlistparent):
         super().__init__("div")
         self.headers = []
         self.parent = parent
+        self.pgnlistparent = pgnlistparent
 
     def getheader(self, key, default):
         for header in self.headers:
@@ -800,6 +801,7 @@ class PgnInfo(e):
         self.parent.pgntext.setpgn(self.content)
         self.bds("dotted").bdw("6").bdc("#00f")
         localStorage.setItem("pgninfo/idclicked", self.id)
+        self.pgnlistparent.bookmarkedpi = self
         getconn().sioreq({
             "kind": "parsepgn",
             "owner": self.parent.id,
@@ -934,12 +936,19 @@ class PgnList(e):
         super().__init__("div")
         self.parent = parent
 
+    def tobookmark(self):
+        if self.bookmarkedpi:
+            self.bookmarkedpi.e.scrollIntoView({"block": "center", "inline": "center"})
+
     def build(self):
         self.x()
         first = True
         dateinfos = []
+        self.bookmarkedpi = None
         for gamecontent in self.gamecontents:
-            pi = PgnInfo(self.parent).setcontent(gamecontent)
+            pi = PgnInfo(self.parent, self).setcontent(gamecontent)
+            if pi.id == localStorage.getItem("pgninfo/idclicked"):
+                self.bookmarkedpi = pi
             self.a(pi)
             mri = pi.meratinginfo()            
             if mri:
