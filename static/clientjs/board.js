@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2019-04-09 16:40:55
+// Transcrypt'ed from Python, 2019-04-10 04:31:44
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {LICH_API_GAMES_EXPORT, getconn, lichapiget} from './connection.js';
 import {Log, LogItem} from './widgets.js';
@@ -673,6 +673,50 @@ export var Board =  __class__ ('Board', [e], {
 		self.anyinfo = true;
 		var elapsed = new Date ().getTime () - self.analysisstartedat;
 		self.analysisinfo = obj;
+		self.analysiszobristkeyhex = self.analysisinfo ['zobristkeyhex'];
+		if (!(self.trainweightshash)) {
+			self.trainweightshash = dict ({});
+		}
+		try {
+			for (var pvitem of self.analysisinfo ['pvitems']) {
+				var algeb = pvitem ['bestmoveuci'];
+				var metrainweight = pvitem ['metrainweight'];
+				var opptrainweight = pvitem ['opptrainweight'];
+				if (self.trainweightshash [self.analysiszobristkeyhex]) {
+					var hashedweights = self.trainweightshash [self.analysiszobristkeyhex];
+					if (hashedweights [algeb]) {
+						var trainweights = hashedweights [algeb];
+						if (!(metrainweight)) {
+							pvitem ['metrainweight'] = trainweights ['metrainweight'];
+						}
+						if (!(opptrainweight)) {
+							pvitem ['opptrainweight'] = trainweights ['opptrainweight'];
+						}
+					}
+				}
+			}
+		}
+		catch (__except0__) {
+			print ('there was a problem with getting hashed train weights');
+		}
+		try {
+			if (self.trainweightshash [self.analysiszobristkeyhex]) {
+				var hashedweights = self.trainweightshash [self.analysiszobristkeyhex];
+			}
+			else {
+				var hashedweights = dict ({});
+				self.trainweightshash [self.analysiszobristkeyhex] = hashedweights;
+			}
+			for (var pvitem of self.analysisinfo ['pvitems']) {
+				var algeb = pvitem ['bestmoveuci'];
+				var metrainweight = pvitem ['metrainweight'];
+				var opptrainweight = pvitem ['opptrainweight'];
+				hashedweights [algeb] = dict ({'metrainweight': metrainweight, 'opptrainweight': opptrainweight});
+			}
+		}
+		catch (__except0__) {
+			print ('there was a problem with hashing train weights');
+		}
 		self.buildanalysisinfodiv ();
 		if (self.analyzing.py_get () && !(self.depthlimit === null) || !(self.timelimit === null)) {
 			var depthok = self.depthlimit === null || self.maxdepth >= self.depthlimit;
