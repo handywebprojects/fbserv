@@ -947,6 +947,8 @@ class Board(e):
                                 selsize = int(Math.random() * len(pvitems)) + 1
                                 if selsize > len(pvitems):
                                     selsize = len(pvitems)
+                                if int(Math.random() * 100) > 20:
+                                    selsize = 1
                                 index = int(Math.random() * selsize)
                                 if index >= len(pvitems):
                                     index = len(pvitems) - 1
@@ -954,6 +956,9 @@ class Board(e):
                                 self.trainfen = self.basicboard.fen                                                                    
                                 self.moveclickedcallback(self.basicboard.variantkey, self.basicboard.fen, selectedalgeb, False)
                                 self.showtraininfomsg("Making random engine move [ {} from {} : {} ].".format(index + 1, selsize, selectedalgeb))                            
+                            else:
+                                self.trainfen = self.basicboard.fen
+                                self.showtraininfomsg("No legal moves.", "err")
                 else:                
                     if self.examinealgeb:                    
                         examinealgeb = self.examinealgeb                        
