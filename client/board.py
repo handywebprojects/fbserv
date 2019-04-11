@@ -836,6 +836,11 @@ class Board(e):
     def lichessanalysisclicked(self):
         window.open("https://lichess.org/analysis/" + self.basicboard.variantkey + "/" + self.basicboard.fen, "_blank")
 
+    def lichessgameclicked(self):        
+        if self.loadedgameid:            
+            url = "https://lichess.org/" + self.loadedgameid + "/" + self.loadedgameside + "#" + str(self.gamei)
+            window.open(url, "_blank")
+
     def fentextchangedcallback(self, fen):
         self.variantchanged(self.basicboard.variantkey, fen)
 
@@ -1003,6 +1008,8 @@ class Board(e):
         self.analysiscontrolpanelbottom.a(self.autoanalysisbutton)
         self.lichessanalysisbutton = Button("L", self.lichessanalysisclicked)
         self.analysiscontrolpanelbottom.a(self.lichessanalysisbutton)
+        self.lichessgamebutton = Button("G", self.lichessgameclicked)
+        self.analysiscontrolpanelbottom.a(self.lichessgamebutton)
         mopts = []
         for i in range(1,501):
             mopts.append([ str(i), "MultiPV {}".format(i) ])

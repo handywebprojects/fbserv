@@ -798,6 +798,10 @@ class PgnInfo(e):
         self.id = self.site.split("/")[-1:][0]
 
     def idclicked(self):
+        self.parent.loadedgameid = self.id
+        self.parent.loadedgameside = "white"        
+        if self.meblack():
+            self.parent.loadedgameside = "black"
         self.parent.pgntext.setpgn(self.content)
         self.bds("dotted").bdw("6").bdc("#00f")
         localStorage.setItem("pgninfo/idclicked", self.id)
