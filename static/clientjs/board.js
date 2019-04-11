@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2019-04-11 14:04:39
+// Transcrypt'ed from Python, 2019-04-11 18:34:56
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {LICH_API_GAMES_EXPORT, getconn, lichapiget} from './connection.js';
 import {Log, LogItem} from './widgets.js';
@@ -28,6 +28,10 @@ export var Board =  __class__ ('Board', [e], {
 		if (typeof edithistory == 'undefined' || (edithistory != null && edithistory.hasOwnProperty ("__kwargtrans__"))) {;
 			var edithistory = true;
 		};
+		self.fen2zobristkeyhex [fen] = null;
+		if (__in__ ('zobristkeyhex', positioninfo)) {
+			self.fen2zobristkeyhex [fen] = positioninfo ['zobristkeyhex'];
+		}
 		self.trainfen = null;
 		var restartanalysis = false;
 		if (self.analyzing.py_get ()) {
@@ -296,6 +300,32 @@ export var Board =  __class__ ('Board', [e], {
 			self.autodiv.a (itemdiv);
 		}
 	});},
+	get getcachedanalysisinfobyfen () {return __get__ (this, function (self, fen) {
+		if (__in__ (fen, self.fen2zobristkeyhex)) {
+			var zobristkeyhex = self.fen2zobristkeyhex [fen];
+			if (zobristkeyhex) {
+				try {
+					if (self.analysisinfo ['zobristkeyhex'] == zobristkeyhex) {
+						return self.analysisinfo;
+					}
+				}
+				catch (__except0__) {
+					// pass;
+				}
+				if (__in__ (zobristkeyhex, self.zobristkeyhex2analysisinfo)) {
+					var dataobj = self.zobristkeyhex2analysisinfo [zobristkeyhex];
+					if (dataobj == 'none') {
+						return 'none';
+					}
+					if (__in__ ('analysisinfo', dataobj)) {
+						var analysisinfo = dataobj ['analysisinfo'];
+						return analysisinfo;
+					}
+				}
+			}
+		}
+		return null;
+	});},
 	get sioresfunc () {return __get__ (this, function (self, response) {
 		var dataobj = response ['dataobj'];
 		if (dataobj) {
@@ -319,7 +349,32 @@ export var Board =  __class__ ('Board', [e], {
 			self.buildgame ();
 			self.tabpane.selectbykey ('analysis');
 		}
-		var kind = response ['kind'];
+		var kind = null;
+		if (__in__ ('kind', response)) {
+			var kind = response ['kind'];
+		}
+		if (kind == 'retrievedb') {
+			if (__in__ ('path', response)) {
+				var path = response ['path'];
+				if (path) {
+					var parts = path.py_split ('/');
+					if (len (parts) > 2) {
+						if (parts [0] == 'analysisinfo' && parts [1] == self.basicboard.variantkey) {
+							var zobristkeyhex = parts [2];
+							if (len (zobristkeyhex) == 16) {
+								self.zobristkeyhex2analysisinfo [zobristkeyhex] = 'none';
+								if (__in__ ('dataobj', response)) {
+									var dobjrd = response ['dataobj'];
+									if (dobjrd) {
+										self.zobristkeyhex2analysisinfo [zobristkeyhex] = dobjrd;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 		if (kind == 'engineout') {
 			var sline = response ['sline'];
 			var li = LogItem (dict ({'text': sline, 'kind': 'success', 'prompt': 'out > '}));
@@ -667,7 +722,7 @@ export var Board =  __class__ ('Board', [e], {
 		if (typeof force == 'undefined' || (force != null && force.hasOwnProperty ("__kwargtrans__"))) {;
 			var force = false;
 		};
-		if (!(self.analyzing) && !(force)) {
+		if (!(self.analyzing.py_get ()) && !(force)) {
 			return ;
 		}
 		self.anyinfo = true;
@@ -910,6 +965,19 @@ export var Board =  __class__ ('Board', [e], {
 	get gametabselected () {return __get__ (this, function (self) {
 		self.showcurrentgamepos ();
 	});},
+	get showtraininfomsg () {return __get__ (this, function (self, msg, kind) {
+		if (typeof kind == 'undefined' || (kind != null && kind.hasOwnProperty ("__kwargtrans__"))) {;
+			var kind = null;
+		};
+		self.traininfodiv.x ().a (Div ().ff ('monospace').html (msg));
+		self.traininfodiv.c ('#007');
+		if (kind == 'err') {
+			self.traininfodiv.c ('#700');
+		}
+		if (kind == 'succ') {
+			self.traininfodiv.c ('#070');
+		}
+	});},
 	get trainhandler () {return __get__ (this, function (self) {
 		try {
 			self.traintimediv.html (new Date ().toLocaleString ());
@@ -927,10 +995,27 @@ export var Board =  __class__ ('Board', [e], {
 					if (self.trainfen == self.basicboard.fen) {
 						// pass;
 					}
-					else if (self.analysisinfo && self.positioninfo) {
-						if (self.analysisinfo ['zobristkeyhex'] == self.positioninfo ['zobristkeyhex']) {
+					else {
+						var analysisinfo = self.getcachedanalysisinfobyfen (self.basicboard.fen);
+						if (analysisinfo == 'none' || self.analyzing.py_get ()) {
+							self.showtraininfomsg ('No analysis available to make move.', 'err');
+							if (!(self.analyzing.py_get ())) {
+								self.analyzecallbackfactory () ();
+							}
+							else {
+								var elapsedms = new Date ().getTime () - self.analysisstartedat;
+								var elapsed = int (elapsedms / 1000);
+								self.showtraininfomsg ('Analyzing, elapsed: {} sec(s).'.format (elapsed));
+								if (elapsed > 20) {
+									self.showtraininfomsg ('Analysis done.', 'succ');
+									self.stopandstoreanalysis ();
+								}
+							}
+						}
+						else if (analysisinfo && !(self.analyzing.py_get ())) {
 							var foundmoves = [];
-							for (var item of self.analysisinfo ['pvitems']) {
+							var pvitems = analysisinfo ['pvitems'];
+							for (var item of pvitems) {
 								try {
 									var opptrainweight = int (item ['opptrainweight']);
 								}
@@ -954,18 +1039,39 @@ export var Board =  __class__ ('Board', [e], {
 								}
 								var selectedalgeb = algebs [index];
 								self.trainfen = self.basicboard.fen;
+								self.showtraininfomsg ('Making training move : {} .'.format (selectedalgeb), 'succ');
 								self.moveclickedcallback (self.basicboard.variantkey, self.basicboard.fen, selectedalgeb, false);
+							}
+							else if (len (pvitems) > 0) {
+								var selsize = int (Math.random () * len (pvitems)) + 1;
+								if (selsize > len (pvitems)) {
+									var selsize = len (pvitems);
+								}
+								var index = int (Math.random () * selsize);
+								if (index >= len (pvitems)) {
+									var index = len (pvitems) - 1;
+								}
+								var selectedalgeb = pvitems [index] ['bestmoveuci'];
+								self.trainfen = self.basicboard.fen;
+								self.moveclickedcallback (self.basicboard.variantkey, self.basicboard.fen, selectedalgeb, false);
+								self.showtraininfomsg ('Making random engine move [ {} from {} : {} ].'.format (index + 1, selsize, selectedalgeb));
 							}
 						}
 					}
 				}
 				else if (self.examinealgeb) {
 					var examinealgeb = self.examinealgeb;
-					self.examinealgeb = null;
-					if (self.analysisinfo) {
+					var analysisinfo = self.getcachedanalysisinfobyfen (self.basicboard.fen);
+					if (analysisinfo == 'none') {
+						self.showtraininfomsg ('No analysis available to check move.', 'err');
+						self.examinealgeb = null;
+						self.moveclickedcallback (self.basicboard.variantkey, self.basicboard.fen, examinealgeb, false);
+					}
+					else if (analysisinfo) {
+						self.examinealgeb = null;
 						var moveok = false;
 						var trainweight = 0;
-						for (var item of self.analysisinfo ['pvitems']) {
+						for (var item of analysisinfo ['pvitems']) {
 							if (item ['bestmoveuci'] == examinealgeb) {
 								try {
 									var trainweight = int (item ['metrainweight']);
@@ -980,20 +1086,13 @@ export var Board =  __class__ ('Board', [e], {
 							}
 						}
 						if (moveok) {
+							self.showtraininfomsg ('Move ok. Weight : {}.'.format (trainweight), 'succ');
 							self.moveclickedcallback (self.basicboard.variantkey, self.basicboard.fen, examinealgeb, false);
 						}
 						else {
-							setTimeout ((function __lambda__ () {
-								return window.alert ('Wrong move.');
-							}), 200);
+							self.showtraininfomsg ('Wrong move.', 'err');
 							self.basicboard.setfromfen (self.basicboard.fen);
 						}
-					}
-					else {
-						setTimeout ((function __lambda__ () {
-							return window.alert ('No analysis info available.');
-						}), 200);
-						self.basicboard.setfromfen (self.basicboard.fen);
 					}
 				}
 			}
@@ -1018,6 +1117,8 @@ export var Board =  __class__ ('Board', [e], {
 	});},
 	get __init__ () {return __get__ (this, function (self, args) {
 		__super__ (Board, '__init__') (self, 'div');
+		self.fen2zobristkeyhex = dict ({});
+		self.zobristkeyhex2analysisinfo = dict ({});
 		self.addmovemode = false;
 		self.bookpath = null;
 		self.resizeorigwidth = 800;
@@ -1137,7 +1238,8 @@ export var Board =  __class__ ('Board', [e], {
 		self.traincontrols = Div ().disp ('flex').jc ('space-around').ai ('center').h (40).w (400).bc ('#eee');
 		self.traintimediv = Div ().w (200).bc ('#eff').html ('time').ff ('monospace').ta ('center');
 		self.traincontrols.a ([self.traincombo, self.traintimediv]);
-		self.traindiv.a (self.traincontrols);
+		self.traininfodiv = Div ().disp ('flex').jc ('space-around').ai ('center').h (40).w (400).bc ('#eee').mt (2);
+		self.traindiv.a ([self.traincontrols, self.traininfodiv]);
 		window.setInterval (self.trainhandler, 500);
 		self.tabpane = TabPane (dict ({'kind': 'normal', 'id': 'board', 'tabs': [Tab ('analysis', 'Analysis', self.analysisdiv), Tab ('train', 'Train', self.traindiv), Tab ('auto', 'Auto', self.autodiv), Tab ('book', 'Book', self.bookpane), Tab ('game', 'Game', self.gamediv, self.gametabselected), Tab ('pgn', 'Pgn', self.pgntext), Tab ('games', 'Games', self.gamescontainerdiv), Tab ('chart', 'Chart', self.chartdiv), Tab ('engineout', 'Engine out', self.engineoutpane)], 'selected': 'analysis'}));
 		self.verticalcontainer.a ([self.sectioncontainer, self.enginebardiv, self.movelistdiv, self.tabpane]);
