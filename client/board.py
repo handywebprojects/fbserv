@@ -24,6 +24,9 @@ class Board(e):
             })
 
     def setfromfen(self, fen, positioninfo = {}, edithistory = True):
+        self.fen2zobristkeyhex[fen] = None        
+        if "zobristkeyhex" in positioninfo:
+            self.fen2zobristkeyhex[fen] = positioninfo["zobristkeyhex"]            
         self.trainfen = None
         restartanalysis = False
         if self.analyzing.get():
@@ -278,8 +281,26 @@ class Board(e):
             scorediv = Div().w(80).bc("#eee").ta("center").pad(3).fs(20).cp().fw("bold").html(scoreverbal(score)).c(scorecolor(score)).mar(2)                
             itemdiv.a(scorediv)
             self.autodiv.a(itemdiv)
+
+    def getcachedanalysisinfobyfen(self, fen):        
+        if fen in self.fen2zobristkeyhex:            
+            zobristkeyhex = self.fen2zobristkeyhex[fen]            
+            if zobristkeyhex:
+                try:
+                    if self.analysisinfo["zobristkeyhex"] == zobristkeyhex:
+                        return self.analysisinfo
+                except:                    
+                    pass
+                if zobristkeyhex in self.zobristkeyhex2analysisinfo:                
+                    dataobj = self.zobristkeyhex2analysisinfo[zobristkeyhex]                            
+                    if dataobj == "none":
+                        return "none"
+                    if "analysisinfo" in dataobj:            
+                        analysisinfo = dataobj["analysisinfo"]
+                        return analysisinfo        
+        return None
             
-    def sioresfunc(self, response):
+    def sioresfunc(self, response):        
         dataobj = response["dataobj"]
         if dataobj:
             analysisinfo = dataobj["analysisinfo"]
@@ -301,7 +322,25 @@ class Board(e):
             self.buildgame()
             self.tabpane.selectbykey("analysis")
 
-        kind = response["kind"]        
+        kind = None
+        if "kind" in response:
+            kind = response["kind"]        
+        
+        if kind == "retrievedb":
+            if "path" in response:
+                path = response["path"]
+                if path:
+                    parts = path.split("/")
+                    if len(parts) > 2:
+                        if ( parts[0] == "analysisinfo" ) and ( parts[1] == self.basicboard.variantkey ):
+                            zobristkeyhex = parts[2]
+                            if len(zobristkeyhex) == 16:
+                                self.zobristkeyhex2analysisinfo[zobristkeyhex] = "none"
+                                if "dataobj" in response:
+                                    dobjrd = response["dataobj"]                                    
+                                    if dobjrd:
+                                        self.zobristkeyhex2analysisinfo[zobristkeyhex] = dobjrd                                
+
         if kind == "engineout":
             sline = response["sline"]
             li = LogItem({
@@ -364,7 +403,7 @@ class Board(e):
                         })
                 __pragma__("jsiter")                              
             __pragma__("nojsiter")
-            self.buildauto()
+            self.buildauto()        
 
     def siores(self, response):        
         if IS_PROD():
@@ -620,7 +659,7 @@ class Board(e):
             i += 1
 
     def processanalysisinfo(self, obj, force = False):
-        if ( not self.analyzing ) and ( not force ):
+        if ( not self.analyzing.get() ) and ( not force ):
             return                
         self.anyinfo = True
         elapsed = __new__(Date()).getTime() - self.analysisstartedat
@@ -847,7 +886,15 @@ class Board(e):
     def gametabselected(self):        
         self.showcurrentgamepos()
 
-    def trainhandler(self):
+    def showtraininfomsg(self, msg, kind = None):                
+        self.traininfodiv.x().a(Div().ff("monospace").html(msg))
+        self.traininfodiv.c("#007")
+        if kind == "err":
+            self.traininfodiv.c("#700")
+        if kind == "succ":
+            self.traininfodiv.c("#070")
+
+    def trainhandler(self):                
         try:
             self.traintimediv.html(__new__(Date()).toLocaleString())
             self.trainmode = self.traincombo.v()
@@ -858,39 +905,68 @@ class Board(e):
                 if self.trainmode == "black":
                     trainside = BLACK
                 turn = self.basicboard.turn()
-                if turn == trainside:
+                if turn == trainside:                    
                     if self.trainfen == self.basicboard.fen:
                         pass
                     else:
-                        if self.analysisinfo and self.positioninfo:
-                            if self.analysisinfo["zobristkeyhex"] == self.positioninfo["zobristkeyhex"]:
-                                foundmoves = []
-                                for item in self.analysisinfo["pvitems"]:
-                                    try:
-                                        opptrainweight = int(item["opptrainweight"])
-                                    except:
-                                        opptrainweight = 0
-                                    if opptrainweight > 0:
-                                        foundmoves.append([item["bestmoveuci"], opptrainweight])
-                                if len(foundmoves) > 0:                                
-                                    algebs = []
-                                    for moveitem in foundmoves:
-                                        for i in range(moveitem[1]):
-                                            algebs.append(moveitem[0])                                
-                                    index = int(Math.random() * len(algebs))
-                                    if index >= len(algebs):
-                                        index = len(algebs) - 1
-                                    selectedalgeb = algebs[index]                                
-                                    self.trainfen = self.basicboard.fen                                                                    
-                                    self.moveclickedcallback(self.basicboard.variantkey, self.basicboard.fen, selectedalgeb, False)
+                        analysisinfo = self.getcachedanalysisinfobyfen(self.basicboard.fen)                                                                        
+                        if ( analysisinfo == "none" ) or self.analyzing.get():                                                        
+                            self.showtraininfomsg("No analysis available to make move.", "err")                            
+                            if not self.analyzing.get():
+                                self.analyzecallbackfactory()()
+                            else:
+                                elapsedms = __new__(Date()).getTime() - self.analysisstartedat
+                                elapsed = int(elapsedms / 1000)
+                                self.showtraininfomsg("Analyzing, elapsed: {} sec(s).".format(elapsed))
+                                if(elapsed > 20):
+                                    self.showtraininfomsg("Analysis done.", "succ")
+                                    self.stopandstoreanalysis()
+                        elif analysisinfo and ( not self.analyzing.get() ):
+                            foundmoves = []
+                            pvitems = analysisinfo["pvitems"]
+                            for item in pvitems:
+                                try:
+                                    opptrainweight = int(item["opptrainweight"])
+                                except:
+                                    opptrainweight = 0
+                                if opptrainweight > 0:
+                                    foundmoves.append([item["bestmoveuci"], opptrainweight])
+                            if len(foundmoves) > 0:                                
+                                algebs = []
+                                for moveitem in foundmoves:
+                                    for i in range(moveitem[1]):
+                                        algebs.append(moveitem[0])                                
+                                index = int(Math.random() * len(algebs))
+                                if index >= len(algebs):
+                                    index = len(algebs) - 1
+                                selectedalgeb = algebs[index]                                
+                                self.trainfen = self.basicboard.fen                                                                    
+                                self.showtraininfomsg("Making training move : {} .".format(selectedalgeb), "succ")
+                                self.moveclickedcallback(self.basicboard.variantkey, self.basicboard.fen, selectedalgeb, False)
+                            elif len(pvitems) > 0:                                
+                                selsize = int(Math.random() * len(pvitems)) + 1
+                                if selsize > len(pvitems):
+                                    selsize = len(pvitems)
+                                index = int(Math.random() * selsize)
+                                if index >= len(pvitems):
+                                    index = len(pvitems) - 1
+                                selectedalgeb = pvitems[index]["bestmoveuci"]                                
+                                self.trainfen = self.basicboard.fen                                                                    
+                                self.moveclickedcallback(self.basicboard.variantkey, self.basicboard.fen, selectedalgeb, False)
+                                self.showtraininfomsg("Making random engine move [ {} from {} : {} ].".format(index + 1, selsize, selectedalgeb))                            
                 else:                
                     if self.examinealgeb:                    
-                        examinealgeb = self.examinealgeb
-                        self.examinealgeb = None                    
-                        if self.analysisinfo:                        
+                        examinealgeb = self.examinealgeb                        
+                        analysisinfo = self.getcachedanalysisinfobyfen(self.basicboard.fen)                                                
+                        if analysisinfo == "none":      
+                            self.showtraininfomsg("No analysis available to check move.", "err")
+                            self.examinealgeb = None                                          
+                            self.moveclickedcallback(self.basicboard.variantkey, self.basicboard.fen, examinealgeb, False)
+                        elif analysisinfo:                        
+                            self.examinealgeb = None                                          
                             moveok = False         
                             trainweight = 0               
-                            for item in self.analysisinfo["pvitems"]:
+                            for item in analysisinfo["pvitems"]:
                                 if item["bestmoveuci"] == examinealgeb:
                                     try:
                                         trainweight = int(item["metrainweight"])
@@ -900,13 +976,11 @@ class Board(e):
                                         moveok = True
                                         break                        
                             if moveok:
+                                self.showtraininfomsg("Move ok. Weight : {}.".format(trainweight), "succ")
                                 self.moveclickedcallback(self.basicboard.variantkey, self.basicboard.fen, examinealgeb, False)
                             else:
-                                setTimeout(lambda: window.alert("Wrong move."), 200)                        
+                                self.showtraininfomsg("Wrong move.", "err")
                                 self.basicboard.setfromfen(self.basicboard.fen)
-                        else:
-                            setTimeout(lambda: window.alert("No analysis info available."), 200)                        
-                            self.basicboard.setfromfen(self.basicboard.fen)
         except:
             pass
 
@@ -922,6 +996,8 @@ class Board(e):
 
     def __init__(self, args):
         super().__init__("div")
+        self.fen2zobristkeyhex = {}
+        self.zobristkeyhex2analysisinfo = {}
         self.addmovemode = False
         self.bookpath = None        
         self.resizeorigwidth = 800
@@ -1061,7 +1137,8 @@ class Board(e):
         self.traincontrols = Div().disp("flex").jc("space-around").ai("center").h(40).w(400).bc("#eee")
         self.traintimediv = Div().w(200).bc("#eff").html("time").ff("monospace").ta("center")
         self.traincontrols.a([self.traincombo, self.traintimediv])
-        self.traindiv.a(self.traincontrols)
+        self.traininfodiv = Div().disp("flex").jc("space-around").ai("center").h(40).w(400).bc("#eee").mt(2)
+        self.traindiv.a([self.traincontrols, self.traininfodiv])
         window.setInterval(self.trainhandler, 500)
         self.tabpane = TabPane({
             "kind":"normal", 
