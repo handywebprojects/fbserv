@@ -190,6 +190,7 @@ def jointourney(req):
 #########################################################
 
 def sendsiores(obj):
+    #print("send siores", obj)
     postjson(SERVER_URL() + "/sendsiores", obj)
 
 sioresqueue = Queue()
@@ -411,6 +412,18 @@ class EngineProcess:
         })
         self.process.send_line(sline)
 
+    def sendinitialanalysisinfo(self):
+        time.sleep(0.25)
+        print("sending initial analysis info", self.defaultanalysisinfo)
+
+        sendsiores({
+            "kind": "analysisinfo",
+            "owner": self.owner,
+            "sendto": "user",
+            "uid": self.uid,
+            "analysisinfo": self.defaultanalysisinfo,                        
+        })
+
     def analyze(self, variantkey, multipv, fen):
         self.variantkey = variantkey
         self.fen = fen        
@@ -419,6 +432,17 @@ class EngineProcess:
         self.board.set_fen(fen)
 
         self.zobristkeyhex = get_zobrist_key_hex(self.board)
+
+        print("analyzing", fen)
+
+        self.defaultanalysisinfo = {
+            "zobristkeyhex": self.zobristkeyhex,
+            "pvitems": []
+        }
+
+        Thread(target = self.sendinitialanalysisinfo).start()
+
+        print("starting engine")
 
         uci_variant = self.board.uci_variant
         self.eng = Engine()
