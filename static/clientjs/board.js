@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2019-04-11 19:10:58
+// Transcrypt'ed from Python, 2019-04-12 05:26:11
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {LICH_API_GAMES_EXPORT, getconn, lichapiget} from './connection.js';
 import {Log, LogItem} from './widgets.js';
@@ -128,6 +128,31 @@ export var Board =  __class__ ('Board', [e], {
 	get gametoend () {return __get__ (this, function (self) {
 		self.gamei = len (self.positioninfos) - 1;
 		self.selectgamei (self.gamei);
+	});},
+	get getcurrentline () {return __get__ (this, function (self) {
+		try {
+			var sans = [];
+			var hm = -(1);
+			for (var pinfo of self.positioninfos) {
+				var posinfo = pinfo ['positioninfo'];
+				var genmove = '*';
+				if (__in__ ('genmove', posinfo)) {
+					var genmove = posinfo ['genmove'] ['san'];
+				}
+				if (__mod__ (hm, 2) == 0) {
+					var genmove = '{}. {}'.format (hm / 2 + 1, genmove);
+				}
+				hm++;
+				if (hm <= self.gamei) {
+					sans.append (genmove);
+				}
+			}
+			return ' '.join (sans);
+		}
+		catch (__except0__) {
+			print ('could not get current line', __except0__);
+			// pass;
+		}
 	});},
 	get buildgame () {return __get__ (this, function (self) {
 		self.gamediv.x ();
@@ -978,9 +1003,44 @@ export var Board =  __class__ ('Board', [e], {
 			self.traininfodiv.c ('#070');
 		}
 	});},
+	get favlineclickedfactory () {return __get__ (this, function (self, favline) {
+		var favlineclicked = function () {
+			var fen = favline ['fen'];
+			self.fentextchangedcallback (fen);
+		};
+		return favlineclicked;
+	});},
+	get getfavlines () {return __get__ (this, function (self) {
+		return JSON.parse (localStorage.getItem (self.id + '/favlines'));
+	});},
+	get storefavlines () {return __get__ (this, function (self, favlines) {
+		localStorage.setItem (self.id + '/favlines', JSON.stringify (favlines));
+	});},
+	get removefavlinefactory () {return __get__ (this, function (self, favline) {
+		var removefavline = function () {
+			var favlines = self.getfavlines ();
+			var newfavlines = [];
+			for (var fl of favlines) {
+				if (!(fl ['line'] == favline ['line'])) {
+					newfavlines.append (fl);
+				}
+			}
+			self.storefavlines (newfavlines);
+		};
+		return removefavline;
+	});},
 	get trainhandler () {return __get__ (this, function (self) {
 		try {
 			self.traintimediv.html (new Date ().toLocaleString ());
+			self.trainlinediv.html (self.getcurrentline ());
+			self.favlinesdiv.x ();
+			var favlines = self.getfavlines ();
+			for (var favline of favlines) {
+				var favlinediv = Div ().disp ('flex').pad (1).mar (1).cp ();
+				var line = favline ['line'];
+				favlinediv.a ([Button ('-', self.removefavlinefactory (favline)).w (14).h (14).fs (7).bc ('#faa'), Div ().ml (3).html (line).ae ('mousedown', self.favlineclickedfactory (favline))]);
+				self.favlinesdiv.a (favlinediv);
+			}
 			self.trainmode = self.traincombo.v ();
 			if (self.trainmode == 'off') {
 				self.trainfen = null;
@@ -1013,6 +1073,7 @@ export var Board =  __class__ ('Board', [e], {
 							}
 						}
 						else if (analysisinfo && !(self.analyzing.py_get ())) {
+							var ignorepreset = '';
 							var foundmoves = [];
 							var pvitems = analysisinfo ['pvitems'];
 							for (var item of pvitems) {
@@ -1025,6 +1086,10 @@ export var Board =  __class__ ('Board', [e], {
 								if (opptrainweight > 0) {
 									foundmoves.append ([item ['bestmoveuci'], opptrainweight]);
 								}
+							}
+							if (int (Math.random () * 100) > 50) {
+								var foundmoves = [];
+								var ignorepreset = 'Ignore preset. ';
 							}
 							if (len (foundmoves) > 0) {
 								var algebs = [];
@@ -1057,7 +1122,7 @@ export var Board =  __class__ ('Board', [e], {
 								var selectedalgeb = pvitems [index] ['bestmoveuci'];
 								self.trainfen = self.basicboard.fen;
 								self.moveclickedcallback (self.basicboard.variantkey, self.basicboard.fen, selectedalgeb, false);
-								self.showtraininfomsg ('Making random engine move [ {} from {} : {} ].'.format (index + 1, selsize, selectedalgeb));
+								self.showtraininfomsg ('{}Making random engine move [ {} from {} : {} ].'.format (ignorepreset, index + 1, selsize, selectedalgeb));
 							}
 							else {
 								self.trainfen = self.basicboard.fen;
@@ -1122,8 +1187,15 @@ export var Board =  __class__ ('Board', [e], {
 			}
 		}
 	});},
+	get addtrainline () {return __get__ (this, function (self) {
+		var favlines = self.getfavlines ();
+		var line = window.prompt ('Enter name:', self.getcurrentline ());
+		favlines.append (dict ({'line': line, 'fen': self.basicboard.fen}));
+		self.storefavlines (favlines);
+	});},
 	get __init__ () {return __get__ (this, function (self, args) {
 		__super__ (Board, '__init__') (self, 'div');
+		self.gamei = 0;
 		self.fen2zobristkeyhex = dict ({});
 		self.zobristkeyhex2analysisinfo = dict ({});
 		self.addmovemode = false;
@@ -1240,13 +1312,18 @@ export var Board =  __class__ ('Board', [e], {
 		self.bookdiv = Div ().ms ().fs (20);
 		self.bookpane.setcontentelement (self.bookdiv);
 		self.chartdiv = Div ();
+		if (!(localStorage.getItem (self.id + '/favlines'))) {
+			localStorage.setItem (self.id + '/favlines', '[]');
+		}
 		self.traindiv = Div ().mar (3);
 		self.traincombo = ComboBox ().setoptions ([['off', 'Training off'], ['black', 'Train White'], ['white', 'Train Black']], 'off', self.traincombochanged);
-		self.traincontrols = Div ().disp ('flex').jc ('space-around').ai ('center').h (40).w (400).bc ('#eee');
+		self.traincontrols = Div ().disp ('flex').jc ('space-around').ai ('center').h (40).w (500).bc ('#eee');
 		self.traintimediv = Div ().w (200).bc ('#eff').html ('time').ff ('monospace').ta ('center');
-		self.traincontrols.a ([self.traincombo, self.traintimediv]);
-		self.traininfodiv = Div ().disp ('flex').jc ('space-around').ai ('center').h (40).w (400).bc ('#eee').mt (2);
-		self.traindiv.a ([self.traincontrols, self.traininfodiv]);
+		self.traincontrols.a ([self.traincombo, Button ('+', self.addtrainline), self.traintimediv]);
+		self.traininfodiv = Div ().disp ('flex').jc ('space-around').ai ('center').h (40).w (500).bc ('#eee').mt (2);
+		self.trainlinediv = Div ().mt (2).pad (1).ff ('monospace').c ('#00f').bc ('#eee');
+		self.favlinesdiv = Div ().mt (2).ff ('monospace');
+		self.traindiv.a ([self.traincontrols, self.traininfodiv, self.trainlinediv, self.favlinesdiv]);
 		window.setInterval (self.trainhandler, 500);
 		self.tabpane = TabPane (dict ({'kind': 'normal', 'id': 'board', 'tabs': [Tab ('analysis', 'Analysis', self.analysisdiv), Tab ('train', 'Train', self.traindiv), Tab ('auto', 'Auto', self.autodiv), Tab ('book', 'Book', self.bookpane), Tab ('game', 'Game', self.gamediv, self.gametabselected), Tab ('pgn', 'Pgn', self.pgntext), Tab ('games', 'Games', self.gamescontainerdiv), Tab ('chart', 'Chart', self.chartdiv), Tab ('engineout', 'Engine out', self.engineoutpane)], 'selected': 'analysis'}));
 		self.verticalcontainer.a ([self.sectioncontainer, self.enginebardiv, self.movelistdiv, self.tabpane]);
