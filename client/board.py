@@ -123,6 +123,25 @@ class Board(e):
         self.gamei = len(self.positioninfos) - 1
         self.selectgamei(self.gamei)            
 
+    def getcurrentline(self):
+        try:
+            sans = []
+            hm = -1
+            for pinfo in self.positioninfos:
+                posinfo = pinfo["positioninfo"]
+                genmove = "*"
+                if "genmove" in posinfo:
+                    genmove = posinfo["genmove"]["san"]
+                if ( hm % 2 ) == 0:
+                    genmove = "{}. {}".format(hm/2 + 1, genmove)                
+                hm += 1
+                if hm <= self.gamei:
+                    sans.append(genmove)                            
+            return " ".join(sans)
+        except:
+            print("could not get current line", __except0__)
+            pass
+
     def buildgame(self):
         self.gamediv.x()        
         self.posdivs = []
@@ -894,9 +913,42 @@ class Board(e):
         if kind == "succ":
             self.traininfodiv.c("#070")
 
+    def favlineclickedfactory(self, favline):
+        def favlineclicked():
+            fen = favline["fen"]
+            self.fentextchangedcallback(fen)
+        return favlineclicked
+
+    def getfavlines(self):
+        return JSON.parse(localStorage.getItem(self.id + "/favlines"))
+
+    def storefavlines(self, favlines):
+        localStorage.setItem(self.id + "/favlines", JSON.stringify(favlines))
+
+    def removefavlinefactory(self, favline):
+        def removefavline():
+            favlines = self.getfavlines()
+            newfavlines = []
+            for fl in favlines:
+                if not fl["line"] == favline["line"]:
+                    newfavlines.append(fl)
+            self.storefavlines(newfavlines)
+        return removefavline
+
     def trainhandler(self):                
         try:
             self.traintimediv.html(__new__(Date()).toLocaleString())
+            self.trainlinediv.html(self.getcurrentline())
+            self.favlinesdiv.x()
+            favlines = self.getfavlines()
+            for favline in favlines:
+                favlinediv = Div().disp("flex").pad(1).mar(1).cp()
+                line = favline["line"]
+                favlinediv.a([
+                    Button("-", self.removefavlinefactory(favline)).w(14).h(14).fs(7).bc("#faa"),
+                    Div().ml(3).html(line).ae("mousedown", self.favlineclickedfactory(favline))
+                ])
+                self.favlinesdiv.a(favlinediv)
             self.trainmode = self.traincombo.v()
             if self.trainmode == "off":
                 self.trainfen = None
@@ -922,6 +974,7 @@ class Board(e):
                                     self.showtraininfomsg("Analysis done.", "succ")
                                     self.stopandstoreanalysis()
                         elif analysisinfo and ( not self.analyzing.get() ):
+                            ignorepreset = ""
                             foundmoves = []
                             pvitems = analysisinfo["pvitems"]
                             for item in pvitems:
@@ -931,6 +984,9 @@ class Board(e):
                                     opptrainweight = 0
                                 if opptrainweight > 0:
                                     foundmoves.append([item["bestmoveuci"], opptrainweight])
+                            if int(Math.random() * 100) > 50:
+                                foundmoves = []
+                                ignorepreset = "Ignore preset. "
                             if len(foundmoves) > 0:                                
                                 algebs = []
                                 for moveitem in foundmoves:
@@ -955,7 +1011,7 @@ class Board(e):
                                 selectedalgeb = pvitems[index]["bestmoveuci"]                                
                                 self.trainfen = self.basicboard.fen                                                                    
                                 self.moveclickedcallback(self.basicboard.variantkey, self.basicboard.fen, selectedalgeb, False)
-                                self.showtraininfomsg("Making random engine move [ {} from {} : {} ].".format(index + 1, selsize, selectedalgeb))                            
+                                self.showtraininfomsg("{}Making random engine move [ {} from {} : {} ].".format(ignorepreset, index + 1, selsize, selectedalgeb))                            
                             else:
                                 self.trainfen = self.basicboard.fen
                                 self.showtraininfomsg("No legal moves.", "err")
@@ -999,8 +1055,18 @@ class Board(e):
             if self.basicboard.flip:
                 self.flipcallback()
 
+    def addtrainline(self):
+        favlines = self.getfavlines()
+        line = window.prompt("Enter name:", self.getcurrentline())
+        favlines.append({
+            "line": line,
+            "fen": self.basicboard.fen
+        })
+        self.storefavlines(favlines)
+
     def __init__(self, args):
         super().__init__("div")
+        self.gamei = 0
         self.fen2zobristkeyhex = {}
         self.zobristkeyhex2analysisinfo = {}
         self.addmovemode = False
@@ -1133,17 +1199,25 @@ class Board(e):
         self.bookdiv = Div().ms().fs(20)
         self.bookpane.setcontentelement(self.bookdiv)
         self.chartdiv = Div()
+        if not localStorage.getItem(self.id + "/favlines"):
+            localStorage.setItem(self.id + "/favlines", "[]")
         self.traindiv = Div().mar(3)
         self.traincombo = ComboBox().setoptions([
             ["off", "Training off"],            
             ["black", "Train White"],
             ["white", "Train Black"]
-        ], "off", self.traincombochanged)
-        self.traincontrols = Div().disp("flex").jc("space-around").ai("center").h(40).w(400).bc("#eee")
+        ], "off", self.traincombochanged)        
+        self.traincontrols = Div().disp("flex").jc("space-around").ai("center").h(40).w(500).bc("#eee")
         self.traintimediv = Div().w(200).bc("#eff").html("time").ff("monospace").ta("center")
-        self.traincontrols.a([self.traincombo, self.traintimediv])
-        self.traininfodiv = Div().disp("flex").jc("space-around").ai("center").h(40).w(400).bc("#eee").mt(2)
-        self.traindiv.a([self.traincontrols, self.traininfodiv])
+        self.traincontrols.a([
+            self.traincombo,
+            Button("+", self.addtrainline),
+            self.traintimediv
+        ])
+        self.traininfodiv = Div().disp("flex").jc("space-around").ai("center").h(40).w(500).bc("#eee").mt(2)
+        self.trainlinediv = Div().mt(2).pad(1).ff("monospace").c("#00f").bc("#eee")
+        self.favlinesdiv = Div().mt(2).ff("monospace")
+        self.traindiv.a([self.traincontrols, self.traininfodiv, self.trainlinediv, self.favlinesdiv])
         window.setInterval(self.trainhandler, 500)
         self.tabpane = TabPane({
             "kind":"normal", 
