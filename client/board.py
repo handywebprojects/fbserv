@@ -139,7 +139,7 @@ class Board(e):
                     sans.append(genmove)                            
             return " ".join(sans)
         except:
-            print("could not get current line", __except0__)
+            print("could not get current line")
             pass
 
     def buildgame(self):
@@ -683,7 +683,14 @@ class Board(e):
         self.anyinfo = True
         elapsed = __new__(Date()).getTime() - self.analysisstartedat
         self.analysisinfo = obj       
-        self.analysiszobristkeyhex = self.analysisinfo["zobristkeyhex"]            
+        self.analysiszobristkeyhex = self.analysisinfo["zobristkeyhex"]     
+        try:
+            self.zobristkeyhex2analysisinfo[self.analysiszobristkeyhex] = {
+                "analysisinfo": self.analysisinfo
+            }
+        except:
+            print("there was a problem caching analysis info")
+            pass
         if not self.trainweightshash:
             self.trainweightshash = {}
         try:
