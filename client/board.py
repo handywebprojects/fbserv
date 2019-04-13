@@ -651,7 +651,7 @@ class Board(e):
         minfos = []
         for infoi in self.analysisinfo["pvitems"]:            
             try:                                   
-                minfo = MultipvInfo(infoi)
+                minfo = MultipvInfo(infoi, self.analysispvlength)
                 minfo.bestmovesanclickedcallback = self.analysismoveclicked
                 minfo.bonussliderchangedcallback = self.buildanalysisinfodiv                
                 if minfo.depth > self.maxdepth:
@@ -744,6 +744,27 @@ class Board(e):
 
     def storeanalysiscallback(self):
         if not ( self.analysisinfo is None ):
+            try:
+                zobristkeyhex = self.analysisinfo["zobristkeyhex"]
+                for pvitem in self.analysisinfo["pvitems"]:
+                    metrainweight = None
+                    if "metrainweight" in pvitem:
+                        metrainweight = pvitem["metrainweight"]
+                    opptrainweight = None
+                    if "opptrainweight" in pvitem:
+                        opptrainweight = pvitem["opptrainweight"]
+                    if not self.trainweightshash[zobristkeyhex]:
+                        self.trainweightshash[zobristkeyhex] = {}
+                    if not self.trainweightshash[zobristkeyhex][algeb]:
+                        self.trainweightshash[zobristkeyhex][algeb] = {}
+                    algeb = pvitem["bestmoveuci"]
+                    if metrainweight:
+                        self.trainweightshash[zobristkeyhex][algeb]["metrainweight"] = metrainweight
+                    if opptrainweight:
+                        self.trainweightshash[zobristkeyhex][algeb]["opptrainweight"] = opptrainweight
+            except:
+                print("there was a problem caching analysis info")
+                pass
             getconn().sioreq({
                 "kind": "storedb",
                 "path": "analysisinfo/{}/{}".format(self.basicboard.variantkey, self.analysisinfo["zobristkeyhex"]),            
@@ -1105,6 +1126,7 @@ class Board(e):
         self.RATINGCLUSTER = args.get("ratingcluster", 25)
         self.maxgames = args.get("maxgames", 25)
         self.gamesfilter = args.get("gamesfilter", "")
+        self.analysispvlength = args.get("analysispvlength", 4)
         self.setposinfo = args.get("setposinfo", {
             "variantkey": "standard",
             "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"

@@ -700,6 +700,12 @@ class MultipvInfo(e):
         self.bestmovesan = self.infoi["bestmovesan"]
         self.scorenumerical = self.infoi["scorenumerical"]
         self.pvsan = self.infoi["pvsan"]
+        self.pvsans = self.pvsan.split(" ")
+        if len(self.pvsans) > ( self.pvlength + 1 ):
+            self.pvsans = self.pvsans[0:self.pvlength + 1]
+        if len(self.pvsans) > 1:
+            self.pvsans = self.pvsans[1:]
+        self.showpv = " ".join(self.pvsans)
         self.pvpgn = self.infoi["pvpgn"]
         self.depth = self.infoi["depth"]
         self.nps = self.infoi["nps"]        
@@ -743,16 +749,17 @@ class MultipvInfo(e):
             oppbc = "inherit"        
         self.metraincombo = ComboBox().setoptions(TRAIN_OPTIONS, metrainweight, self.traincombochanged)
         self.opptraincombo = ComboBox().setoptions(TRAIN_OPTIONS, opptrainweight, self.traincombochanged)        
-        self.traindiv.a([self.metraincombo, self.opptraincombo])
-        self.pvdiv = Div().ac("multipvinfopv").html(self.pvpgn)
+        self.traindiv.a([self.metraincombo, self.opptraincombo])        
+        self.pvdiv = Div().ac("multipvinfopv").html(self.showpv).c("#070").fw("bold")
         self.container.a([self.idiv, self.bestmovesandiv, self.scorenumericaldiv, self.bonussliderdiv, self.traindiv, self.depthdiv, self.pvdiv])        
         self.container.bc(oppbc)
         self.bestmovesandiv.c(scorecolor(self.effscore()))
         self.scorenumericaldiv.c(scorecolor(self.effscore()))        
         self.x().a(self.container)        
 
-    def __init__(self, infoi):
+    def __init__(self, infoi, pvlength = 4):
         super().__init__("div")
+        self.pvlength = pvlength
         self.bestmovesanclickedcallback = None
         self.bonussliderchangedcallback = None
         self.infoi = infoi

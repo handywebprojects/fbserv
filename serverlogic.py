@@ -290,6 +290,10 @@ class ProcessConsole:
 
         return returncode
 
+#########################################################
+
+ANALYSIS_PV_LENGTH = 10
+
 class EngineProcess:
     def read_stdout_callback(self, sline):
         #print("{}engine out >".format(ANSI_GREEN), sline)        
@@ -337,7 +341,7 @@ class EngineProcess:
                                 san = sanboard.san(move)
                                 sans.append(san)
                                 ucis.append(move.uci())
-                                if mcnt < config.analysispvlength():
+                                if mcnt < ANALYSIS_PV_LENGTH:
                                     pref = ""                                
                                     if mcnt == 0:
                                         dot = ""                                    
@@ -351,9 +355,9 @@ class EngineProcess:
                                     pgnsans.append(san)
                                 sanboard.push(move)                            
                                 mcnt += 1                            
-                            if len(sans) > config.analysispvlength():
-                                sans = sans[:config.analysispvlength()]
-                                ucis = ucis[:config.analysispvlength()]
+                            if len(sans) > ANALYSIS_PV_LENGTH:
+                                sans = sans[:ANALYSIS_PV_LENGTH]
+                                ucis = ucis[:ANALYSIS_PV_LENGTH]
                             pvsan = " ".join(sans)
                             bestmovesan = sans[0]
                             pvuci = " ".join(ucis)                        

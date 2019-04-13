@@ -76,7 +76,8 @@ class Client:
                 "background": self.boardbackground,
                 "autoanalysisdelay": self.autoanalysisdelay,
                 "maxgames": self.maxgames,
-                "gamesfilter": self.gamesfilter
+                "gamesfilter": self.gamesfilter,
+                "analysispvlength": self.analysispvlength
             })            
             self.mainboard.setusername(self.username, self.usertoken)
             self.mainboard.tabpane.controlpanel.ac("subcontrolpanel")
@@ -187,6 +188,7 @@ class Client:
         self.autoanalysisdelay = self.config.get("global/autoanalysisdelay", True)        
         self.maxgames = self.config.get("global/maxgames", 25)        
         self.gamesfilter = self.config.get("global/gamesfilter", "")        
+        self.analysispvlength = self.config.get("global/analysispvlength", 4)        
         self.setposinfo = obj["setposinfo"]
 
     def buildfromconfiginobj(self, obj):        
