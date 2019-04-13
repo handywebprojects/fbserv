@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2019-04-11 14:04:37
+// Transcrypt'ed from Python, 2019-04-13 07:26:15
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {getconn} from './connection.js';
 import {Vect, cpick, scorecolor, scoreverbal, xor} from './utils.js';
@@ -808,6 +808,14 @@ export var MultipvInfo =  __class__ ('MultipvInfo', [e], {
 		self.bestmovesan = self.infoi ['bestmovesan'];
 		self.scorenumerical = self.infoi ['scorenumerical'];
 		self.pvsan = self.infoi ['pvsan'];
+		self.pvsans = self.pvsan.py_split (' ');
+		if (len (self.pvsans) > self.pvlength + 1) {
+			self.pvsans = self.pvsans.__getslice__ (0, self.pvlength + 1, 1);
+		}
+		if (len (self.pvsans) > 1) {
+			self.pvsans = self.pvsans.__getslice__ (1, null, 1);
+		}
+		self.showpv = ' '.join (self.pvsans);
 		self.pvpgn = self.infoi ['pvpgn'];
 		self.depth = self.infoi ['depth'];
 		self.nps = self.infoi ['nps'];
@@ -863,15 +871,19 @@ export var MultipvInfo =  __class__ ('MultipvInfo', [e], {
 		self.metraincombo = ComboBox ().setoptions (TRAIN_OPTIONS, metrainweight, self.traincombochanged);
 		self.opptraincombo = ComboBox ().setoptions (TRAIN_OPTIONS, opptrainweight, self.traincombochanged);
 		self.traindiv.a ([self.metraincombo, self.opptraincombo]);
-		self.pvdiv = Div ().ac ('multipvinfopv').html (self.pvpgn);
+		self.pvdiv = Div ().ac ('multipvinfopv').html (self.showpv).c ('#070').fw ('bold');
 		self.container.a ([self.idiv, self.bestmovesandiv, self.scorenumericaldiv, self.bonussliderdiv, self.traindiv, self.depthdiv, self.pvdiv]);
 		self.container.bc (oppbc);
 		self.bestmovesandiv.c (scorecolor (self.effscore ()));
 		self.scorenumericaldiv.c (scorecolor (self.effscore ()));
 		self.x ().a (self.container);
 	});},
-	get __init__ () {return __get__ (this, function (self, infoi) {
+	get __init__ () {return __get__ (this, function (self, infoi, pvlength) {
+		if (typeof pvlength == 'undefined' || (pvlength != null && pvlength.hasOwnProperty ("__kwargtrans__"))) {;
+			var pvlength = 4;
+		};
 		__super__ (MultipvInfo, '__init__') (self, 'div');
+		self.pvlength = pvlength;
 		self.bestmovesanclickedcallback = null;
 		self.bonussliderchangedcallback = null;
 		self.infoi = infoi;
