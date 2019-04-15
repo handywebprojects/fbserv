@@ -520,12 +520,12 @@ class Board(e):
             movediv.ae("mousedown", self.moveclickedfactory(move))
             self.movelistdiv.a(movediv)
 
-    def delcallback(self, rep = 1):
+    def delcallback(self, event = None, rep = 1):        
         if len(self.history) < rep:
-            return
+            return        
         for _ in range(rep):
-            item = self.history.pop()
-        self.setfromfen(item["fen"], item["positioninfo"], False)
+            self.delitem = self.history.pop()
+        self.setfromfen(self.delitem["fen"], self.delitem["positioninfo"], False)
 
     def clearcallback(self):
         item = None
@@ -1099,7 +1099,7 @@ class Board(e):
         self.storefavlines(favlines)
 
     def takeback(self):
-        self.delcallback(2)
+        self.delcallback(None, 2)
 
     def __init__(self, args):
         super().__init__("div")
