@@ -520,10 +520,12 @@ class Board(e):
             movediv.ae("mousedown", self.moveclickedfactory(move))
             self.movelistdiv.a(movediv)
 
-    def delcallback(self):
-        if len(self.history) > 0:
+    def delcallback(self, rep = 1):
+        if len(self.history) < rep:
+            return
+        for _ in range(rep):
             item = self.history.pop()
-            self.setfromfen(item["fen"], item["positioninfo"], False)
+        self.setfromfen(item["fen"], item["positioninfo"], False)
 
     def clearcallback(self):
         item = None
@@ -1096,6 +1098,9 @@ class Board(e):
         })
         self.storefavlines(favlines)
 
+    def takeback(self):
+        self.delcallback(2)
+
     def __init__(self, args):
         super().__init__("div")
         self.gamei = 0
@@ -1246,6 +1251,7 @@ class Board(e):
         self.traincontrols.a([
             self.traincombo,
             Labeled("Free", self.trainfreecheckbox),
+            Button("Take back", self.takeback),
             Button("+", self.addtrainline),
             self.traintimediv
         ])
