@@ -953,12 +953,15 @@ class Board(e):
     def storefavlines(self, favlines):
         localStorage.setItem(self.id + "/favlines", JSON.stringify(favlines))
 
-    def removefavlinefactory(self, favline):
+    def removefavlinefactory(self, favline, edit = False):
         def removefavline():
             favlines = self.getfavlines()
             newfavlines = []
             for fl in favlines:
-                if not fl["line"] == favline["line"]:
+                if not ( fl["line"] == favline["line"] ):
+                    newfavlines.append(fl)
+                elif edit:
+                    fl["fen"] = self.basicboard.fen
                     newfavlines.append(fl)
             self.storefavlines(newfavlines)
         return removefavline
@@ -973,7 +976,8 @@ class Board(e):
                 favlinediv = Div().disp("flex").pad(1).mar(1).cp()
                 line = favline["line"]
                 favlinediv.a([
-                    Button("-", self.removefavlinefactory(favline)).w(14).h(14).fs(7).bc("#faa"),
+                    Button("*", self.removefavlinefactory(favline, True)).w(28).h(14).fs(7).bc("#afa"),
+                    Button("-", self.removefavlinefactory(favline)).w(14).h(14).fs(7).bc("#faa").ml(2),
                     Div().ml(3).html(line).ae("mousedown", self.favlineclickedfactory(favline))
                 ])
                 self.favlinesdiv.a(favlinediv)
