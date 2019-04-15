@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2019-04-15 09:36:27
+// Transcrypt'ed from Python, 2019-04-15 10:08:25
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {LICH_API_GAMES_EXPORT, getconn, lichapiget} from './connection.js';
 import {Log, LogItem} from './widgets.js';
@@ -559,11 +559,17 @@ export var Board =  __class__ ('Board', [e], {
 			self.movelistdiv.a (movediv);
 		}
 	});},
-	get delcallback () {return __get__ (this, function (self) {
-		if (len (self.history) > 0) {
-			var item = self.history.py_pop ();
-			self.setfromfen (item ['fen'], item ['positioninfo'], false);
+	get delcallback () {return __get__ (this, function (self, rep) {
+		if (typeof rep == 'undefined' || (rep != null && rep.hasOwnProperty ("__kwargtrans__"))) {;
+			var rep = 1;
+		};
+		if (len (self.history) < rep) {
+			return ;
 		}
+		for (var _ = 0; _ < rep; _++) {
+			var item = self.history.py_pop ();
+		}
+		self.setfromfen (item ['fen'], item ['positioninfo'], false);
 	});},
 	get clearcallback () {return __get__ (this, function (self) {
 		var item = null;
@@ -1237,6 +1243,9 @@ export var Board =  __class__ ('Board', [e], {
 		favlines.append (dict ({'line': line, 'fen': self.basicboard.fen}));
 		self.storefavlines (favlines);
 	});},
+	get takeback () {return __get__ (this, function (self) {
+		self.delcallback (2);
+	});},
 	get __init__ () {return __get__ (this, function (self, args) {
 		__super__ (Board, '__init__') (self, 'div');
 		self.gamei = 0;
@@ -1365,7 +1374,7 @@ export var Board =  __class__ ('Board', [e], {
 		self.traincontrols = Div ().disp ('flex').jc ('space-around').ai ('center').h (40).w (500).bc ('#eee');
 		self.traintimediv = Div ().w (200).bc ('#eff').html ('time').ff ('monospace').ta ('center');
 		self.trainfreecheckbox = CheckBox ();
-		self.traincontrols.a ([self.traincombo, Labeled ('Free', self.trainfreecheckbox), Button ('+', self.addtrainline), self.traintimediv]);
+		self.traincontrols.a ([self.traincombo, Labeled ('Free', self.trainfreecheckbox), Button ('Take back', self.takeback), Button ('+', self.addtrainline), self.traintimediv]);
 		self.traininfodiv = Div ().disp ('flex').jc ('space-around').ai ('center').h (40).w (500).bc ('#eee').mt (2);
 		self.trainlinediv = Div ().mt (2).pad (1).ff ('monospace').c ('#00f').bc ('#eee');
 		self.favlinesdiv = Div ().mt (2).ff ('monospace');
