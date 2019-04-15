@@ -1,4 +1,4 @@
-from dom import e, Div, Button, ComboBox, TextArea, Span
+from dom import e, Div, Button, ComboBox, TextArea, Span, CheckBox, Labeled
 from utils import cpick, View, getglobalcssvarpxint, uci_variant_to_variantkey, scorecolor, IS_PROD, scoreverbal
 from basicboard import BasicBoard, VARIANT_OPTIONS, PgnText, PgnList, PgnInfo, MultipvInfo, WHITE, BLACK
 from widgets import TabPane, Tab, SplitPane
@@ -854,7 +854,7 @@ class Board(e):
         self.makeanalyzedmovecallback()
 
     def defaultmoveclickedcallback(self, variantkey, fen, moveuci, handletrain = True):        
-        if handletrain:
+        if handletrain and ( not self.trainfreecheckbox.getchecked() ):
             if ( ( self.trainmode == "white" ) and ( self.basicboard.turn() == BLACK ) ) or ( ( self.trainmode == "black" ) and ( self.basicboard.turn() == WHITE ) ):
                 self.examinealgeb = moveuci            
                 self.trainhandler()            
@@ -1242,8 +1242,10 @@ class Board(e):
         ], "off", self.traincombochanged)        
         self.traincontrols = Div().disp("flex").jc("space-around").ai("center").h(40).w(500).bc("#eee")
         self.traintimediv = Div().w(200).bc("#eff").html("time").ff("monospace").ta("center")
+        self.trainfreecheckbox = CheckBox()
         self.traincontrols.a([
             self.traincombo,
+            Labeled("Free", self.trainfreecheckbox),
             Button("+", self.addtrainline),
             self.traintimediv
         ])

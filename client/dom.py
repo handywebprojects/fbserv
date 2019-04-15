@@ -624,4 +624,13 @@ class Hlink(e):
         super().__init__("a")
         self.sa("href", href)
         self.html(caption)
+
+class Labeled(e):
+    def __init__(self, label, element):
+        super().__init__("div")
+        self.disp("flex").ai("center").bc("#eee").curlyborder()
+        self.labeldiv = Div().mar(1).pad(1).ml(6).html(label).ff("monospace").bc("#ffe")
+        self.element = element
+        self.elementcontainer = Div().mr(2).a(self.element)
+        self.a([self.labeldiv, self.elementcontainer])
 ######################################################
