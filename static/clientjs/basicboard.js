@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2019-04-13 07:26:15
+// Transcrypt'ed from Python, 2019-04-17 10:31:43
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {getconn} from './connection.js';
 import {Vect, cpick, scorecolor, scoreverbal, xor} from './utils.js';
@@ -114,6 +114,10 @@ export var Square =  __class__ ('Square', [object], {
 	get __init__ () {return __get__ (this, function (self, file, rank) {
 		self.file = file;
 		self.rank = rank;
+	});},
+	get hashkey () {return __get__ (this, function (self) {
+		var hashkey = '{}:{}'.format (self.file, self.rank);
+		return hashkey;
 	});},
 	get p () {return __get__ (this, function (self, sq) {
 		return Square (self.file + sq.file, self.rank + sq.rank);
@@ -375,14 +379,20 @@ export var BasicBoard =  __class__ ('BasicBoard', [e], {
 	});},
 	get buildsquares () {return __get__ (this, function (self) {
 		self.container.x ();
+		self.sqdivs = dict ({});
+		self.sqhdivs = dict ({});
 		for (var sq of self.squarelist ()) {
 			var sqclass = cpick (self.islightsquare (sq), 'boardsquarelight', 'boardsquaredark');
 			var sqdiv = Div ().ac (['boardsquare', sqclass]).w (self.squaresize).h (self.squaresize);
+			var sqhdiv = Div ().pa ().w (self.squaresize).h (self.squaresize);
+			self.sqdivs [sq.hashkey ()] = sqdiv;
+			self.sqhdivs [sq.hashkey ()] = sqhdiv;
 			var fasq = self.flipawaresquare (sq);
 			sqdiv.pv (self.squarecoordsvect (fasq));
+			sqhdiv.pv (self.squarecoordsvect (fasq));
 			sqdiv.ae ('dragover', self.piecedragoverfactory (sq));
 			sqdiv.ae ('drop', self.piecedropfactory (sq));
-			self.container.a (sqdiv);
+			self.container.a ([sqdiv, sqhdiv]);
 			var p = self.getpieceatsquare (sq);
 			if (p.ispiece ()) {
 				var pdiv = Div ().ac ('boardpiece').w (self.piecesize).h (self.piecesize).pv (self.piececoordsvect (fasq));
@@ -486,6 +496,20 @@ export var BasicBoard =  __class__ ('BasicBoard', [e], {
 			var args = dict ({});
 		};
 		self.drawmovearrow (self.ucitomove (uci), args);
+	});},
+	get highlightsquare () {return __get__ (this, function (self, sq, bc) {
+		var margin = self.squaresize * 0.1;
+		var hsize = self.squaresize - 2 * margin;
+		var sqhdiv = self.sqhdivs [sq.hashkey ()];
+		sqhdiv.a (Div ().pa ().t (margin).l (margin).w (hsize).h (hsize).bc (bc));
+		sqhdiv.op (0.75);
+	});},
+	get highlightmove () {return __get__ (this, function (self, move, bc) {
+		self.highlightsquare (move.fromsq, bc);
+		self.highlightsquare (move.tosq, bc);
+	});},
+	get highlightucimove () {return __get__ (this, function (self, uci, bc) {
+		self.highlightmove (self.ucitomove (uci), bc);
 	});},
 	get buildgenmove () {return __get__ (this, function (self) {
 		if (__in__ ('genmove', self.positioninfo)) {
@@ -857,23 +881,23 @@ export var MultipvInfo =  __class__ ('MultipvInfo', [e], {
 			// pass;
 		}
 		if (hasmetrain && hasopptrain) {
-			var oppbc = '#00f';
+			self.trainbc = '#00f';
 		}
 		else if (hasmetrain) {
-			var oppbc = '#0f0';
+			self.trainbc = '#0f0';
 		}
 		else if (hasopptrain) {
-			var oppbc = '#f00';
+			self.trainbc = '#f00';
 		}
 		else {
-			var oppbc = 'inherit';
+			self.trainbc = 'inherit';
 		}
 		self.metraincombo = ComboBox ().setoptions (TRAIN_OPTIONS, metrainweight, self.traincombochanged);
 		self.opptraincombo = ComboBox ().setoptions (TRAIN_OPTIONS, opptrainweight, self.traincombochanged);
 		self.traindiv.a ([self.metraincombo, self.opptraincombo]);
 		self.pvdiv = Div ().ac ('multipvinfopv').html (self.showpv).c ('#070').fw ('bold');
 		self.container.a ([self.idiv, self.bestmovesandiv, self.scorenumericaldiv, self.bonussliderdiv, self.traindiv, self.depthdiv, self.pvdiv]);
-		self.container.bc (oppbc);
+		self.container.bc (self.trainbc);
 		self.bestmovesandiv.c (scorecolor (self.effscore ()));
 		self.scorenumericaldiv.c (scorecolor (self.effscore ()));
 		self.x ().a (self.container);
