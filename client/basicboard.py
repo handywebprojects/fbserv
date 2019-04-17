@@ -354,7 +354,10 @@ class BasicBoard(e):
             sqdiv = Div().ac(["boardsquare", sqclass]).w(self.squaresize).h(self.squaresize)
             sqhdiv = Div().pa().w(self.squaresize).h(self.squaresize)
             self.sqdivs[sq.hashkey()] = sqdiv
-            self.sqhdivs[sq.hashkey()] = sqhdiv
+            self.sqhdivs[sq.hashkey()] = {
+                "div": sqhdiv,
+                "cumop": 0.0
+            }
             fasq = self.flipawaresquare(sq)
             sqdiv.pv(self.squarecoordsvect(fasq))
             sqhdiv.pv(self.squarecoordsvect(fasq))
@@ -447,19 +450,22 @@ class BasicBoard(e):
     def drawuciarrow(self, uci, args = {}):
         self.drawmovearrow(self.ucitomove(uci), args)
 
-    def highlightsquare(self, sq, bc):
+    def highlightsquare(self, sq, bc, op):
+        if op == 0:
+            return
         margin = self.squaresize * 0.1
         hsize = self.squaresize - 2 * margin
-        sqhdiv = self.sqhdivs[sq.hashkey()]
-        sqhdiv.a(Div().pa().t(margin).l(margin).w(hsize).h(hsize).bc(bc))
-        sqhdiv.op(0.75)
+        sqhdiv = self.sqhdivs[sq.hashkey()]                
+        if op > sqhdiv["cumop"]:
+            sqhdiv["cumop"] = op          
+        sqhdiv["div"].x().a(Div().pa().t(margin).l(margin).w(hsize).h(hsize).bc(bc).op(sqhdiv["cumop"]))              
 
-    def highlightmove(self, move, bc):
-        self.highlightsquare(move.fromsq, bc)
-        self.highlightsquare(move.tosq, bc)
+    def highlightmove(self, move, bc, op):        
+        self.highlightsquare(move.fromsq, bc, op)
+        self.highlightsquare(move.tosq, bc, op)
 
-    def highlightucimove(self, uci, bc):
-        self.highlightmove(self.ucitomove(uci), bc)
+    def highlightucimove(self, uci, bc, op):        
+        self.highlightmove(self.ucitomove(uci), bc, op)
 
     def buildgenmove(self):
         if "genmove" in self.positioninfo:
@@ -773,6 +779,10 @@ class MultipvInfo(e):
             self.trainbc = "#f00"
         else:
             self.trainbc = "inherit"                
+        self.metrainweight = int(metrainweight)
+        self.opptrainweight = int(opptrainweight)
+        self.avgtrainweight = ( self.metrainweight + self.opptrainweight ) / 2.0
+        self.trainop = self.avgtrainweight / 10.0
         self.metraincombo = ComboBox().setoptions(TRAIN_OPTIONS, metrainweight, self.traincombochanged)
         self.opptraincombo = ComboBox().setoptions(TRAIN_OPTIONS, opptrainweight, self.traincombochanged)        
         self.traindiv.a([self.metraincombo, self.opptraincombo])        
