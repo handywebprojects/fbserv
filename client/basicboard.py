@@ -360,6 +360,8 @@ class BasicBoard(e):
             sqhdiv.pv(self.squarecoordsvect(fasq))
             sqdiv.ae("dragover", self.piecedragoverfactory(sq))
             sqdiv.ae("drop", self.piecedropfactory(sq))            
+            sqhdiv.ae("dragover", self.piecedragoverfactory(sq))
+            sqhdiv.ae("drop", self.piecedropfactory(sq))            
             self.container.a([sqdiv, sqhdiv])
             p = self.getpieceatsquare(sq)
             if p.ispiece():
