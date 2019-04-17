@@ -676,6 +676,8 @@ class Board(e):
                     "linewidth": iw,
                     "headheight": iw
                 })
+                if not ( minfo.trainbc == "inherit" ):
+                    self.basicboard.highlightucimove(minfo.bestmoveuci, minfo.trainbc)
             self.analysisinfodiv.a(minfo)
             i += 1
 

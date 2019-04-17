@@ -125,6 +125,10 @@ class Square:
         self.file = file
         self.rank = rank
 
+    def hashkey(self):
+        hashkey = "{}:{}".format(self.file, self.rank)
+        return hashkey
+
     def p(self, sq):
         return Square(self.file + sq.file, self.rank + sq.rank)
 
@@ -343,14 +347,20 @@ class BasicBoard(e):
 
     def buildsquares(self):
         self.container.x()
+        self.sqdivs = {}
+        self.sqhdivs = {}
         for sq in self.squarelist():
             sqclass = cpick(self.islightsquare(sq), "boardsquarelight", "boardsquaredark")
             sqdiv = Div().ac(["boardsquare", sqclass]).w(self.squaresize).h(self.squaresize)
+            sqhdiv = Div().pa().w(self.squaresize).h(self.squaresize)
+            self.sqdivs[sq.hashkey()] = sqdiv
+            self.sqhdivs[sq.hashkey()] = sqhdiv
             fasq = self.flipawaresquare(sq)
             sqdiv.pv(self.squarecoordsvect(fasq))
+            sqhdiv.pv(self.squarecoordsvect(fasq))
             sqdiv.ae("dragover", self.piecedragoverfactory(sq))
             sqdiv.ae("drop", self.piecedropfactory(sq))            
-            self.container.a(sqdiv)
+            self.container.a([sqdiv, sqhdiv])
             p = self.getpieceatsquare(sq)
             if p.ispiece():
                 pdiv = Div().ac("boardpiece").w(self.piecesize).h(self.piecesize).pv(self.piececoordsvect(fasq))
@@ -434,6 +444,20 @@ class BasicBoard(e):
 
     def drawuciarrow(self, uci, args = {}):
         self.drawmovearrow(self.ucitomove(uci), args)
+
+    def highlightsquare(self, sq, bc):
+        margin = self.squaresize * 0.1
+        hsize = self.squaresize - 2 * margin
+        sqhdiv = self.sqhdivs[sq.hashkey()]
+        sqhdiv.a(Div().pa().t(margin).l(margin).w(hsize).h(hsize).bc(bc))
+        sqhdiv.op(0.75)
+
+    def highlightmove(self, move, bc):
+        self.highlightsquare(move.fromsq, bc)
+        self.highlightsquare(move.tosq, bc)
+
+    def highlightucimove(self, uci, bc):
+        self.highlightmove(self.ucitomove(uci), bc)
 
     def buildgenmove(self):
         if "genmove" in self.positioninfo:
@@ -740,19 +764,19 @@ class MultipvInfo(e):
         except:
             pass
         if hasmetrain and hasopptrain:
-            oppbc = "#00f"
+            self.trainbc = "#00f"
         elif hasmetrain:
-            oppbc = "#0f0"
+            self.trainbc = "#0f0"
         elif hasopptrain:
-            oppbc = "#f00"
+            self.trainbc = "#f00"
         else:
-            oppbc = "inherit"        
+            self.trainbc = "inherit"                
         self.metraincombo = ComboBox().setoptions(TRAIN_OPTIONS, metrainweight, self.traincombochanged)
         self.opptraincombo = ComboBox().setoptions(TRAIN_OPTIONS, opptrainweight, self.traincombochanged)        
         self.traindiv.a([self.metraincombo, self.opptraincombo])        
         self.pvdiv = Div().ac("multipvinfopv").html(self.showpv).c("#070").fw("bold")
         self.container.a([self.idiv, self.bestmovesandiv, self.scorenumericaldiv, self.bonussliderdiv, self.traindiv, self.depthdiv, self.pvdiv])        
-        self.container.bc(oppbc)
+        self.container.bc(self.trainbc)
         self.bestmovesandiv.c(scorecolor(self.effscore()))
         self.scorenumericaldiv.c(scorecolor(self.effscore()))        
         self.x().a(self.container)        
