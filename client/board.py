@@ -527,6 +527,9 @@ class Board(e):
             self.delitem = self.history.pop()
         self.setfromfen(self.delitem["fen"], self.delitem["positioninfo"], False)
 
+    def refreshcallback(self):
+        self.setfromfen(self.basicboard.fen, self.basicboard.positioninfo, False)
+
     def clearcallback(self):
         item = None
         while len(self.history) > 0:
@@ -1164,6 +1167,7 @@ class Board(e):
         self.controlpanel.a(Button("Reset", self.setvariantcallback))
         self.controlpanel.a(Button("Clearall", self.clearcallback))
         self.controlpanel.a(Button("Delall", self.delallcallback))
+        self.controlpanel.a(Button("#", self.refreshcallback))        
         self.controlpanel.a(Button("Del", self.delcallback))        
         self.sectioncontainer = Div().ac("bigboardsectioncontainer").w(self.basicboard.outerwidth)
         self.sectioncontainer.bci(self.background)
