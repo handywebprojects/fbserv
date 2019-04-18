@@ -571,6 +571,37 @@ class Config(e):
             "owner": self.id
         })
 
+    def serializelocalstorage(self):
+        getconn().sioreq({
+            "kind": "serializelocalstorage",
+            "data": JSON.stringify(localStorage),
+            "owner": self.id
+        })
+
+    def synclocalstorage(self):
+        getconn().sioreq({
+            "kind": "synclocalstorage",
+            "owner": self.id
+        })
+
+    def siores(self, response):
+        try:
+            kind = response["kind"]
+            if kind == "localstoragesaved":
+                window.alert("Local storage saved. Size {} characters.".format(response["size"]))
+            elif kind == "synclocalstorage":
+                obj = response["data"]
+                i = 0
+                __pragma__("jsiter")
+                for key in obj:
+                    localStorage.setItem(key, obj[key])
+                    i += 1
+                __pragma__("nojsiter")
+                window.alert("Setting {} key(s) in localstorage done. Press ok to reload.".format(i))
+                document.location.reload()
+        except:
+            print("there was a problem processing config siores")
+
     def resize(self, width, height):
         self.configsplitpane.resize(width, height)
 
@@ -579,7 +610,11 @@ class Config(e):
             "controlheight": 50
         })        
         self.configdiv = Div("largesheet")
-        self.configsplitpane.controlpanel.a(Button("Serialize", self.serializeconfig).ac("controlbutton"))                
+        self.configsplitpane.controlpanel.a([
+            Button("Serialize config", self.serializeconfig).ac("controlbutton"),
+            Button("Serialize localstorage", self.serializelocalstorage).ac("controlbutton"),
+            Button("Sync localstorage", self.synclocalstorage).ac("controlbutton")
+        ])                
         self.configsplitpane.controlpanel.ac("subcontrolpanel")
         self.configschema = Schema(self.schemaconfig)
         self.configdiv.a(self.configschema)        

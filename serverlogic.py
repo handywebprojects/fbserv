@@ -601,6 +601,37 @@ def serializeconfig(req):
             "status": "fatal"
         })
 
+def serializelocalstorage(req):
+    try:        
+        path = "localstorage/{}".format(req.uid)        
+        db.reference(path).set(req.data)
+        return req.res({
+            "kind": "localstoragesaved",
+            "size": len(req.data)
+        })
+    except:
+        pe()
+        return req.res({
+            "kind": "localstoragesavefailed",
+            "status": "fatal"
+        })
+
+def synclocalstorage(req):
+    try:        
+        path = "localstorage/{}".format(req.uid)        
+        data = db.reference(path).get()
+        obj = json.loads(data)
+        return req.res({
+            "kind": "synclocalstorage",
+            "data": obj
+        })
+    except:
+        pe()
+        return req.res({
+            "kind": "synclocalstoragefailed",
+            "status": "fatal"
+        })
+
 def updateuserdisplayname(req):
     try:
         if not ( req.displayname == "" ):
