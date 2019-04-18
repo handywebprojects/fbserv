@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of the python-chess library.
-# Copyright (C) 2012-2019 Niklas Fiekas <niklas.fiekas@backscattering.de>
+# Copyright (C) 2012-2018 Niklas Fiekas <niklas.fiekas@backscattering.de>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,14 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import collections.abc
+import collections
 import itertools
 import logging
 import re
-import weakref
 
 import chess
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -102,15 +100,12 @@ MOVETEXT_REGEX = re.compile(r"""
     |([\?!]{1,2})
     """, re.DOTALL | re.VERBOSE)
 
-SKIP_MOVETEXT_REGEX = re.compile(r""";|\{|\}""")
 
 TAG_ROSTER = ["Event", "Site", "Date", "Round", "White", "Black", "Result"]
 
 
-SKIP = object()
+class GameNode(object):
 
-
-class GameNode:
     def __init__(self):
         self.parent = None
         self.move = None
@@ -127,16 +122,14 @@ class GameNode:
 
         It's a copy, so modifying the board will not alter the game.
         """
-        if self.board_cached is not None:
-            board = self.board_cached()
-            if board is not None:
-                return board.copy()
+        if self.board_cached:
+            return self.board_cached.copy()
 
         board = self.parent.board(_cache=False)
         board.push(self.move)
 
         if _cache:
-            self.board_cached = weakref.ref(board)
+            self.board_cached = board
             return board.copy()
         else:
             return board
@@ -157,10 +150,10 @@ class GameNode:
 
         Do not call this on the root node.
         """
-        return self.parent.board().uci(self.move, chess960=chess960)
+        return self.parent.board().san(self.move, chess960=chess960)
 
     def root(self):
-        """Gets the root node, i.e., the game."""
+        """Gets the root node, i.e. the game."""
         node = self
 
         while node.parent:
@@ -187,7 +180,7 @@ class GameNode:
         comment). The root node does not start a variation and can have no
         starting comment.
 
-        For example, in ``1. e4 e5 (1... c5 2. Nf3) 2. Nf3``, the node holding
+        For example in ``1. e4 e5 (1... c5 2. Nf3) 2. Nf3`` the node holding
         1... c5 starts a variation.
         """
         if not self.parent or not self.parent.variations:
@@ -195,8 +188,8 @@ class GameNode:
 
         return self.parent.variations[0] != self
 
-    def is_mainline(self):
-        """Checks if the node is in the mainline of the game."""
+    def is_main_line(self):
+        """Checks if the node is in the main line of the game."""
         node = self
 
         while node.parent:
@@ -219,21 +212,15 @@ class GameNode:
 
         return not self.parent.variations or self.parent.variations[0] == self
 
-    def __getitem__(self, move):
-        try:
-            return self.variations[move]
-        except TypeError:
-            for variation in self.variations:
-                if variation.move == move or variation == move:
-                    return variation
-
-        raise KeyError(move)
-
     def variation(self, move):
         """
         Gets a child node by either the move or the variation index.
         """
-        return self[move]
+        for index, variation in enumerate(self.variations):
+            if move == variation.move or index == move or move == variation:
+                return variation
+
+        raise KeyError("variation not found")
 
     def has_variation(self, move):
         """Checks if the given *move* appears as a variation."""
@@ -241,20 +228,20 @@ class GameNode:
 
     def promote_to_main(self, move):
         """Promotes the given *move* to the main variation."""
-        variation = self[move]
+        variation = self.variation(move)
         self.variations.remove(variation)
         self.variations.insert(0, variation)
 
     def promote(self, move):
         """Moves a variation one up in the list of variations."""
-        variation = self[move]
+        variation = self.variation(move)
         i = self.variations.index(variation)
         if i > 0:
             self.variations[i - 1], self.variations[i] = self.variations[i], self.variations[i - 1]
 
     def demote(self, move):
         """Moves a variation one down in the list of variations."""
-        variation = self[move]
+        variation = self.variation(move)
         i = self.variations.index(variation)
         if i < len(self.variations) - 1:
             self.variations[i + 1], self.variations[i] = self.variations[i], self.variations[i + 1]
@@ -284,13 +271,12 @@ class GameNode:
         self.variations.insert(0, node)
         return node
 
-    def mainline(self):
-        """Returns an iterator over the mainline starting after this node."""
-        return Mainline(self)
-
-    def mainline_moves(self):
-        """Returns an iterator over the main moves after this node."""
-        return Mainline(self, lambda node: node.move)
+    def main_line(self):
+        """Yields the moves of the main line starting in this node."""
+        node = self
+        while node.variations:
+            node = node.variations[0]
+            yield node.move
 
     def add_line(self, moves, *, comment="", starting_comment="", nags=()):
         """
@@ -314,89 +300,94 @@ class GameNode:
 
         return node
 
-    def _accept_node(self, parent_board, visitor):
-        if self.starting_comment:
-            visitor.visit_comment(self.starting_comment)
-
-        visitor.visit_move(parent_board, self.move)
-
-        parent_board.push(self.move)
-        visitor.visit_board(parent_board)
-        parent_board.pop()
-
-        for nag in sorted(self.nags):
-            visitor.visit_nag(nag)
-
-        if self.comment:
-            visitor.visit_comment(self.comment)
-
-    def accept(self, visitor, *, _parent_board=None):
+    def accept(self, visitor, *, _board=None):
         """
-        Traverses game nodes in PGN order using the given *visitor*. Starts with
-        the move leading to this node. Returns the *visitor* result.
+        Traverse game nodes in PGN order using the given *visitor*. Returns
+        the visitor result.
         """
-        board = self.parent.board() if _parent_board is None else _parent_board
+        board = self.board() if _board is None else _board
 
-        # First, visit the move that leads to this node.
-        self._accept_node(board, visitor)
-
-        # Then visit sidelines.
-        if _parent_board is not None and self == self.parent.variations[0]:
-            for variation in itertools.islice(self.parent.variations, 1, None):
-                if visitor.begin_variation() is not SKIP:
-                    variation.accept(visitor, _parent_board=board)
-                visitor.end_variation()
-
-        # The mainline is continued last.
+        # The first move of the main line goes first.
         if self.variations:
-            board.push(self.move)
-            self.variations[0].accept(visitor, _parent_board=board)
+            main_variation = self.variations[0]
+            visitor.visit_move(board, main_variation.move)
+
+            # Visit NAGs.
+            for nag in sorted(main_variation.nags):
+                visitor.visit_nag(nag)
+
+            # Visit the comment.
+            if main_variation.comment:
+                visitor.visit_comment(main_variation.comment)
+
+        # Then visit side lines.
+        for variation in itertools.islice(self.variations, 1, None):
+            # Start variation.
+            visitor.begin_variation()
+
+            # Append starting comment.
+            if variation.starting_comment:
+                visitor.visit_comment(variation.starting_comment)
+
+            # Visit move.
+            visitor.visit_move(board, variation.move)
+
+            # Visit NAGs.
+            for nag in sorted(variation.nags):
+                visitor.visit_nag(nag)
+
+            # Visit comment.
+            if variation.comment:
+                visitor.visit_comment(variation.comment)
+
+            # Recursively append the next moves.
+            board.push(variation.move)
+            variation.accept(visitor, _board=board)
+            board.pop()
+
+            # End variation.
+            visitor.end_variation()
+
+        # The main line is continued last.
+        if self.variations:
+            main_variation = self.variations[0]
+
+            # Recursively append the next moves.
+            board.push(main_variation.move)
+            main_variation.accept(visitor, _board=board)
             board.pop()
 
         # Get the result if not called recursively.
-        if _parent_board is None:
+        if _board is None:
             return visitor.result()
 
     def accept_subgame(self, visitor):
         """
         Traverses headers and game nodes in PGN order, as if the game was
-        starting after this node. Returns the *visitor* result.
+        starting from this node. Returns the visitor result.
         """
-        if visitor.begin_game() is not SKIP:
-            game = self.root()
-            board = self.board()
+        game = self.root()
+        visitor.begin_game()
 
-            dummy_game = Game.without_tag_roster()
-            dummy_game.setup(board)
+        dummy_game = Game.without_tag_roster()
+        dummy_game.setup(self.board())
 
-            visitor.begin_headers()
-
-            for tagname, tagvalue in game.headers.items():
-                if tagname not in dummy_game.headers:
-                    visitor.visit_header(tagname, tagvalue)
-            for tagname, tagvalue in dummy_game.headers.items():
+        visitor.begin_headers()
+        for tagname, tagvalue in game.headers.items():
+            if tagname not in dummy_game.headers:
                 visitor.visit_header(tagname, tagvalue)
+        for tagname, tagvalue in dummy_game.headers.items():
+            visitor.visit_header(tagname, tagvalue)
+        visitor.end_headers()
 
-            if visitor.end_headers() is not SKIP:
-                visitor.visit_board(board)
+        self.accept(visitor)
 
-                if self.variations:
-                    self.variations[0].accept(visitor, _parent_board=board)
-
-                visitor.visit_result(game.headers.get("Result", "*"))
-
+        visitor.visit_result(game.headers.get("Result", "*"))
         visitor.end_game()
         return visitor.result()
 
     def __str__(self):
         return self.accept(StringExporter(columns=None))
-
-    def __repr__(self):
-        return "<GameNode at {:#x} ({}{} {} ...)>".format(
-            id(self),
-            self.parent.board().fullmove_number,
-            "." if self.parent.board().turn == chess.WHITE else "...",
-            self.san())
 
 
 class Game(GameNode):
@@ -407,7 +398,7 @@ class Game(GameNode):
     """
 
     def __init__(self, headers=None):
-        super().__init__()
+        super(Game, self).__init__()
         self.headers = Headers(headers)
         self.errors = []
 
@@ -418,11 +409,30 @@ class Game(GameNode):
         Unless the ``FEN`` header tag is set, this is the default starting
         position (for the ``Variant``).
         """
-        return self.headers.board()
+        chess960 = self.headers.get("Variant", "").lower() in [
+            "chess960",
+            "fischerandom",  # Cute Chess
+            "fischerrandom"]
+
+        # http://www.freechess.org/Help/HelpFiles/wild.html
+        wild = self.headers.get("Variant", "").lower() in [
+            "wild/0", "wild/1", "wild/2", "wild/3", "wild/4", "wild/5",
+            "wild/6", "wild/7", "wild/8", "wild/8a"]
+
+        if chess960 or wild or "Variant" not in self.headers:
+            VariantBoard = chess.Board
+        else:
+            from chess.variant import find_variant
+            VariantBoard = find_variant(self.headers["Variant"])
+
+        fen = self.headers.get("FEN", VariantBoard.starting_fen)
+        board = VariantBoard(fen, chess960=chess960)
+        board.chess960 = board.chess960 or board.has_chess960_castling_rights()
+        return board
 
     def setup(self, board):
         """
-        Sets up a specific starting position. This sets (or resets) the
+        Setup a specific starting position. This sets (or resets) the
         ``FEN``, ``SetUp``, and ``Variant`` header tags.
         """
         try:
@@ -450,37 +460,42 @@ class Game(GameNode):
     def accept(self, visitor):
         """
         Traverses the game in PGN order using the given *visitor*. Returns
-        the *visitor* result.
+        the visitor result.
         """
-        if visitor.begin_game() is not SKIP:
-            for tagname, tagvalue in self.headers.items():
-                visitor.visit_header(tagname, tagvalue)
-            if visitor.end_headers() is not SKIP:
-                board = self.board()
-                visitor.visit_board(board)
+        visitor.begin_game()
 
-                if self.comment:
-                    visitor.visit_comment(self.comment)
+        visitor.begin_headers()
+        for tagname, tagvalue in self.headers.items():
+            visitor.visit_header(tagname, tagvalue)
+        visitor.end_headers()
 
-                if self.variations:
-                    self.variations[0].accept(visitor, _parent_board=board)
+        if self.comment:
+            visitor.visit_comment(self.comment)
 
-                visitor.visit_result(self.headers.get("Result", "*"))
+        super(Game, self).accept(visitor, _board=self.board())
 
+        visitor.visit_result(self.headers.get("Result", "*"))
         visitor.end_game()
         return visitor.result()
 
     @classmethod
     def from_board(cls, board):
         """Creates a game from the move stack of a :class:`~chess.Board()`."""
+        # Undo all moves.
+        switchyard = collections.deque()
+        while board.move_stack:
+            switchyard.append(board.pop())
+
         # Setup the initial position.
         game = cls()
-        game.setup(board.root())
+        game.setup(board)
         node = game
 
         # Replay all moves.
-        for move in board.move_stack:
+        while switchyard:
+            move = switchyard.pop()
             node = node.add_variation(move)
+            board.push(move)
 
         game.headers["Result"] = board.result()
         return game
@@ -490,15 +505,8 @@ class Game(GameNode):
         """Creates an empty game without the default 7 tag roster."""
         return cls(headers={})
 
-    def __repr__(self):
-        return "<Game at {:#x} ({!r} vs. {!r}, {!r})>".format(
-            id(self),
-            self.headers.get("White", "?"),
-            self.headers.get("Black", "?"),
-            self.headers.get("Date", "????.??.??"))
 
-
-class Headers(collections.abc.MutableMapping):
+class Headers(collections.MutableMapping):
     def __init__(self, data=None, **kwargs):
         self._tag_roster = {}
         self._others = {}
@@ -516,42 +524,13 @@ class Headers(collections.abc.MutableMapping):
 
         self.update(data, **kwargs)
 
-    def is_chess960(self):
-        return self.get("Variant", "").lower() in [
-            "chess960",
-            "chess 960",
-            "fischerandom",  # Cute Chess
-            "fischerrandom",
-            "fischer random",
-        ]
-
-    def is_wild(self):
-        # http://www.freechess.org/Help/HelpFiles/wild.html
-        return self.get("Variant", "").lower() in [
-            "wild/0", "wild/1", "wild/2", "wild/3", "wild/4", "wild/5",
-            "wild/6", "wild/7", "wild/8", "wild/8a"]
-
-    def variant(self):
-        if "Variant" not in self or self.is_chess960() or self.is_wild():
-            return chess.Board
-        else:
-            from chess.variant import find_variant
-            return find_variant(self["Variant"])
-
-    def board(self):
-        VariantBoard = self.variant()
-        fen = self.get("FEN", VariantBoard.starting_fen)
-        board = VariantBoard(fen, chess960=self.is_chess960())
-        board.chess960 = board.chess960 or board.has_chess960_castling_rights()
-        return board
-
     def __setitem__(self, key, value):
         if key in TAG_ROSTER:
             self._tag_roster[key] = value
         elif not TAG_NAME_REGEX.match(key):
-            raise ValueError("non-alphanumeric pgn header tag: {!r}".format(key))
+            raise ValueError("non-alphanumeric pgn header tag: {}".format(repr(key)))
         elif "\n" in value or "\r" in value:
-            raise ValueError("line break in pgn header {}: {!r}".format(key, value))
+            raise ValueError("line break in pgn header {}: {}".format(key, repr(value)))
         else:
             self._others[key] = value
 
@@ -586,71 +565,10 @@ class Headers(collections.abc.MutableMapping):
     def __repr__(self):
         return "{}({})".format(
             type(self).__name__,
-            ", ".join("{}={!r}".format(key, value) for key, value in self.items()))
+            ", ".join("{}={}".format(key, repr(value)) for key, value in self.items()))
 
 
-class Mainline:
-    def __init__(self, start, f=lambda node: node):
-        self.start = start
-        self.f = f
-
-    def __bool__(self):
-        return bool(self.start.variations)
-
-    def __iter__(self):
-        node = self.start
-        while node.variations:
-            node = node.variations[0]
-            yield self.f(node)
-
-    def __reversed__(self):
-        return ReverseMainline(self.start, self.f)
-
-    def accept(self, visitor):
-        node = self.start
-        board = self.start.board()
-        while node.variations:
-            node = node.variations[0]
-            node._accept_node(board, visitor)
-            board.push(node.move)
-        return visitor.result()
-
-    def __str__(self):
-        return self.accept(StringExporter(columns=None))
-
-    def __repr__(self):
-        return "<Mainline at {:#x} ({})>".format(id(self), self.accept(StringExporter(columns=None, comments=False)))
-
-
-class ReverseMainline:
-    def __init__(self, stop, f=lambda node: node):
-        self.stop = stop
-        self.f = f
-
-        self.length = 0
-        node = stop
-        while node.variations:
-            node = node.variations[0]
-            self.length += 1
-        self.end = node
-
-    def __len__(self):
-        return self.length
-
-    def __iter__(self):
-        node = self.end
-        while node.parent and node != self.stop:
-            yield self.f(node)
-            node = node.parent
-
-    def __reversed__(self):
-        return Mainline(self.stop, self.f)
-
-    def __repr__(self):
-        return "<ReverseMainline at {:#x} ({})>".format(id(self), " ".join(ReverseMainline(self.stop, lambda node: node.move.uci())))
-
-
-class BaseVisitor:
+class BaseVisitor(object):
     """
     Base class for visitors.
 
@@ -665,7 +583,7 @@ class BaseVisitor:
         pass
 
     def begin_headers(self):
-        """Called before visiting game headers."""
+        """Called at the start of game headers."""
         pass
 
     def visit_header(self, tagname, tagvalue):
@@ -673,24 +591,8 @@ class BaseVisitor:
         pass
 
     def end_headers(self):
-        """Called after visiting game headers."""
+        """Called at the end of the game headers."""
         pass
-
-    def parse_san(self, board, san):
-        """
-        When the visitor is used by a parser, this is called to parse a move
-        in standard algebraic notation.
-
-        You can override the default implementation to work around specific
-        quirks of your input format.
-        """
-        # Replace zeros with correct castling notation.
-        if san == "0-0":
-            san = "O-O"
-        elif san == "0-0-0":
-            san = "O-O-O"
-
-        return board.parse_san(san)
 
     def visit_move(self, board, move):
         """
@@ -700,13 +602,6 @@ class BaseVisitor:
         restored before the traversal continues.
         """
         pass
-
-    def visit_board(self, board):
-        """
-        Called for the starting position of the game and after each move.
-
-        The board state must be restored before the traversal continues.
-        """
 
     def visit_comment(self, comment):
         """Called for each comment."""
@@ -719,7 +614,7 @@ class BaseVisitor:
     def begin_variation(self):
         """
         Called at the start of a new variation. It is not called for the
-        mainline of the game.
+        main line of the game.
         """
         pass
 
@@ -746,20 +641,17 @@ class BaseVisitor:
         raise error
 
 
-class GameCreator(BaseVisitor):
+class GameModelCreator(BaseVisitor):
     """
     Creates a game model. Default visitor for :func:`~chess.pgn.read_game()`.
     """
 
-    def begin_game(self):
+    def __init__(self):
         self.game = Game()
 
         self.variation_stack = [self.game]
         self.starting_comment = ""
         self.in_variation = False
-
-    def begin_headers(self):
-        return self.game.headers
 
     def visit_header(self, tagname, tagvalue):
         self.game.headers[tagname] = tagvalue
@@ -811,60 +703,6 @@ class GameCreator(BaseVisitor):
         return self.game
 
 
-class HeaderCreator(BaseVisitor):
-    """Collects headers into a dictionary."""
-
-    def begin_headers(self):
-        self.headers = Headers({})
-        return self.headers
-
-    def visit_header(self, tagname, tagvalue):
-        self.headers[tagname] = tagvalue
-
-    def end_headers(self):
-        return SKIP
-
-    def result(self):
-        return self.headers
-
-
-class BoardCreator(BaseVisitor):
-    """
-    Returns the final position of the game. The mainline of the game is
-    on the move stack.
-    """
-
-    def begin_game(self):
-        self.skip_variation_depth = 0
-
-    def begin_variation(self):
-        self.skip_variation_depth += 1
-        return SKIP
-
-    def end_variation(self):
-        self.skip_variation_depth = max(self.skip_variation_depth - 1, 0)
-
-    def visit_board(self, board):
-        if not self.skip_variation_depth:
-            self.board = board
-
-    def result(self):
-        return self.board
-
-
-class SkipVisitor(BaseVisitor):
-    """Skips a game."""
-
-    def begin_game(self):
-        return SKIP
-
-    def end_headers(self):
-        return SKIP
-
-    def begin_variation(self):
-        return SKIP
-
-
 class StringExporter(BaseVisitor):
     """
     Allows exporting a game as a string.
@@ -876,7 +714,7 @@ class StringExporter(BaseVisitor):
     >>> exporter = chess.pgn.StringExporter(headers=True, variations=True, comments=True)
     >>> pgn_string = game.accept(exporter)
 
-    Only *columns* characters are written per line. If *columns* is ``None``,
+    Only *columns* characters are written per line. If *columns* is ``None``
     then the entire movetext will be on a single line. This does not affect
     header tags and comments.
 
@@ -939,8 +777,6 @@ class StringExporter(BaseVisitor):
         if self.variations:
             self.write_token(") ")
             self.force_movenumber = True
-        else:
-            return SKIP
 
     def visit_comment(self, comment):
         if self.comments and (self.variations or not self.variation_depth):
@@ -995,7 +831,7 @@ class FileExporter(StringExporter):
     """
 
     def __init__(self, handle, *, columns=80, headers=True, comments=True, variations=True):
-        super().__init__(columns=columns, headers=headers, comments=comments, variations=variations)
+        super(FileExporter, self).__init__(columns=columns, headers=headers, comments=comments, variations=variations)
         self.handle = handle
 
     def flush_current_line(self):
@@ -1013,13 +849,13 @@ class FileExporter(StringExporter):
         return None
 
     def __repr__(self):
-        return "<FileExporter at {:#x}>".format(id(self))
+        return "<FileExporter at {}>".format(hex(id(self)))
 
     def __str__(self):
         return self.__repr__()
 
 
-def read_game(handle, *, Visitor=GameCreator):
+def read_game(handle, *, Visitor=GameModelCreator):
     """
     Reads a game from a file opened in text mode.
 
@@ -1035,7 +871,7 @@ def read_game(handle, *, Visitor=GameCreator):
     >>>
     >>> # Iterate through all moves and play them on a board.
     >>> board = first_game.board()
-    >>> for move in first_game.mainline_moves():
+    >>> for move in first_game.main_line():
     ...     board.push(move)
     ...
     >>> board
@@ -1043,9 +879,10 @@ def read_game(handle, *, Visitor=GameCreator):
 
     By using text mode, the parser does not need to handle encodings. It is the
     caller's responsibility to open the file with the correct encoding.
-    PGN files are usually ASCII or UTF-8 encoded. So, the following should
+    PGN files are ASCII or UTF-8 most of the time. So, the following should
     cover most relevant cases (ASCII, UTF-8, UTF-8 with BOM).
 
+    >>> # Python 3
     >>> pgn = open("data/pgn/kasparov-deep-blue-1997.pgn", encoding="utf-8-sig")
 
     Use :class:`~io.StringIO` to parse games from a string.
@@ -1056,7 +893,7 @@ def read_game(handle, *, Visitor=GameCreator):
     >>> game = chess.pgn.read_game(pgn)
 
     The end of a game is determined by a completely blank line or the end of
-    the file. (Of course, blank lines in comments are possible).
+    the file. (Of course, blank lines in comments are possible.)
 
     According to the PGN standard, at least the usual 7 header tags are
     required for a valid game. This parser also handles games without any
@@ -1065,125 +902,77 @@ def read_game(handle, *, Visitor=GameCreator):
     The parser is relatively forgiving when it comes to errors. It skips over
     tokens it can not parse. Any exceptions are logged and collected in
     :data:`Game.errors <chess.pgn.Game.errors>`. This behavior can be
-    :func:`overriden <chess.pgn.GameCreator.handle_error>`.
+    :func:`overriden <chess.pgn.GameModelCreator.handle_error>`.
 
     Returns the parsed game or ``None`` if the end of file is reached.
     """
     visitor = Visitor()
 
+    dummy_game = Game.without_tag_roster()
     found_game = False
-    skipping_game = False
-    headers = None
-    managed_headers = None
 
-    # Ignore leading empty lines and comments.
-    line = handle.readline().lstrip("\ufeff")
+    # Skip leading empty lines and comments.
+    line = handle.readline()
     while line.isspace() or line.startswith("%") or line.startswith(";"):
         line = handle.readline()
 
     # Parse game headers.
     while line:
-        # Ignore comments.
+        # Skip comments.
         if line.startswith("%") or line.startswith(";"):
             line = handle.readline()
             continue
 
-        # First token of the game.
-        if not found_game:
-            found_game = True
-            skipping_game = visitor.begin_game() is SKIP
-            if not skipping_game:
-                managed_headers = visitor.begin_headers()
-                if not isinstance(managed_headers, Headers):
-                    managed_headers = None
-                    headers = Headers({})
+        # Read header tags.
+        tag_match = TAG_REGEX.match(line)
+        if tag_match:
+            if not found_game:
+                found_game = True
+                visitor.begin_game()
+                visitor.begin_headers()
 
-        if not line.startswith("["):
+            dummy_game.headers[tag_match.group(1)] = tag_match.group(2)
+            visitor.visit_header(tag_match.group(1), tag_match.group(2))
+        else:
             break
-
-        if not skipping_game:
-            tag_match = TAG_REGEX.match(line)
-            if tag_match:
-                visitor.visit_header(tag_match.group(1), tag_match.group(2))
-                if headers is not None:
-                    headers[tag_match.group(1)] = tag_match.group(2)
-            else:
-                break
 
         line = handle.readline()
 
-    if not found_game:
-        return None
+    if found_game:
+        visitor.end_headers()
 
-    if not skipping_game:
-        skipping_game = visitor.end_headers() is SKIP
-
-    # Ignore single empty line after headers.
+    # Skip a single empty line after headers.
     if line.isspace():
         line = handle.readline()
 
-    if not skipping_game:
-        # Chess variant.
-        headers = managed_headers if headers is None else headers
-        try:            
-            VariantBoard = headers.variant()
-        except ValueError as error:
-            visitor.handle_error(error)
-            VariantBoard = chess.Board
-
-        # Initial position.
-        fen = headers.get("FEN", VariantBoard.starting_fen)
-        try:
-            board_stack = [VariantBoard(fen, chess960=headers.is_chess960())]
-        except ValueError as error:
-            visitor.handle_error(error)
-            skipping_game = True
-        else:
-            visitor.visit_board(board_stack[0])
-
-    # Fast path: Skip entire game.
-    if skipping_game:
-        in_comment = False
-
-        while line:
-            if not in_comment:
-                if line.isspace():
-                    break
-                elif line.startswith("%"):
-                    line = handle.readline()
-                    continue
-
-            for match in SKIP_MOVETEXT_REGEX.finditer(line):
-                token = match.group(0)
-                if token == "{":
-                    in_comment = True
-                elif not in_comment and token == ";":
-                    break
-                elif token == "}":
-                    in_comment = False
-
-            line = handle.readline()
-
-        visitor.end_game()
-        return visitor.result()
+    # Movetext parser state.
+    try:
+        board_stack = [dummy_game.board()]
+    except ValueError as error:
+        visitor.handle_error(error)
+        board_stack = [chess.Board()]
 
     # Parse movetext.
-    skip_variation_depth = 0
     while line:
         read_next_line = True
 
-        # Ignore comments.
         if line.startswith("%") or line.startswith(";"):
+            # Ignore comments.
             line = handle.readline()
             continue
 
-        # An empty line means the end of a game.
-        if line.isspace():
+        # An empty line means the end of a game. But gracefully try to find
+        # at least some content if we didn't even see headers so far.
+        if found_game and line.isspace():
             visitor.end_game()
             return visitor.result()
 
         for match in MOVETEXT_REGEX.finditer(line):
             token = match.group(0)
+
+            if not found_game:
+                found_game = True
+                visitor.begin_game()
 
             if token.startswith("{"):
                 # Consume until the end of the comment.
@@ -1199,36 +988,22 @@ def read_game(handle, *, Visitor=GameCreator):
                 else:
                     line = ""
 
-                if not skip_variation_depth:
-                    visitor.visit_comment("\n".join(comment_lines).strip())
+                visitor.visit_comment("\n".join(comment_lines).strip())
 
                 # Continue with the current or the next line.
                 if line:
                     read_next_line = False
                 break
-            elif token == "(":
-                if skip_variation_depth:
-                    skip_variation_depth += 1
-                elif board_stack[-1].move_stack:
-                    if visitor.begin_variation() is SKIP:
-                        skip_variation_depth = 1
-                    else:
-                        board = board_stack[-1].copy()
-                        board.pop()
-                        board_stack.append(board)
-            elif token == ")":
-                if skip_variation_depth:
-                    skip_variation_depth -= 1
-                if len(board_stack) > 1:
-                    visitor.end_variation()
-                    board_stack.pop()
-            elif skip_variation_depth:
-                continue
             elif token.startswith(";"):
                 break
             elif token.startswith("$"):
                 # Found a NAG.
-                visitor.visit_nag(int(token[1:]))
+                try:
+                    nag = int(token[1:])
+                except ValueError as error:
+                    visitor.handle_error(error)
+                else:
+                    visitor.visit_nag(nag)
             elif token == "?":
                 visitor.visit_nag(NAG_MISTAKE)
             elif token == "??":
@@ -1241,30 +1016,48 @@ def read_game(handle, *, Visitor=GameCreator):
                 visitor.visit_nag(NAG_SPECULATIVE_MOVE)
             elif token == "?!":
                 visitor.visit_nag(NAG_DUBIOUS_MOVE)
+            elif token == "(" and board_stack[-1].move_stack:
+                visitor.begin_variation()
+
+                board = board_stack[-1].copy()
+                board.pop()
+                board_stack.append(board)
+            elif token == ")" and len(board_stack) > 1:
+                # Always leave at least the root node on the stack.
+                visitor.end_variation()
+                board_stack.pop()
             elif token in ["1-0", "0-1", "1/2-1/2", "*"] and len(board_stack) == 1:
                 visitor.visit_result(token)
             else:
+                # Replace zeros castling notation.
+                if token == "0-0":
+                    token = "O-O"
+                elif token == "0-0-0":
+                    token = "O-O-O"
+
                 # Parse SAN tokens.
                 try:
-                    move = visitor.parse_san(board_stack[-1], token)
+                    move = board_stack[-1].parse_san(token)
                 except ValueError as error:
                     visitor.handle_error(error)
-                    skip_variation_depth = 1
                 else:
                     visitor.visit_move(board_stack[-1], move)
                     board_stack[-1].push(move)
-                visitor.visit_board(board_stack[-1])
 
         if read_next_line:
             line = handle.readline()
 
-    visitor.end_game()
-    return visitor.result()
+    if found_game:
+        visitor.end_game()
+        return visitor.result()
 
 
-def read_headers(handle):
+def scan_headers(handle):
     """
-    Reads game headers from a PGN file opened in text mode.
+    Scan a PGN file opened in text mode for game offsets and headers.
+
+    Yields a tuple for each game. The first element is the offset and the
+    second element is a mapping of game headers.
 
     Since actually parsing many games from a big file is relatively expensive,
     this is a better way to look only for specific games and then seek and
@@ -1276,35 +1069,97 @@ def read_headers(handle):
     >>>
     >>> pgn = open("data/pgn/kasparov-deep-blue-1997.pgn")
     >>>
-    >>> kasparov_offsets = []
-    >>>
-    >>> while True:
-    ...     offset = pgn.tell()
-    ...
-    ...     headers = chess.pgn.read_headers(pgn)
-    ...     if headers is None:
+    >>> for offset, headers in chess.pgn.scan_headers(pgn):
+    ...     if "Kasparov" in headers["White"]:
+    ...         kasparov_offset = offset
     ...         break
-    ...
-    ...     if "Kasparov" in headers.get("White", "?"):
-    ...         kasparov_offsets.append(offset)
 
     Then it can later be seeked an parsed.
 
-    >>> for offset in kasparov_offsets:
-    ...     pgn.seek(offset)
-    ...     chess.pgn.read_game(pgn)  # doctest: +ELLIPSIS
+    >>> pgn.seek(kasparov_offset)
     0
-    <Game at ... ('Garry Kasparov' vs. 'Deep Blue (Computer)', 1997.??.??)>
-    1436
-    <Game at ... ('Garry Kasparov' vs. 'Deep Blue (Computer)', 1997.??.??)>
-    3067
-    <Game at ... ('Garry Kasparov' vs. 'Deep Blue (Computer)', 1997.??.??)>
+    >>> game = chess.pgn.read_game(pgn)
+
+    This also works nicely with generators, scanning lazily only when the next
+    offset is required.
+
+    >>> white_win_offsets = (offset for offset, headers in chess.pgn.scan_headers(pgn)
+    ...                             if headers["Result"] == "1-0")
+    >>> first_white_win = next(white_win_offsets)
+    >>> second_white_win = next(white_win_offsets)
+
+    :warning: Be careful when seeking a game in the file while more offsets are
+        being generated.
     """
-    return read_game(handle, Visitor=HeaderCreator)
+    in_comment = False
+
+    game_headers = None
+    game_pos = None
+
+    last_pos = handle.tell()
+    line = handle.readline()
+
+    while line:
+        # Skip single-line comments.
+        if line.startswith("%"):
+            last_pos = handle.tell()
+            line = handle.readline()
+            continue
+
+        # Reading a header tag. Parse it and add it to the current headers.
+        if not in_comment and line.startswith("["):
+            tag_match = TAG_REGEX.match(line)
+            if tag_match:
+                if game_pos is None:
+                    game_headers = Headers()
+                    game_pos = last_pos
+
+                game_headers[tag_match.group(1)] = tag_match.group(2)
+
+                last_pos = handle.tell()
+                line = handle.readline()
+                continue
+
+        # Reading movetext. Update parser's in_comment state in order to skip
+        # comments that look like header tags.
+        if (not in_comment and "{" in line) or (in_comment and "}" in line):
+            in_comment = line.rfind("{") > line.rfind("}")
+
+        # Reading movetext. If there were headers previously, those are now
+        # complete and can be yielded.
+        if game_pos is not None:
+            yield game_pos, game_headers
+            game_pos = None
+
+        last_pos = handle.tell()
+        line = handle.readline()
+
+    # Yield the headers of the last game.
+    if game_pos is not None:
+        yield game_pos, game_headers
 
 
-def skip_game(handle):
+def scan_offsets(handle):
     """
-    Skip a game. Returns ``True`` if a game was found and skipped.
+    Scan a PGN file opened in text mode for game offsets.
+
+    Yields the starting offsets of all the games, so that they can be seeked
+    later. This is just like :func:`~chess.pgn.scan_headers()` but more
+    efficient if you do not actually need the header information.
+
+    The PGN standard requires each game to start with an ``Event`` tag. So does
+    this scanner.
     """
-    return read_game(handle, Visitor=SkipVisitor)
+    in_comment = False
+
+    last_pos = handle.tell()
+    line = handle.readline()
+
+    while line:
+        if not in_comment and line.startswith("[Event \""):
+            yield last_pos
+        elif (not in_comment and "{" in line) or (in_comment and "}" in line):
+            in_comment = line.rfind("{") > line.rfind("}")
+
+        last_pos = handle.tell()
+        line = handle.readline()

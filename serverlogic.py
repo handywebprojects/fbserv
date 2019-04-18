@@ -39,6 +39,7 @@ from cbuild.utils import create_dir
 from lichess.models import Profile
 import login
 from scheduler import shouldsleep
+from utils.chess import ClientGame
 #########################################################
 
 #########################################################
@@ -122,6 +123,10 @@ engineprocess = None
 
 storedtitled = []
 onlinestatus = []
+
+#########################################################
+
+clientgames = {}
 
 #########################################################
 
@@ -521,6 +526,42 @@ class Req:
             return userpath(self.uid, self.dirpath)
         else:
             return self.dirpath
+
+    def clientgamepgnpath(self):
+        return "clientgames/{}/pgn".format(self.uid)
+
+    def setmainboardfen_resobj(self, board, genmove, genboard, status):
+        global clientgames
+        clientgame = clientgames.get(self.uid, None)
+        if clientgame:
+            if genmove:
+                if genmove == "reset":
+                    clientgame = ClientGame(self.variantkey, None, board.fen())
+                else:
+                    try:
+                        clientgame.makemove(genmove)
+                    except:
+                        print("could not make client game move")
+                        clientgame = ClientGame(self.variantkey, None, board.fen())                
+            else:
+                candel = True
+                while candel and not ( clientgame.fen() == board.fen() ):
+                    candel = clientgame.delmove()
+                if not ( clientgame.fen() == board.fen() ):
+                    clientgame = ClientGame(self.variantkey, None, board.fen())            
+        else:
+            clientgame = ClientGame(self.variantkey, None, board.fen())                      
+        clientgames[self.uid] = clientgame     
+        pgn = clientgame.pgn()
+        db.reference(self.clientgamepgnpath()).set(pgn)
+        resobj = {
+            "kind": "setmainboardfen",
+            "fen": board.fen(),
+            "pgn": pgn,
+            "status": status
+        }                        
+        addpositioninfo(board, resobj, genmove, genboard)
+        return resobj
 
     def __init__(self, reqobj = {}):
         self.reqobj = reqobj
@@ -1089,6 +1130,7 @@ def unzipfromcloud(req):
         })
 
 def connected(req):        
+    global clientgames
     schemaconfig = getconfigschemawithdefaults()
     if req.ismock():
         pass
@@ -1112,6 +1154,24 @@ def connected(req):
         posinfo = defposinfo
     else:
         posinfo = getdbelse("board/{}/posinfo".format(req.uid), defposinfo)
+    print("checking clientgame for", req.uid)
+    if req.uid in clientgames:        
+        print("clientgame found in memory", clientgames[req.uid].pgn())
+    else:
+        print("no client game found in memory, checking in database")
+        cgpgn = getdbelse(req.clientgamepgnpath(), None)
+        if not cgpgn:
+            print("no client game found in database, creating one", posinfo["variantkey"], posinfo["fen"])
+            clientgame = ClientGame(posinfo["variantkey"], None, posinfo["fen"])
+            cgpgn = clientgame.pgn()
+            print("storing client game in database", cgpgn)
+            db.reference(req.clientgamepgnpath()).set(cgpgn)
+        else:
+            clientgame = ClientGame(posinfo["variantkey"], cgpgn, None)        
+            cgpgn = clientgame.pgn()
+            print("found clientgame in database", cgpgn)
+        print("storing clientgame in memory")
+        clientgames[req.uid] = clientgame
     return req.res({
         "kind": "connectedack",        
         "schemaconfig": schemaconfig,
@@ -1276,14 +1336,8 @@ def mainboardsetvariant(req):
         if req.variantkey == "chess960":
             board.set_chess960_pos(random.randint(0, 959))
         if req.fen:
-            board.set_fen(req.fen)
-        resobj = {
-            "kind": "setmainboardfen",
-            "fen": board.fen(),
-            "status": "main board variant selected ok"
-        }
-        addpositioninfo(board, resobj, "reset")
-        return req.res(resobj)
+            board.set_fen(req.fen)        
+        return req.res(req.setmainboardfen_resobj(board, "reset", None, "main board variant selected ok"))
     except:
         pe()
         return req.res({
@@ -1292,28 +1346,19 @@ def mainboardsetvariant(req):
         })        
 
 def mainboardmove(req):
-    try:                                  
-        move = chess.Move.from_uci(req.moveuci)
+    try:
         board = get_variant_board(req.variantkey)
         board.set_fen(req.fen)
-        if board.is_legal(move):
-            genboard = board.copy()
-            board.push(move)
-            resobj = {
-                "kind": "setmainboardfen",
-                "fen": board.fen(),
-                "status": "making main board move ok"
-            }            
-            addpositioninfo(board, resobj, move, genboard)
-            return req.res(resobj)
+        if req.moveuci == "null":
+            return req.res(req.setmainboardfen_resobj(board, None, None, "made null move"))
         else:
-            resobj = {
-                "kind": "setmainboardfen",
-                "fen": req.fen,
-                "status": "! making main board move failed, illegal move"
-            }                        
-            addpositioninfo(board, resobj)
-            return req.res(resobj)
+            move = chess.Move.from_uci(req.moveuci)
+            if board.is_legal(move):
+                genboard = board.copy()
+                board.push(move)            
+                return req.res(req.setmainboardfen_resobj(board, move, genboard, "making main board move ok"))
+            else:            
+                return req.res(req.setmainboardfen_resobj(board, None, None, "! making main board move failed, illegal move"))
     except:
         pe()
         return req.res({

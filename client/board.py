@@ -385,8 +385,11 @@ class Board(e):
             self.setbook(response)
         elif kind == "setmainboardfen":
             fen = response["fen"]
+            pgn = response["pgn"]
             positioninfo = response["positioninfo"]                
             self.setfromfen(fen, positioninfo)
+            if pgn:
+                self.pgntext.setpgn(pgn)
         elif kind == "addmovetobookok":
             moveuci = response["moveuci"]
             movesan = response["movesan"]
@@ -409,17 +412,20 @@ class Board(e):
                 haspv = movedict["haspv"]
                 depth = movedict["depth"]
                 __pragma__("nojsiter")                  
-                for moveinfo in self.positioninfo["movelist"]:
-                    if moveinfo["uci"] == algeb:
-                        san = moveinfo["san"]
-                        self.autoinfo.append({
-                            "algeb": algeb,
-                            "san": san,                            
-                            "score": score,
-                            "evaluation": evaluation,
-                            "haspv": haspv,
-                            "depth": depth,
-                        })
+                try:
+                    for moveinfo in self.positioninfo["movelist"]:
+                        if moveinfo["uci"] == algeb:
+                            san = moveinfo["san"]
+                            self.autoinfo.append({
+                                "algeb": algeb,
+                                "san": san,                            
+                                "score": score,
+                                "evaluation": evaluation,
+                                "haspv": haspv,
+                                "depth": depth,
+                            })
+                except:
+                    pass
                 __pragma__("jsiter")                              
             __pragma__("nojsiter")
             self.buildauto()        
@@ -515,17 +521,30 @@ class Board(e):
 
     def buildpositioninfo(self):
         self.movelistdiv.x().h(self.totalheight())
-        for move in self.movelist:
-            movediv = Div().ac("bigboardshowmove").html(move["san"])
-            movediv.ae("mousedown", self.moveclickedfactory(move))
-            self.movelistdiv.a(movediv)
+        try:
+            for move in self.movelist:
+                movediv = Div().ac("bigboardshowmove").html(move["san"])
+                movediv.ae("mousedown", self.moveclickedfactory(move))
+                self.movelistdiv.a(movediv)
+        except:
+            pass
+
+    def makenullmove(self, fen):
+        getconn().sioreq({
+            "kind": "mainboardmove",
+            "variantkey": self.basicboard.variantkey,
+            "fen": fen,
+            "moveuci": "null",
+            "owner": self.id
+        })
 
     def delcallback(self, event = None, rep = 1):        
         if len(self.history) < rep:
             return        
         for _ in range(rep):
             self.delitem = self.history.pop()
-        self.setfromfen(self.delitem["fen"], self.delitem["positioninfo"], False)
+        #self.setfromfen(self.delitem["fen"], self.delitem["positioninfo"], False)
+        self.makenullmove(self.delitem["fen"])
 
     def refreshcallback(self):
         self.setfromfen(self.basicboard.fen, self.basicboard.positioninfo, False)
@@ -535,11 +554,18 @@ class Board(e):
         while len(self.history) > 0:
             item = self.history.pop()
         return item
+
+    def clearall(self):        
+        fen = self.basicboard.fen
+        item = self.clearcallback()
+        if item:
+            self.variantchanged(self.basicboard.variantkey, fen)
     
     def delallcallback(self):
         item = self.clearcallback()
         if item:
-            self.setfromfen(item["fen"], item["positioninfo"], False)
+            #self.setfromfen(item["fen"], item["positioninfo"], False)
+            self.makenullmove(item["fen"])
 
     def totalheight(self):
         return self.basicboard.totalheight() + self.controlpanelheight
@@ -1105,6 +1131,13 @@ class Board(e):
     def takeback(self):
         self.delcallback(None, 2)
 
+    def copylink(self):
+        url = document.location.protocol + "//" +document.location.host + "/analysis/" + self.basicboard.variantkey + "/" + self.basicboard.fen
+        url = url.replace(" ", "%20")
+        self.basicboard.fentext.setText(url)
+        self.basicboard.fentext.e.select()
+        document.execCommand("copy")
+
     def __init__(self, args):
         super().__init__("div")
         self.gamei = 0
@@ -1165,7 +1198,7 @@ class Board(e):
         self.setvariantcombo()
         self.controlpanel.a(self.variantcombo).w(self.basicboard.outerwidth).mw(self.basicboard.outerwidth)        
         self.controlpanel.a(Button("Reset", self.setvariantcallback))
-        self.controlpanel.a(Button("Clearall", self.clearcallback))
+        self.controlpanel.a(Button("Clearall", self.clearall))
         self.controlpanel.a(Button("Delall", self.delallcallback))
         self.controlpanel.a(Button("#", self.refreshcallback))        
         self.controlpanel.a(Button("Del", self.delcallback))        
@@ -1196,9 +1229,11 @@ class Board(e):
         self.autoanalysis = False
         self.autoanalysisbutton = Button("A", self.autoanalysisclicked)        
         self.analysiscontrolpanelbottom.a(self.autoanalysisbutton)
+        self.copylinkbutton = Button("C", self.copylink)
+        self.analysiscontrolpanelbottom.a(self.copylinkbutton)
         self.lichessanalysisbutton = Button("L", self.lichessanalysisclicked)
         self.analysiscontrolpanelbottom.a(self.lichessanalysisbutton)
-        self.lichessgamebutton = Button("G", self.lichessgameclicked)
+        self.lichessgamebutton = Button("G", self.lichessgameclicked)        
         self.analysiscontrolpanelbottom.a(self.lichessgamebutton)
         mopts = []
         for i in range(1,501):
