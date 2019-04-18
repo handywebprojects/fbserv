@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2019-04-18 06:12:24
+// Transcrypt'ed from Python, 2019-04-18 15:24:58
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {LICH_API_GAMES_EXPORT, getconn, lichapiget} from './connection.js';
 import {Log, LogItem} from './widgets.js';
@@ -421,8 +421,12 @@ export var Board =  __class__ ('Board', [e], {
 		}
 		else if (kind == 'setmainboardfen') {
 			var fen = response ['fen'];
+			var pgn = response ['pgn'];
 			var positioninfo = response ['positioninfo'];
 			self.setfromfen (fen, positioninfo);
+			if (pgn) {
+				self.pgntext.setpgn (pgn);
+			}
 		}
 		else if (kind == 'addmovetobookok') {
 			var moveuci = response ['moveuci'];
@@ -446,11 +450,16 @@ export var Board =  __class__ ('Board', [e], {
 				var evaluation = movedict ['eval'];
 				var haspv = movedict ['haspv'];
 				var depth = movedict ['depth'];
-				for (var moveinfo of self.positioninfo ['movelist']) {
-					if (moveinfo ['uci'] == algeb) {
-						var san = moveinfo ['san'];
-						self.autoinfo.append (dict ({'algeb': algeb, 'san': san, 'score': score, 'evaluation': evaluation, 'haspv': haspv, 'depth': depth}));
+				try {
+					for (var moveinfo of self.positioninfo ['movelist']) {
+						if (moveinfo ['uci'] == algeb) {
+							var san = moveinfo ['san'];
+							self.autoinfo.append (dict ({'algeb': algeb, 'san': san, 'score': score, 'evaluation': evaluation, 'haspv': haspv, 'depth': depth}));
+						}
 					}
+				}
+				catch (__except0__) {
+					// pass;
 				}
 			}
 			self.buildauto ();
@@ -553,11 +562,19 @@ export var Board =  __class__ ('Board', [e], {
 	});},
 	get buildpositioninfo () {return __get__ (this, function (self) {
 		self.movelistdiv.x ().h (self.totalheight ());
-		for (var move of self.movelist) {
-			var movediv = Div ().ac ('bigboardshowmove').html (move ['san']);
-			movediv.ae ('mousedown', self.moveclickedfactory (move));
-			self.movelistdiv.a (movediv);
+		try {
+			for (var move of self.movelist) {
+				var movediv = Div ().ac ('bigboardshowmove').html (move ['san']);
+				movediv.ae ('mousedown', self.moveclickedfactory (move));
+				self.movelistdiv.a (movediv);
+			}
 		}
+		catch (__except0__) {
+			// pass;
+		}
+	});},
+	get makenullmove () {return __get__ (this, function (self, fen) {
+		getconn ().sioreq (dict ({'kind': 'mainboardmove', 'variantkey': self.basicboard.variantkey, 'fen': fen, 'moveuci': 'null', 'owner': self.id}));
 	});},
 	get delcallback () {return __get__ (this, function (self, event, rep) {
 		if (typeof event == 'undefined' || (event != null && event.hasOwnProperty ("__kwargtrans__"))) {;
@@ -572,7 +589,7 @@ export var Board =  __class__ ('Board', [e], {
 		for (var _ = 0; _ < rep; _++) {
 			self.delitem = self.history.py_pop ();
 		}
-		self.setfromfen (self.delitem ['fen'], self.delitem ['positioninfo'], false);
+		self.makenullmove (self.delitem ['fen']);
 	});},
 	get refreshcallback () {return __get__ (this, function (self) {
 		self.setfromfen (self.basicboard.fen, self.basicboard.positioninfo, false);
@@ -584,10 +601,17 @@ export var Board =  __class__ ('Board', [e], {
 		}
 		return item;
 	});},
+	get clearall () {return __get__ (this, function (self) {
+		var fen = self.basicboard.fen;
+		var item = self.clearcallback ();
+		if (item) {
+			self.variantchanged (self.basicboard.variantkey, fen);
+		}
+	});},
 	get delallcallback () {return __get__ (this, function (self) {
 		var item = self.clearcallback ();
 		if (item) {
-			self.setfromfen (item ['fen'], item ['positioninfo'], false);
+			self.makenullmove (item ['fen']);
 		}
 	});},
 	get totalheight () {return __get__ (this, function (self) {
@@ -1253,6 +1277,13 @@ export var Board =  __class__ ('Board', [e], {
 	get takeback () {return __get__ (this, function (self) {
 		self.delcallback (null, 2);
 	});},
+	get copylink () {return __get__ (this, function (self) {
+		var url = (((((document.location.protocol + '//') + document.location.host) + '/analysis/') + self.basicboard.variantkey) + '/') + self.basicboard.fen;
+		var url = url.py_replace (' ', '%20');
+		self.basicboard.fentext.setText (url);
+		self.basicboard.fentext.e.select ();
+		document.execCommand ('copy');
+	});},
 	get __init__ () {return __get__ (this, function (self, args) {
 		__super__ (Board, '__init__') (self, 'div');
 		self.gamei = 0;
@@ -1312,7 +1343,7 @@ export var Board =  __class__ ('Board', [e], {
 		self.setvariantcombo ();
 		self.controlpanel.a (self.variantcombo).w (self.basicboard.outerwidth).mw (self.basicboard.outerwidth);
 		self.controlpanel.a (Button ('Reset', self.setvariantcallback));
-		self.controlpanel.a (Button ('Clearall', self.clearcallback));
+		self.controlpanel.a (Button ('Clearall', self.clearall));
 		self.controlpanel.a (Button ('Delall', self.delallcallback));
 		self.controlpanel.a (Button ('#', self.refreshcallback));
 		self.controlpanel.a (Button ('Del', self.delcallback));
@@ -1343,6 +1374,8 @@ export var Board =  __class__ ('Board', [e], {
 		self.autoanalysis = false;
 		self.autoanalysisbutton = Button ('A', self.autoanalysisclicked);
 		self.analysiscontrolpanelbottom.a (self.autoanalysisbutton);
+		self.copylinkbutton = Button ('C', self.copylink);
+		self.analysiscontrolpanelbottom.a (self.copylinkbutton);
 		self.lichessanalysisbutton = Button ('L', self.lichessanalysisclicked);
 		self.analysiscontrolpanelbottom.a (self.lichessanalysisbutton);
 		self.lichessgamebutton = Button ('G', self.lichessgameclicked);
