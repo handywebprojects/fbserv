@@ -80,7 +80,7 @@ def createhistory(pgn):
         }
         addpositioninfo(board, pinfo)
         positioninfos.append(pinfo)
-        for move in game.main_line():
+        for move in game.mainline_moves():
             genboard = board.copy()
             board.push(move)
             pinfo = {

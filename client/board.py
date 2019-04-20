@@ -1,4 +1,4 @@
-from dom import e, Div, Button, ComboBox, TextArea, Span, CheckBox, Labeled
+from dom import e, Div, Button, ComboBox, TextArea, Span, CheckBox, Labeled, CopyText
 from utils import cpick, View, getglobalcssvarpxint, uci_variant_to_variantkey, scorecolor, IS_PROD, scoreverbal
 from basicboard import BasicBoard, VARIANT_OPTIONS, PgnText, PgnList, PgnInfo, MultipvInfo, WHITE, BLACK
 from widgets import TabPane, Tab, SplitPane
@@ -1138,6 +1138,26 @@ class Board(e):
         self.basicboard.fentext.e.select()
         document.execCommand("copy")
 
+    def parsepgn(self, pgn):
+        getconn().sioreq({
+            "kind": "parsepgn",
+            "owner": self.id,
+            "data": pgn
+        })
+
+    def gameloaded(self, content):
+        print("loaded", content)
+        #self.parsepgn(content)
+
+    def gamesinputpastecallback(self, text):        
+        re = __new__(RegExp("^https://lichess.org/([0-9a-zA-Z]+)"))
+        m = text.match(re)
+        if m:
+            id = m[1]
+            lichapiget("game/export/{}".format(id), None, self.gameloaded, lambda err: print(err), None)
+        else:
+            self.parsepgn(text)
+
     def __init__(self, args):
         super().__init__("div")
         self.gamei = 0
@@ -1248,10 +1268,16 @@ class Board(e):
         self.analysisinfodiv = Div()
         self.analysisdiv.a(self.analysisinfodiv)
         self.gamescontainerdiv = Div()
+        self.gamesinputdiv = Div().ms().pad(3)
+        self.gamesinput = CopyText({
+            "width": 500,
+            "pastecallback": self.gamesinputpastecallback
+        })
+        self.gamesinputdiv.a(self.gamesinput)
         self.gamesshowlinkdiv = Div().ms().pad(3)
         self.gamesloadingdiv = Div()
         self.gamesdiv = Div()
-        self.gamescontainerdiv.a([self.gamesshowlinkdiv, self.gamesdiv])
+        self.gamescontainerdiv.a([self.gamesinputdiv, self.gamesshowlinkdiv, self.gamesdiv])
         self.gamediv = Div()
         self.pgntext = PgnText()
         self.engineoutpane = SplitPane({

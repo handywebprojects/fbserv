@@ -633,4 +633,69 @@ class Labeled(e):
         self.element = element
         self.elementcontainer = Div().mr(2).a(self.element)
         self.a([self.labeldiv, self.elementcontainer])
+
+class CopyText(e):
+    def copy(self):
+        pass
+
+    def paste(self):
+        pass
+
+    def getText(self):
+        return self.textinput.getText()
+
+    def setText(self, text):
+        self.textinput.setText(text)
+        return self
+
+    def pastehandler(self, clipText):
+        self.textinput.setText(clipText)
+        if(self.pastecallback):
+            self.pastecallback(clipText)
+
+    def paste(self):
+        try:
+            navigator.clipboard.readText().then(self.pastehandler, lambda err: print(err))        
+        except:
+            print("clipboard.readText does not work, falling back to text pasted manually")
+            if self.pastecallback:
+                self.pastecallback(self.textinput.getText())
+
+    def resize(self, width, height):
+        self.width = width
+        self.height = height        
+        if self.dopaste:
+            self.copydiv.w(self.controlwidth/2)
+        else:
+            self.copydiv.w(self.controlwidth)
+        self.copydiv.h(self.height/1.4)
+        if self.docopy:
+            self.pastediv.w(self.controlwidth/2).h(self.height/1.4)
+        else:
+            self.pastediv.w(self.controlwidth).h(self.height/1.4)
+        self.pastediv.h(self.height/1.4)
+        self.textinput.w(self.width - self.controlwidth * 1.2).h(self.height * 0.5).fs(self.height * 0.5)
+        self.w(self.width).h(self.height)
+        return self
+
+    def __init__(self, args = {}):
+        super().__init__("div")
+        self.dopaste = args.get("dopaste", True)
+        self.docopy = args.get("docopy", True)
+        self.disp("flex").ai("center").jc("space-around").bc("#ddd").ac("noselect")
+        self.width = args.get("width", 400)
+        self.height = args.get("height", 40)
+        self.controlwidth = args.get("controlwidth", 80)
+        self.pastecallback = args.get("pastecallback", None)
+        self.copydiv = Div().disp("flex").ai("center").jc("space-around").a(Div().html("Copy")).bc("#efe").cp().fs(10)
+        self.copydiv.ae("mousedown", self.copy)
+        self.pastediv = Div().disp("flex").ai("center").jc("space-around").a(Div().html("Paste")).bc("#fee").cp().fs(10)
+        self.pastediv.ae("mousedown", self.paste)        
+        self.textinput = TextInput().ff("monospace")
+        self.a(self.textinput)
+        if self.docopy:
+            self.a(self.copydiv)
+        if self.dopaste:
+            self.a(self.pastediv)
+        self.resize(self.width, self.height)
 ######################################################
