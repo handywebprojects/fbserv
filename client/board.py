@@ -1146,15 +1146,20 @@ class Board(e):
         })
 
     def gameloaded(self, content):
-        print("loaded", content)
-        #self.parsepgn(content)
+        #print("loaded", content)
+        self.parsepgn(content)
+
+    def getgamebyid(self, id):
+        lichapiget("game/export/{}".format(id), None, self.gameloaded, lambda err: print(err), None)
 
     def gamesinputpastecallback(self, text):        
         re = __new__(RegExp("^https://lichess.org/([0-9a-zA-Z]+)"))
         m = text.match(re)
         if m:
             id = m[1]
-            lichapiget("game/export/{}".format(id), None, self.gameloaded, lambda err: print(err), None)
+            self.getgamebyid(id)
+            id = id[:-4]
+            self.getgamebyid(id)
         else:
             self.parsepgn(text)
 
