@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2019-04-15 09:32:12
+// Transcrypt'ed from Python, 2019-04-20 12:51:36
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {ce} from './utils.js';
 var __name__ = 'dom';
@@ -699,6 +699,88 @@ export var Labeled =  __class__ ('Labeled', [e], {
 		self.element = element;
 		self.elementcontainer = Div ().mr (2).a (self.element);
 		self.a ([self.labeldiv, self.elementcontainer]);
+	});}
+});
+export var CopyText =  __class__ ('CopyText', [e], {
+	__module__: __name__,
+	get copy () {return __get__ (this, function (self) {
+		// pass;
+	});},
+	get paste () {return __get__ (this, function (self) {
+		// pass;
+	});},
+	get getText () {return __get__ (this, function (self) {
+		return self.textinput.getText ();
+	});},
+	get setText () {return __get__ (this, function (self, text) {
+		self.textinput.setText (text);
+		return self;
+	});},
+	get pastehandler () {return __get__ (this, function (self, clipText) {
+		self.textinput.setText (clipText);
+		if (self.pastecallback) {
+			self.pastecallback (clipText);
+		}
+	});},
+	get paste () {return __get__ (this, function (self) {
+		try {
+			navigator.clipboard.readText ().then (self.pastehandler, (function __lambda__ (err) {
+				return print (err);
+			}));
+		}
+		catch (__except0__) {
+			print ('clipboard.readText does not work, falling back to text pasted manually');
+			if (self.pastecallback) {
+				self.pastecallback (self.textinput.getText ());
+			}
+		}
+	});},
+	get resize () {return __get__ (this, function (self, width, height) {
+		self.width = width;
+		self.height = height;
+		if (self.dopaste) {
+			self.copydiv.w (self.controlwidth / 2);
+		}
+		else {
+			self.copydiv.w (self.controlwidth);
+		}
+		self.copydiv.h (self.height / 1.4);
+		if (self.docopy) {
+			self.pastediv.w (self.controlwidth / 2).h (self.height / 1.4);
+		}
+		else {
+			self.pastediv.w (self.controlwidth).h (self.height / 1.4);
+		}
+		self.pastediv.h (self.height / 1.4);
+		self.textinput.w (self.width - self.controlwidth * 1.2).h (self.height * 0.5).fs (self.height * 0.5);
+		self.w (self.width).h (self.height);
+		return self;
+	});},
+	get __init__ () {return __get__ (this, function (self, args) {
+		if (typeof args == 'undefined' || (args != null && args.hasOwnProperty ("__kwargtrans__"))) {;
+			var args = dict ({});
+		};
+		__super__ (CopyText, '__init__') (self, 'div');
+		self.dopaste = args.py_get ('dopaste', true);
+		self.docopy = args.py_get ('docopy', true);
+		self.disp ('flex').ai ('center').jc ('space-around').bc ('#ddd').ac ('noselect');
+		self.width = args.py_get ('width', 400);
+		self.height = args.py_get ('height', 40);
+		self.controlwidth = args.py_get ('controlwidth', 80);
+		self.pastecallback = args.py_get ('pastecallback', null);
+		self.copydiv = Div ().disp ('flex').ai ('center').jc ('space-around').a (Div ().html ('Copy')).bc ('#efe').cp ().fs (10);
+		self.copydiv.ae ('mousedown', self.copy);
+		self.pastediv = Div ().disp ('flex').ai ('center').jc ('space-around').a (Div ().html ('Paste')).bc ('#fee').cp ().fs (10);
+		self.pastediv.ae ('mousedown', self.paste);
+		self.textinput = TextInput ().ff ('monospace');
+		self.a (self.textinput);
+		if (self.docopy) {
+			self.a (self.copydiv);
+		}
+		if (self.dopaste) {
+			self.a (self.pastediv);
+		}
+		self.resize (self.width, self.height);
 	});}
 });
 
