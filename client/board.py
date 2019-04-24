@@ -1163,6 +1163,10 @@ class Board(e):
         else:
             self.parsepgn(text)
 
+    def screenshot(self):
+        self.chartdiv.x()
+        html2canvas(self.analysisinfodiv.e).then(lambda canvas: self.chartdiv.e.appendChild(canvas), lambda err: print(err))
+
     def __init__(self, args):
         super().__init__("div")
         self.gamei = 0
@@ -1255,6 +1259,7 @@ class Board(e):
         self.autoanalysisbutton = Button("A", self.autoanalysisclicked)        
         self.analysiscontrolpanelbottom.a(self.autoanalysisbutton)
         self.copylinkbutton = Button("C", self.copylink)
+        self.copylinkbutton = Button("S", self.screenshot)
         self.analysiscontrolpanelbottom.a(self.copylinkbutton)
         self.lichessanalysisbutton = Button("L", self.lichessanalysisclicked)
         self.analysiscontrolpanelbottom.a(self.lichessanalysisbutton)
