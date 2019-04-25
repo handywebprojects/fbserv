@@ -1,4 +1,4 @@
-from dom import e, Div, TextInput, Canvas, TextArea, Slider, Table, Tr, Td, ComboBox
+from dom import e, Div, TextInput, Canvas, TextArea, Slider, Table, Tr, Td, ComboBox, Arrow
 from utils import Vect, cpick, xor, scorecolor, scoreverbal
 from connection import getconn
 
@@ -432,20 +432,29 @@ class BasicBoard(e):
         linewidth = args.get("linewidth", 0.2) * self.squaresize
         headwidth = args.get("headwidth", 0.2) * self.squaresize
         headheight = args.get("headheight", 0.2) * self.squaresize        
-        self.movecanvas.lineWidth(linewidth)
-        self.movecanvas.strokeStyle(strokecolor)
-        self.movecanvas.fillStyle(strokecolor)
         tomv = self.squarecoordsmiddlevect(self.flipawaresquare(move.tosq))
-        self.movecanvas.drawline(self.squarecoordsmiddlevect(self.flipawaresquare(move.fromsq)), tomv)
-        dv = Vect(headwidth, headheight)            
-        self.movecanvas.fillRect(tomv.m(dv), tomv.p(dv))
-        if not ( move.prompiece.isempty() ):
-            pf = 4
-            dvp = Vect(linewidth * pf, linewidth * pf)
-            move.prompiece.color = self.turn()
-            ppdiv = Div().pa().cp().ac(getclassforpiece(move.prompiece, self.piecestyle)).w(linewidth * 2 * pf).h(linewidth * 2 * pf)
-            ppdiv.pv(tomv.m(dvp))            
-            self.piececanvashook.a(ppdiv)
+        frommv = self.squarecoordsmiddlevect(self.flipawaresquare(move.fromsq))
+        if False:
+            self.movecanvas.lineWidth(linewidth)
+            self.movecanvas.strokeStyle(strokecolor)
+            self.movecanvas.fillStyle(strokecolor)        
+            self.movecanvas.drawline(frommv, tomv)
+            dv = Vect(headwidth, headheight)            
+            self.movecanvas.fillRect(tomv.m(dv), tomv.p(dv))
+            if not ( move.prompiece.isempty() ):
+                pf = 4
+                dvp = Vect(linewidth * pf, linewidth * pf)
+                move.prompiece.color = self.turn()
+                ppdiv = Div().pa().cp().ac(getclassforpiece(move.prompiece, self.piecestyle)).w(linewidth * 2 * pf).h(linewidth * 2 * pf)
+                ppdiv.pv(tomv.m(dvp))            
+                self.piececanvashook.a(ppdiv)
+        arrow = Arrow(frommv, tomv, {
+            "linewidth": linewidth,
+            "pointwidth": headheight * 4,
+            "pointheight": headheight * 4,
+            "color": strokecolor
+        })
+        self.arrowdiv.a(arrow)
 
     def drawuciarrow(self, uci, args = {}):
         self.drawmovearrow(self.ucitomove(uci), args)
@@ -536,7 +545,8 @@ class BasicBoard(e):
         self.movecanvas = Canvas(self.width, self.height).pa().t(0).l(0)
         self.movecanvashook = Div().pa().t(0).l(0).zi(5).op(0.5)
         self.piececanvashook = Div().pa().t(0).l(0).zi(11).op(0.5)
-        self.container.a([self.movecanvashook, self.piececanvashook])
+        self.arrowdiv = Div().pa()
+        self.container.a([self.movecanvashook, self.arrowdiv, self.piececanvashook])
         self.movecanvashook.a(self.movecanvas)
         self.buildgenmove()
         return self

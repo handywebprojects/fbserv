@@ -163,6 +163,9 @@ class Vect:
 
     def m(self, v):
         return self.p(v.s(-1))
+
+    def l(self):
+        return Math.sqrt(self.x*self.x + self.y*self.y)
     
     def copy(self):
         return Vect(self.x, self.y)

@@ -1,4 +1,4 @@
-from utils import ce
+from utils import ce, Vect
 
 ######################################################
 # dom
@@ -289,6 +289,16 @@ class e:
     # focus me later
     def fl(self, timeout = 50):                
         setTimeout(self.focusme, timeout)
+        return self
+
+    # float
+    def float(self, float):
+        self.e.style.float = float
+        return self
+
+    # transform
+    def transform(self, transform):
+        self.e.style.transform = transform
         return self
 
     # add event listener
@@ -698,4 +708,35 @@ class CopyText(e):
         if self.dopaste:
             self.a(self.pastediv)
         self.resize(self.width, self.height)
+
+class Arrow(Div):
+    def __init__(self, frm, to, args = {}):
+        super().__init__()
+        opacity = args.get("opacity", 1)
+        self.op(opacity)
+        diff = to.m(frm)
+        l = diff.l()
+        linewidth = args.get("linewidth", 12)
+        pointwidth = args.get("pointwidth", 36)
+        pointheight = args.get("pointheight", 36)
+        self.pointheight = pointheight
+        color = args.get("color", "#ff7")
+        self.h(pointwidth).w(l)
+        lineheight = l - pointheight        
+        self.linediv = Div().h(linewidth).w(lineheight).float("left")
+        self.linediv.mt((pointwidth - linewidth)/2).bc(color)
+        self.pointdiv = Div().float("right")
+        self.pointdiv.e.style.borderTop = str(pointwidth/2) + "px solid transparent"
+        self.pointdiv.e.style.borderBottom = str(pointwidth/2) + "px solid transparent"
+        self.pointdiv.e.style.borderLeft = str(pointheight) + "px solid " + str(color)
+        rot = Math.asin((to.y - frm.y)/l)        
+        if to.x < frm.x:
+            rot = Math.PI - rot                     
+        self.transform("rotate(" + str(rot / Math.PI * 180) +"deg)")
+        self.a([self.linediv, self.pointdiv])                        
+        shifty = l/2 * Math.sin(rot) - pointwidth/2
+        shiftx = - ( l/2 - l/2 * Math.cos(rot) )
+        
+        self.t(frm.y + shifty).l(frm.x + shiftx)
+        self.pa()
 ######################################################
