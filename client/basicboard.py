@@ -204,6 +204,7 @@ class BasicBoard(e):
     def clearcanvases(self):
         self.movecanvas.clear()
         self.piececanvashook.x()
+        self.arrowdiv.x()
 
     def ucitosquare(self, squci):
         try:
