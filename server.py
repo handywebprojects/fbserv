@@ -199,6 +199,12 @@ def teardownrequest(exc):
         print("problem with waking")
         print_exc(file = sys.stderr)
 
+@app.after_request
+def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    return response
+
 #########################################################
 
 #########################################################
