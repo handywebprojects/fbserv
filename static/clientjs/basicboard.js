@@ -1,8 +1,8 @@
-// Transcrypt'ed from Python, 2019-04-17 15:10:44
+// Transcrypt'ed from Python, 2019-04-25 02:09:15
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import {getconn} from './connection.js';
 import {Vect, cpick, scorecolor, scoreverbal, xor} from './utils.js';
-import {Canvas, ComboBox, Div, Slider, Table, Td, TextArea, TextInput, Tr, e} from './dom.js';
+import {Arrow, Canvas, ComboBox, Div, Slider, Table, Td, TextArea, TextInput, Tr, e} from './dom.js';
 var __name__ = 'basicboard';
 export var STANDARD_START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 export var ANTICHESS_START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1';
@@ -477,21 +477,26 @@ export var BasicBoard =  __class__ ('BasicBoard', [e], {
 		var linewidth = args.py_get ('linewidth', 0.2) * self.squaresize;
 		var headwidth = args.py_get ('headwidth', 0.2) * self.squaresize;
 		var headheight = args.py_get ('headheight', 0.2) * self.squaresize;
-		self.movecanvas.lineWidth (linewidth);
-		self.movecanvas.strokeStyle (strokecolor);
-		self.movecanvas.fillStyle (strokecolor);
 		var tomv = self.squarecoordsmiddlevect (self.flipawaresquare (move.tosq));
-		self.movecanvas.drawline (self.squarecoordsmiddlevect (self.flipawaresquare (move.fromsq)), tomv);
-		var dv = Vect (headwidth, headheight);
-		self.movecanvas.fillRect (tomv.m (dv), tomv.p (dv));
-		if (!(move.prompiece.isempty ())) {
-			var pf = 4;
-			var dvp = Vect (linewidth * pf, linewidth * pf);
-			move.prompiece.color = self.turn ();
-			var ppdiv = Div ().pa ().cp ().ac (getclassforpiece (move.prompiece, self.piecestyle)).w ((linewidth * 2) * pf).h ((linewidth * 2) * pf);
-			ppdiv.pv (tomv.m (dvp));
-			self.piececanvashook.a (ppdiv);
+		var frommv = self.squarecoordsmiddlevect (self.flipawaresquare (move.fromsq));
+		if (false) {
+			self.movecanvas.lineWidth (linewidth);
+			self.movecanvas.strokeStyle (strokecolor);
+			self.movecanvas.fillStyle (strokecolor);
+			self.movecanvas.drawline (frommv, tomv);
+			var dv = Vect (headwidth, headheight);
+			self.movecanvas.fillRect (tomv.m (dv), tomv.p (dv));
+			if (!(move.prompiece.isempty ())) {
+				var pf = 4;
+				var dvp = Vect (linewidth * pf, linewidth * pf);
+				move.prompiece.color = self.turn ();
+				var ppdiv = Div ().pa ().cp ().ac (getclassforpiece (move.prompiece, self.piecestyle)).w ((linewidth * 2) * pf).h ((linewidth * 2) * pf);
+				ppdiv.pv (tomv.m (dvp));
+				self.piececanvashook.a (ppdiv);
+			}
 		}
+		var arrow = Arrow (frommv, tomv, dict ({'linewidth': linewidth, 'pointwidth': headheight * 4, 'pointheight': headheight * 4, 'color': strokecolor}));
+		self.arrowdiv.a (arrow);
 	});},
 	get drawuciarrow () {return __get__ (this, function (self, uci, args) {
 		if (typeof args == 'undefined' || (args != null && args.hasOwnProperty ("__kwargtrans__"))) {;
@@ -589,7 +594,8 @@ export var BasicBoard =  __class__ ('BasicBoard', [e], {
 		self.movecanvas = Canvas (self.width, self.height).pa ().t (0).l (0);
 		self.movecanvashook = Div ().pa ().t (0).l (0).zi (5).op (0.5);
 		self.piececanvashook = Div ().pa ().t (0).l (0).zi (11).op (0.5);
-		self.container.a ([self.movecanvashook, self.piececanvashook]);
+		self.arrowdiv = Div ().pa ();
+		self.container.a ([self.movecanvashook, self.arrowdiv, self.piececanvashook]);
 		self.movecanvashook.a (self.movecanvas);
 		self.buildgenmove ();
 		return self;
