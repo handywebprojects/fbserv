@@ -22,6 +22,10 @@ class Game_{
         this.meWhite = this.myUsername.toLowerCase() == this.whiteName.toLowerCase()
         this.meBlack = this.myUsername.toLowerCase() == this.blackName.toLowerCase()
 
+        this.myColor = "none"
+        if(this.meWhite) this.myColor = "white"
+        if(this.meBlack) this.myColor = "black"
+
         this.opponentName = this.meWhite ? this.blackName : this.whiteName
         
         this.whiteTitle = obj.players.white.user.title || ""
