@@ -12,7 +12,7 @@
 
     <script src="static/js/can-ndjson-stream.js"></script>
     <script src="static/js/dom.js?ver=1554627979"></script>
-    <script src="static/js/lichess.js?ver=1554267112"></script>
+    <script src="static/js/lichess.js?ver=1557480740"></script>
 
 </head>
 
@@ -280,14 +280,18 @@
         form.a(Tr().a(formtd().html("To date"),(todatetd = Td()).a(
                 todate
         )))        
+        seleco = ( params["eco"] || "none" ).replace(/%20/g, " ")
+        console.log("seleco", params)
         ecooptsdata = [["none", "Ignore ECO code"]]
+        let selecofound = ( seleco == "none" )
         for(let item of ECO_CODES){
-            let disp = `${item[0]}&nbsp;&nbsp;"${item[1]}"&nbsp;&nbsp;${item[2]}`
-            ecooptsdata.push([item[2], disp])
-        }        
-        seleco = params["eco"] || "none"
-        seleco = seleco.replace(/%20/g, " ")        
-        function ecoselectchanged(){
+            let eco = item[2]
+            let disp = `${item[0]}&nbsp;&nbsp;"${item[1]}"&nbsp;&nbsp;${eco}`
+            ecooptsdata.push([eco, disp])
+            if(eco == seleco) selecofound = true
+        }                
+        if(!selecofound) ecooptsdata.push([seleco, `----&nbsp;&nbsp;"Custom line" ${seleco}`])
+        function ecoselectchanged(){            
             seleco = ecoselect.v()
         }
         ecoselect = Select().setoptions(ecooptsdata, seleco).ff("monospace").ae("change", ecoselectchanged)

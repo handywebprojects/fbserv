@@ -1,17 +1,22 @@
 class Game_{
     constructor(obj, myUsername){
 
-        this.whiteAILevel = obj.players.white.aiLevel
-        this.blackAILevel = obj.players.black.aiLevel
+        if(!obj.players.white) obj.players.white = {}
+        if(!obj.players.black) obj.players.black = {}
+
+        this.whiteAILevel = obj.players.white.aiLevel || 0
+        this.blackAILevel = obj.players.black.aiLevel || 0
 
         if(!obj.players.white.user) obj.players.white.user = {
             id: "none",
-            name: "Stockfish AI level " + this.whiteAILevel
+            name: "Stockfish AI level " + this.whiteAILevel,
+            rating: 1500 + this.whiteAILevel * 200
         }
 
         if(!obj.players.black.user) obj.players.black.user = {
             id: "none",
-            name: "Stockfish AI level " + this.blackAILevel
+            name: "Stockfish AI level " + this.blackAILevel,
+            rating: 1500 + this.blackAILevel * 200
         }
 
         this.myUsername = myUsername
@@ -41,8 +46,8 @@ class Game_{
 
         this.opponentTitledName = this.meWhite ? this.blackTitledName : this.whiteTitledName
 
-        this.whiteRating = obj.players.white.rating || "?"
-        this.blackRating = obj.players.black.rating || "?"
+        this.whiteRating = obj.players.white.rating
+        this.blackRating = obj.players.black.rating
 
         if(obj.clock){
             this.clockInitial = obj.clock.initial
