@@ -240,7 +240,7 @@
             }
             let ecoline = ecoselect.v()
             if(ecoline != "none"){
-                code += ` && ( game.moves.match(/^${ecoline}/) )`
+                code += ` && ( game.moves.match(/^${ecoline.replace(/\+/g, "\\+")}/) )`
             }
             codeinput.setText(code)
         }
