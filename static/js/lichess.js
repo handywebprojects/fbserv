@@ -1,3 +1,20 @@
+AI_LEVEL_2_RATING = {
+  1: 1350,
+  2: 1420,
+  3: 1500,
+  4: 1600,
+  5: 1700,
+  6: 1900,
+  7: 2200,
+  8: 2600
+}
+
+function ailevel2rating(ailevel){  
+  let rating = AI_LEVEL_2_RATING[ailevel]
+  if(!rating) return 1500
+  return rating
+}
+
 class Game_{
     constructor(obj, myUsername){
 
@@ -9,14 +26,14 @@ class Game_{
 
         if(!obj.players.white.user) obj.players.white.user = {
             id: "none",
-            name: "Stockfish AI level " + this.whiteAILevel,
-            rating: 1500 + this.whiteAILevel * 200
+            name: `Stockfish AI level ${this.whiteAILevel}`,
+            rating: ailevel2rating(this.whiteAILevel)
         }
 
         if(!obj.players.black.user) obj.players.black.user = {
             id: "none",
-            name: "Stockfish AI level " + this.blackAILevel,
-            rating: 1500 + this.blackAILevel * 200
+            name: `Stockfish AI level ${this.blackAILevel}`,
+            rating: ailevel2rating(this.blackAILevel)
         }
 
         this.myUsername = myUsername

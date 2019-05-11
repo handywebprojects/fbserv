@@ -12,7 +12,7 @@
 
     <script src="static/js/can-ndjson-stream.js"></script>
     <script src="static/js/dom.js?ver=1554627979"></script>
-    <script src="static/js/lichess.js?ver=1557480740"></script>
+    <script src="static/js/lichess.js?ver=1557563906"></script>
 
 </head>
 
@@ -538,15 +538,18 @@
 
         function createopptable(){            
             let opptable = Table()                
+            let headbc = "#eee"
             opptable.a(Tr().a(
-                OppTd().bc("#fee").html("Rank"),
-                OppTd().w(200).bc("#fee").html("Opponent name"),
-                OppTd().bc("#fee").html("Total games"),
-                OppTd().bc("#fee").html("Wins"),
-                OppTd().bc("#fee").html("Draws"),
-                OppTd().bc("#fee").html("Losses"),
-                OppTd().bc("#fee").html("Balance")
-            ))            
+                OppTd().bc(headbc).html("Rank"),
+                OppTd().w(200).bc(headbc).html("Opponent name"),
+                OppTd().bc(headbc).html("Total games"),
+                OppTd().bc(headbc).html("Wins"),
+                OppTd().bc(headbc).html("Draws"),
+                OppTd().bc(headbc).html("Losses"),
+                OppTd().bc(headbc).html("Balance")
+            ))       
+            let totaltr = Tr()     
+            opptable.a(totaltr)
             selectmaxopps.setoptions([
                 ["5", "5"],
                 ["10", "10"],
@@ -560,24 +563,47 @@
             let oppnames = Object.keys(allopponents)
             oppnames = oppnames.sort((a, b) => allopponents[b].total - allopponents[a].total)
             if(oppnames.length > MAXOPPS) oppnames = oppnames.slice(0, MAXOPPS)
+            let totaltotal = 0
+            let totalwins = 0
+            let totaldraws = 0
+            let totallosses = 0
+            let totalbalance = 0
+            let lossbc = "#fee"
+            let drawbc = "#ffc"
+            let winbc = "#cfc"
             for(oppi=0; oppi<oppnames.length; oppi++){
                 let oppname = oppnames[oppi]
                 let opprec = allopponents[oppname]
                 let balance = opprec.wins - opprec.losses
-                let balcol = "#ffc"
-                if(balance < 0) balcol = "#fcc"
-                if(balance > 0) balcol = "#cfc"
+                let balcol = drawbc
+                if(balance < 0) balcol = lossbc
+                if(balance > 0) balcol = winbc
                 let oppurl = `https://lichess.org/@/${oppname}`
                 opptable.a(Tr().a(
                     OppTd().bc("#eee").html(`${oppi + 1}`),
                     OppTd().w(200).c("#007").fw("bold").a(Hlink(oppurl, oppname, true)),
-                    OppTd().html(opprec.total),
-                    OppTd().bc("#afa").html(opprec.wins),
-                    OppTd().bc("#ffa").html(opprec.draws),
-                    OppTd().bc("#faa").html(opprec.losses),
-                    OppTd().bc(balcol).html(balance)
+                    OppTd().bc(headbc).html(opprec.total),
+                    OppTd().bc(winbc).html(opprec.wins),
+                    OppTd().bc(drawbc).html(opprec.draws),
+                    OppTd().bc(lossbc).html(opprec.losses),
+                    OppTd().bc(balcol).html(balance).fw("bold")
                 ))
-            }                
+                totaltotal += opprec.total
+                totalwins += opprec.wins
+                totaldraws += opprec.draws
+                totallosses += opprec.losses
+                totalbalance += balance
+            }        
+            let totalbc = "#fff"        
+            totaltr.a(
+                Td(),
+                OppTd().w(200).bc(totalbc).html("TOTAL"),
+                OppTd().bc(totalbc).html(`${totaltotal}`),
+                OppTd().bc(totalbc).html(`${totalwins}`),
+                OppTd().bc(totalbc).html(`${totaldraws}`),
+                OppTd().bc(totalbc).html(`${totallosses}`),
+                OppTd().bc(totalbc).html(`${totalbalance}`).fw("bold")
+            )
         }
     </script>
 
