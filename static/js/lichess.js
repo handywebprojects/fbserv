@@ -56,6 +56,11 @@ class Game_{
         this.whiteBot = this.whiteTitle == "BOT"
         this.blackBot = this.blackTitle == "BOT"
 
+        this.oppKind = "human"
+
+        if(this.meWhite && this.blackBot) this.oppKind = "bot"
+        if(this.meBlack && this.whiteBot) this.oppKind = "bot"
+
         this.someBot = this.whiteBot || this.blackBot
 
         this.whiteTitledName = this.whiteTitle == "" ? this.whiteName : this.whiteTitle + " " + this.whiteName

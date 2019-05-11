@@ -12,7 +12,7 @@
 
     <script src="static/js/can-ndjson-stream.js"></script>
     <script src="static/js/dom.js?ver=1554627979"></script>
-    <script src="static/js/lichess.js?ver=1557563906"></script>
+    <script src="static/js/lichess.js?ver=1557573050"></script>
 
 </head>
 
@@ -128,6 +128,17 @@
                     ["WCM", "Opponent WCM"],
                     ["NM", "Opponent NM"],
                     ["WNM", "Opponent WNM"]
+                ]
+            },
+            oppkind:{
+                selected: "any",
+                obj: "g.oppKind",
+                ref: "fromdate",
+                quoted: true,
+                data:[
+                    ["any", "Any Opponent"],
+                    ["human", "Human"],
+                    ["bot", "BOT"]                    
                 ]
             },
             myresult:{
