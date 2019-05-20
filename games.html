@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="static/css/staticpage.css?ver=1549100598">
 
     <script src="static/js/can-ndjson-stream.js"></script>
-    <script src="static/js/dom.js?ver=1554627979"></script>
+    <script src="static/js/dom.js?ver=1558373573"></script>
     <script src="static/js/lichess.js?ver=1557573050"></script>
 
 </head>
@@ -48,6 +48,8 @@
     </div>
 
     <script>              
+        const MAX_DOWNLOAD_CHUNK = 300
+
         allopponents = {}
         MAXOPPS = parseInt(params["maxopps"])
         if(isNaN(MAXOPPS)) MAXOPPS = 10        
@@ -361,27 +363,56 @@
 
         createLink()
 
-        function downloadfunc(){
-            let payload = allgameids.join(",")
+        let idpayloads = []
+        let loadedpgns = []
+        let numbatches = 0
+        let currentbatch = 1
+
+        function downloadmessagefunc(){
+
+            let batchmessage = ""
+
+            if(numbatches > 0){
+                if(idpayloads.length > 0) searchinfodiv.html(`Downloading games, please wait ... [ batch ${currentbatch} of ${numbatches} ]`)
+                downloadpartialfunc()
+            }else{
+                window.alert("No games to download !")
+            }
+
+        }
+
+        function downloadpartialfunc(){            
+
+            if(idpayloads.length == 0){
+                let content = loadedpgns.join("")
+                file = new Blob([content])
+                let a = document.createElement("a")
+                let url = URL.createObjectURL(file)
+                a.href = url
+                a.download = "customsearch.pgn"
+                document.body.appendChild(a)
+                maine.style.backgroundColor = "#ffe"
+                searchinfodiv.html("")            
+                a.click()
+                setTimeout(function() {
+                    document.body.removeChild(a)
+                    window.URL.revokeObjectURL(url)
+                }, 0);
+                return
+            }
+
+            let idspayload = idpayloads.pop()
+            let payload = idspayload.join(",")
+
             fetch("https://lichess.org/games/export/_ids", {
                 "method": "POST",
                 "body": payload
             }).then(
                 response => response.text().then(
                     content => {
-                        file = new Blob([content])
-                        let a = document.createElement("a")
-                        let url = URL.createObjectURL(file)
-                        a.href = url
-                        a.download = "customsearch.pgn"
-                        document.body.appendChild(a)
-                        maine.style.backgroundColor = "#ffe"
-                        searchinfodiv.html("")            
-                        a.click()
-                        setTimeout(function() {
-                            document.body.removeChild(a)
-                            window.URL.revokeObjectURL(url)
-                        }, 0);
+                        loadedpgns.push(content)
+                        currentbatch++
+                        downloadmessagefunc()
                     },
                     err => {
                         console.log(err)
@@ -397,6 +428,14 @@
             )
         }
 
+        function downloadfunc(){
+            idpayloads = allgameids.chunk(MAX_DOWNLOAD_CHUNK)
+            loadedpgns = []
+            currentbatch = 1
+            numbatches = idpayloads.length
+            downloadmessagefunc()
+        }
+
         function downloadgames(){
             if(searchon){
                 window.alert("Wait for the search to finish or stop search before downloading.")
@@ -407,9 +446,8 @@
                 window.alert("No games found. Please perform a search and find some games.")
                 return
             }
-            maine.style.backgroundColor = "#eef"
-            searchinfodiv.html("Downloading games, please wait ...")
-            setTimeout(downloadfunc, 10)
+            maine.style.backgroundColor = "#eef"            
+            downloadfunc()
         }
 
         streamErr = e => {

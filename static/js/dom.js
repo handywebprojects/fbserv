@@ -1,4 +1,16 @@
 ////////////////////////////////////////////////////////////////////
+// https://stackoverflow.com/questions/8495687/split-array-into-chunks
+
+Object.defineProperty(Array.prototype, 'chunk', {
+    value: function(chunkSize) {
+        var R = [];
+        for (var i=0; i<this.length; i+=chunkSize)
+            R.push(this.slice(i,i+chunkSize));
+        return R;
+    }
+});
+
+////////////////////////////////////////////////////////////////////
 
 function dateToDateInputStr(dateObj){
     let month = "" + ( dateObj.getUTCMonth() + 1 )
