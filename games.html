@@ -12,7 +12,7 @@
 
     <script src="static/js/can-ndjson-stream.js"></script>
     <script src="static/js/dom.js?ver=1558373573"></script>
-    <script src="static/js/lichess.js?ver=1557573050"></script>
+    <script src="static/js/lichess.js?ver=1558408986"></script>
 
 </head>
 
@@ -205,6 +205,56 @@
                     ["white", "Me White"],
                     ["black", "Me Black"]
                 ]
+            },
+            minplies:{
+                selected: "any",
+                obj: "g.plies",
+                ref: "fromdate",
+                quoted: false,
+                operation: ">=",
+                data:[
+                    ["any", "Ignore Min Plies"],
+                    ["5", "min 5 plies"],
+                    ["10", "min 10 plies"],
+                    ["15", "min 15 plies"],
+                    ["20", "min 20 plies"],
+                    ["25", "min 25 plies"],
+                    ["30", "min 30 plies"],
+                    ["35", "min 35 plies"],
+                    ["40", "min 40 plies"],
+                    ["45", "min 45 plies"],
+                    ["50", "min 50 plies"],
+                    ["60", "min 60 plies"],
+                    ["70", "min 70 plies"],
+                    ["80", "min 80 plies"],
+                    ["90", "min 90 plies"],
+                    ["100", "min 100 plies"]
+                ]
+            },
+            maxplies:{
+                selected: "any",
+                obj: "g.plies",
+                ref: "todate",
+                quoted: false,
+                operation: "<=",
+                data:[
+                    ["any", "Ignore Max Plies"],
+                    ["5", "max 5 plies"],
+                    ["10", "max 10 plies"],
+                    ["15", "max 15 plies"],
+                    ["20", "max 20 plies"],
+                    ["25", "max 25 plies"],
+                    ["30", "max 30 plies"],
+                    ["35", "max 35 plies"],
+                    ["40", "max 40 plies"],
+                    ["45", "max 45 plies"],
+                    ["50", "max 50 plies"],
+                    ["60", "max 60 plies"],
+                    ["70", "max 70 plies"],
+                    ["80", "max 80 plies"],
+                    ["90", "max 90 plies"],
+                    ["100", "max 100 plies"]
+                ]
             }
         }
 
@@ -236,7 +286,8 @@
                         code += ` && ( g.opponentTitled )`
                     }else{
                         if(quoted) v=`"${v}"`
-                        code += ` && ( ${obj} == ${v} )`
+                        let operation = odata.operation || "=="
+                        code += ` && ( ${obj} ${operation} ${v} )`
                     }                    
                 }
             }

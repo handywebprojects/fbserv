@@ -137,6 +137,11 @@ class Game_{
 
         this.ratingDiff = undefined
         if(this.myRating && this.opponentRating) this.ratingDiff = this.myRating - this.opponentRating
+
+        this.plies = 0
+        try{
+          this.plies = obj.moves.split(" ").length
+        }catch(err){console.log(err)}
     }
 
     get summary(){
