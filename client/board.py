@@ -1167,6 +1167,11 @@ class Board(e):
         self.chartdiv.x()
         html2canvas(self.analysisinfodiv.e).then(lambda canvas: self.chartdiv.e.appendChild(canvas), lambda err: print(err))
 
+    def copypgn(self):
+        self.tabpane.selectbykey("pgn")
+        self.pgntext.textarea.e.select()
+        document.execCommand("copy")
+
     def __init__(self, args):
         super().__init__("div")
         self.gamei = 0
@@ -1258,13 +1263,16 @@ class Board(e):
         self.autoanalysis = False
         self.autoanalysisbutton = Button("A", self.autoanalysisclicked)        
         self.analysiscontrolpanelbottom.a(self.autoanalysisbutton)
-        self.copylinkbutton = Button("C", self.copylink)
-        self.copylinkbutton = Button("S", self.screenshot)
+        self.copylinkbutton = Button("H", self.copylink)
         self.analysiscontrolpanelbottom.a(self.copylinkbutton)
+        self.screenshotbutton = Button("S", self.screenshot)
+        self.analysiscontrolpanelbottom.a(self.screenshotbutton)
         self.lichessanalysisbutton = Button("L", self.lichessanalysisclicked)
         self.analysiscontrolpanelbottom.a(self.lichessanalysisbutton)
         self.lichessgamebutton = Button("G", self.lichessgameclicked)        
         self.analysiscontrolpanelbottom.a(self.lichessgamebutton)
+        self.copypgnbutton = Button("C", self.copypgn)
+        self.analysiscontrolpanelbottom.a(self.copypgnbutton)
         mopts = []
         for i in range(1,501):
             mopts.append([ str(i), "MultiPV {}".format(i) ])
