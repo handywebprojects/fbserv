@@ -1172,6 +1172,13 @@ class Board(e):
         self.pgntext.textarea.e.select()
         document.execCommand("copy")
 
+    def copyfen(self):        
+        self.basicboard.fentext.e.select()
+        document.execCommand("copy")
+
+    def autopastefen(self):
+        navigator.clipboard.readText().then(lambda clipText: self.fentextchangedcallback(clipText), lambda err: print(err))
+
     def __init__(self, args):
         super().__init__("div")
         self.gamei = 0
@@ -1252,6 +1259,8 @@ class Board(e):
         self.analysiscontrolpaneltop.a(Button("Store >", self.storeforward).ac("analysismake"))
         self.analysiscontrolpaneltop.a(Button("Store Make", self.storemake).ac("analysismake"))
         self.analysiscontrolpaneltop.a(Button("Store Stop", self.stopandstoreanalysis).ac("analysisstop"))
+        self.analysiscontrolpaneltop.a(Button("CF", self.copyfen))
+        self.analysiscontrolpaneltop.a(Button("PF", self.autopastefen))
         self.analysiscontrolpanelbottom = Div().ac("bigboardanalysiscontrolpanel")
         self.analysiscontrolpanelbottom.a(Button("#", self.getstoredanalysisinfo).ac("analysisanalyze"))
         self.analysiscontrolpanelbottom.a(Button("Analyze", self.analyzecallbackfactory()).ac("analysisanalyze"))
