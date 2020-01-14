@@ -48,8 +48,8 @@
         infodiv = Div().ml(20).disp("inline-block").ac("infodiv").pad(2).pl(10).pr(10)
 
         perfdiv.a(
-            Button("Check all", setchecks.bind(null, perfchecks, true)),
-            Button("Uncheck all", setchecks.bind(null, perfchecks, false)),
+            Button("Check All", setchecks.bind(null, perfchecks, true)),
+            Button("Uncheck All", setchecks.bind(null, perfchecks, false)),
             infodiv
         )
 
@@ -74,7 +74,7 @@
 
         tablediv = Div().ac("tablediv")
 
-        TOSTART_LIMIT = 360
+        TOSTART_LIMIT = 720
 
         function updatelist(uptodate){
             ips = []

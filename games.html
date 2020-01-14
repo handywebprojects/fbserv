@@ -50,9 +50,23 @@
     <script>              
         const MAX_DOWNLOAD_CHUNK = 300
 
+        const DOWNLOAD_OPTS = [
+            "moves",
+            "tags",
+            "clocks",
+            "evals",
+            "opening"
+        ]
+
+        let downloadchecks = {}
+
         allopponents = {}
         MAXOPPS = parseInt(params["maxopps"])
         if(isNaN(MAXOPPS)) MAXOPPS = 10        
+
+        function capitalstart(x){
+            return x.substring(0,1).toUpperCase() + x. substring(1)
+        }
         
         function maxoppschanged(){
             MAXOPPS = parseInt(selectmaxopps.v())
@@ -303,6 +317,8 @@
             search()
         }        
 
+        if(!params["moves"]) params["moves"] = "true"
+        if(!params["tags"]) params["tags"] = "true"
         var username = params["username"] || "randommoverbot"
         usernameinput = FeaturedTextInput("Username").setText(username).bc("#efe")
         token = params["token"] || "L8GHblP1Wc57Oegi"
@@ -319,9 +335,9 @@
         opponentRatingrange = Range(800,3500,100,params["opponentRatingmin"] || 800,800,3500,100,params["opponentRatingmax"] || 3500)
         form.a(Tr().a(formtd().html("My rating"), Td().a(myRatingrange)))        
         form.a(Tr().a(formtd().html("Opp. rating"), Td().a(opponentRatingrange)))        
-        offerdownload = Check().ml(10).set(params["download"]).ae("change", createLink)
-        autocreatecode = Check().ml(10).set(params["autocreatecode"]).ae("change", createLink)
-        autostart = Check().ml(10).set(params["autostart"]).ae("change", createLink)        
+        offerdownload = Check().ml(10).set(params["download"]=="true").ae("change", createLink)
+        autocreatecode = Check().ml(10).set(params["autocreatecode"]=="true").ae("change", createLink)
+        autostart = Check().ml(10).set(params["autostart"]=="true").ae("change", createLink)        
         form.a(Tr().a(formtd().html("Search"),Td().a(
                 Button("Create code and search", createcodeandsearch).mar(3).fs(18).curlyborder().pad(5).bc("#cfc").cp(),
                 Button("Stop", stopreader).mar(3).fs(16).curlyborder().pad(5).bc("#fcc").cp(),
@@ -336,6 +352,14 @@
                 autostart,
                 Div().disp("inline-block").html("Auto start").ml(5)
         )))     
+        form.a(Tr().a(formtd().html("Download"),Td().a(
+                DOWNLOAD_OPTS.map(dopt=>
+                    Div().disp("inline-block").a(
+                        Div().disp("inline-block").html(capitalstart(dopt)).ml(5),
+                        downloadchecks[dopt] = Check().ml(5).set(params[dopt]=="true").ae("change", createLink)
+                    )                    
+                )
+        )))     
         fromdate = DateInput().set(params["fromdate"] || "2000-01-01")        
         form.a(Tr().a(formtd().html("From date"),(fromdatetd = Td()).a(
                 fromdate
@@ -344,8 +368,7 @@
         form.a(Tr().a(formtd().html("To date"),(todatetd = Td()).a(
                 todate
         )))        
-        seleco = ( params["eco"] || "none" ).replace(/%20/g, " ")
-        console.log("seleco", params)
+        seleco = ( params["eco"] || "none" ).replace(/%20/g, " ")        
         ecooptsdata = [["none", "Ignore ECO code"]]
         let selecofound = ( seleco == "none" )
         for(let item of ECO_CODES){
@@ -409,6 +432,9 @@
             if(autostart.checked){
                 link += "&autostart=true"
             }
+            for(let dopt of DOWNLOAD_OPTS){
+                link += `&${dopt}=${downloadchecks[dopt].checked}`
+            }            
             se("link", Hlink(link, link))
         }
 
@@ -455,7 +481,11 @@
             let idspayload = idpayloads.pop()
             let payload = idspayload.join(",")
 
-            fetch("https://lichess.org/games/export/_ids", {
+            let durl = `https://lichess.org/games/export/_ids?${DOWNLOAD_OPTS.map(dopt=>dopt + "=" + ( downloadchecks[dopt].checked ? "true" : "false" )).join("&")}`
+
+            console.log(durl)   
+
+            fetch(durl, {
                 "method": "POST",
                 "body": payload
             }).then(
@@ -491,8 +521,7 @@
             if(searchon){
                 window.alert("Wait for the search to finish or stop search before downloading.")
                 return
-            }
-            //console.log("download games")
+            }            
             if(allgameids.length == 0){
                 window.alert("No games found. Please perform a search and find some games.")
                 return
@@ -502,7 +531,7 @@
         }
 
         streamErr = e => {
-            console.warn("Stream error")
+            console.warn("Stream error.")
             console.warn(e)
         }
 
@@ -514,8 +543,7 @@
 
         var gametable
 
-        function searchdone(){
-            //console.log(allgameids)
+        function searchdone(){            
             createopptable()
             maine.style.backgroundColor = "#ffe"
             if(offerdownload.checked){
@@ -566,7 +594,7 @@
                     try{
                         render(result.value)                        
                     }catch(e){
-                        console.log("could not render result value", result.value, e)                        
+                        console.log("Error. Could not render result value :", result.value, e)                        
                     }
                     reader.read().then(read, streamErr)            
                 }
