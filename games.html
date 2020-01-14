@@ -331,8 +331,8 @@
         userdive.appendChild(tokeninput.e)
         forme = document.getElementById("form")
         form = Table()
-        myRatingrange = Range(800,3500,100,params["myRatingmin"] || 800,800,3500,100,params["myRatingmax"] || 3500)
-        opponentRatingrange = Range(800,3500,100,params["opponentRatingmin"] || 800,800,3500,100,params["opponentRatingmax"] || 3500)
+        myRatingrange = Range(600,3500,100,params["myRatingmin"] || 600,600,3500,100,params["myRatingmax"] || 3500)
+        opponentRatingrange = Range(600,3500,100,params["opponentRatingmin"] || 600,600,3500,100,params["opponentRatingmax"] || 3500)
         form.a(Tr().a(formtd().html("My rating"), Td().a(myRatingrange)))        
         form.a(Tr().a(formtd().html("Opp. rating"), Td().a(opponentRatingrange)))        
         offerdownload = Check().ml(10).set(params["download"]=="true").ae("change", createLink)
@@ -445,17 +445,26 @@
         let numbatches = 0
         let currentbatch = 1
 
+        let retrybatchmsg = ""
+
         function downloadmessagefunc(){
 
             let batchmessage = ""
 
             if(numbatches > 0){
-                if(idpayloads.length > 0) searchinfodiv.html(`Downloading games, please wait ... [ batch ${currentbatch} of ${numbatches} ]`)
+                if(idpayloads.length > 0) searchinfodiv.html(`${retrybatchmsg}Downloading games, please wait ... [ batch ${currentbatch} of ${numbatches} ]`)
                 downloadpartialfunc()
             }else{
                 window.alert("No games to download !")
             }
 
+        }
+
+        function retrydownload(idspayload){
+            idpayloads.push(idspayload)
+            retrybatchmsg = `Retry. `
+            searchinfodiv.html(`Error downloading batch ${currentbatch} of ${numbatches}. Retrying, please wait.`)
+            setTimeout(downloadmessagefunc, 60000)
         }
 
         function downloadpartialfunc(){            
@@ -483,8 +492,6 @@
 
             let durl = `https://lichess.org/games/export/_ids?${DOWNLOAD_OPTS.map(dopt=>dopt + "=" + ( downloadchecks[dopt].checked ? "true" : "false" )).join("&")}`
 
-            console.log(durl)   
-
             fetch(durl, {
                 "method": "POST",
                 "body": payload
@@ -497,14 +504,14 @@
                     },
                     err => {
                         console.log(err)
-                        window.alert("Error. Something went wrong with downloading games.")    
-                        searchinfodiv.html("")
+                        //window.alert("Error. Something went wrong with downloading games.")    
+                        retrydownload(idspayload)
                     }
                 ),
                 err => {
                     console.log(err)
-                    window.alert("Error. Something went wrong with downloading games.")
-                    searchinfodiv.html("")
+                    //window.alert("Error. Something went wrong with downloading games.")
+                    retrydownload(idspayload)
                 }
             )
         }
@@ -617,7 +624,7 @@
 
         function OppTd(){return Td().pad(3).curlyborder().w(80).bc("#efe").ta("center")}
 
-        render = game => {                                    
+        render = game => {                                                
             let gid = game.id
             g = Game(game, username)            
             logic = codeinput.getText()                        
