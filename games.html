@@ -321,7 +321,8 @@
         if(!params["tags"]) params["tags"] = "true"
         var username = params["username"] || "randommoverbot"
         usernameinput = FeaturedTextInput("Username").setText(username).bc("#efe")
-        token = params["token"] || "L8GHblP1Wc57Oegi"
+        //token = params["token"] || "L8GHblP1Wc57Oegi"
+        token = params["token"] || "none"
         tokeninput = FeaturedTextInput("Token").setText(token).bc("#eef")
         opponent = params["opponent"] || ""
         opponentinput = FeaturedTextInput("Opponent").setText(opponent).bc("#fee")
@@ -524,6 +525,23 @@
             downloadmessagefunc()
         }
 
+        function downloadAllPgns(){
+            let content = allPgns.join("")
+            file = new Blob([content])
+            let a = document.createElement("a")
+            let url = URL.createObjectURL(file)
+            a.href = url
+            a.download = "customsearch.pgn"
+            document.body.appendChild(a)
+            maine.style.backgroundColor = "#ffe"
+            searchinfodiv.html("")            
+            a.click()
+            setTimeout(function() {
+                document.body.removeChild(a)
+                window.URL.revokeObjectURL(url)
+            }, 0);
+        }
+
         function downloadgames(){
             if(searchon){
                 window.alert("Wait for the search to finish or stop search before downloading.")
@@ -534,7 +552,8 @@
                 return
             }
             maine.style.backgroundColor = "#eef"            
-            downloadfunc()
+            //downloadfunc()
+            downloadAllPgns()
         }
 
         streamErr = e => {
@@ -583,8 +602,8 @@
                 "Accept": "application/x-ndjson"
             }
             token = tokeninput.getText()
-            if(!(token === "")) headers.Authorization = "Bearer " + token
-            url = `https://lichess.org/api/games/user/${username}?since=${fromdate.asms()}&until=${todate.asms() + ONE_DAY}`
+            if(!(token === "none")) headers.Authorization = "Bearer " + token
+            url = `https://lichess.org/api/games/user/${username}?pgnInJson=true&since=${fromdate.asms()}&until=${todate.asms() + ONE_DAY}`
             fetch(url, {
                 headers: headers
             }).then(response => can.ndjsonStream(response.body)).then(todosStream => {
@@ -621,6 +640,7 @@
         ae("search", searchinfodiv)
 
         allgameids = []
+        allPgns = []
 
         function OppTd(){return Td().pad(3).curlyborder().w(80).bc("#efe").ta("center")}
 
@@ -631,6 +651,7 @@
             ok = eval(logic)                                    
             if(ok){
                 allgameids.push(game.id)
+                allPgns.push(game.pgn)
                 resultcolor = ["#700", "#007", "#070"][g.myResult * 2]
                 Hlink("https://lichess.org/" + game.id, g.summary, true)
                 gametable.a(Tr().cp().bc(found % 2 ? "#ffe" : "#eff").a(
