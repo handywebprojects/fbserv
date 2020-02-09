@@ -437,6 +437,8 @@ def bots():
 
 @app.route("/titled")
 def titled():               
+    return("Page removed. Lichess no longer provides titled players API.")
+    """
     columns = [None]*NUM_TITLED_COLUMNS
     columns[0] = request.args.get("column0", "total_games")
     columns[1] = request.args.get("column1", "number_of_followers")
@@ -531,6 +533,7 @@ def titled():
         titlebreakdowns.append("{} {}".format(title, titlecnts[title]))
     titlebreakdown = " , ".join(titlebreakdowns)
     return render_template("titled.html", config = config, columntypes = TITLED_COLUMN_TYPES, numcolumns = NUM_TITLED_COLUMNS, columns = columns, alltitles = LICHESS_TITLES, titles = titles, playerrows = playerrows, numplayers = len(playerrows), onlineonly = onlineonly, hideoffline = hideoffline, titlebreakdown = titlebreakdown, reverses = reverses, nolog = nolog, fontsize = fontsize, idnamehash = idnamehash, nameidhash = nameidhash, minimal = minimal)
+    """
 
 @app.route("/tourneys.html")
 def tourneys():
