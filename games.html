@@ -406,6 +406,7 @@
         function createLink(){
             username = usernameinput.getText()            
             link = "games.html?username=" + username
+            link += "&opponent=" + opponentinput.getText()            
             link += "&token=" + tokeninput.getText()            
             link += "&eco=" + ecoselect.v()
             link += "&maxopps=" + selectmaxopps.v()
@@ -603,7 +604,9 @@
             }
             token = tokeninput.getText()
             if(!(token === "none")) headers.Authorization = "Bearer " + token
-            url = `https://lichess.org/api/games/user/${username}?pgnInJson=true&since=${fromdate.asms()}&until=${todate.asms() + ONE_DAY}`
+            let opponentName = opponentinput.getText()
+            url = `https://lichess.org/api/games/user/${username}?${opponentName ? "vs=" + opponentName + "&" : ""}pgnInJson=true&since=${fromdate.asms()}&until=${todate.asms() + ONE_DAY}`
+            console.log(url)
             fetch(url, {
                 headers: headers
             }).then(response => can.ndjsonStream(response.body)).then(todosStream => {
